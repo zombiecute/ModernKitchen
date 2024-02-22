@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"id": "bakingdelight",
+	"version": "${version}",
+	"name": "Baking Delight",
+	"description": "Added baking features to Minecraft to make better food!",
+	"authors": [
+		"zombie_cute",
+		"Bianca_Sylvia",
+		"Ria_4035",
+		"EysioErositee",
+		"PF_Wrightryan"
+	],
+	"contact": {
+		"sources": "https://github.com/zombiecute/BakingDelight"
+	},
+	"license": "MIT ",
+	"icon": "assets/bakingdelight/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.zombie_cute.mc.bakingdelight.Bakingdelight"
+		],
+		"client": [
+			"com.zombie_cute.mc.bakingdelight.BakingdelightClient"
+		],
+		"fabric-datagen": [
+			"com.zombie_cute.mc.bakingdelight.BakingdelightDataGenerator"
+		]
+	},
+	"mixins": [
+		"bakingdelight.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,29 @@
+{
+  "entity_butter_hit": {
+    "subtitle": "sounds.bakingdelight.butter_hit",
+    "sounds": [
+      "bakingdelight:butter1",
+      "bakingdelight:butter2",
+      "bakingdelight:butter3"
+    ]
+  },
+  "entity_butter_shoot": {
+    "subtitle": "sounds.bakingdelight.butter_shoot",
+    "sounds": [
+      "bakingdelight:butter_shoot1",
+      "bakingdelight:butter_shoot2"
+    ]
+  },
+  "entity_cherry_bomb_explosion": {
+    "subtitle": "sounds.bakingdelight.cherry_bomb_explosion",
+    "sounds": [
+      "bakingdelight:cherry_bomb_explosion"
+    ]
+  },
+  "entity_cherry_bomb_shoot": {
+    "subtitle": "sounds.bakingdelight.cherry_bomb_shoot",
+    "sounds": [
+      "bakingdelight:cherry_bomb_shoot"
+    ]
+  }
+}

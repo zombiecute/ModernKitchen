@@ -1,0 +1,18 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "tool": {
+    "type": "farmersdelight:tool",
+    "tag": "c:tools/knives"
+  },
+  "result": [
+    {
+      "item": "bakingdelight:apple_petal",
+      "count": 3
+    }
+  ]
+}

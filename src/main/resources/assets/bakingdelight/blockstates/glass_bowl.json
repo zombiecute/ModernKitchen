@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_item=false": {
+      "model": "bakingdelight:block/glass_bowl"
+    },
+    "has_item=true": {
+      "model": "bakingdelight:block/glass_bowl_has_item"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:sunflower"
+    }
+  ],
+  "tool": {
+    "type": "farmersdelight:tool",
+    "tag": "c:tools/knives"
+  },
+  "result": [
+    {
+      "item": "bakingdelight:sunflower_seed",
+      "count": 4
+    }
+  ]
+}

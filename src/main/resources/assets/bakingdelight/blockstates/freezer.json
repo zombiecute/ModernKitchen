@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=north,has_ice=false": {
+      "model": "bakingdelight:block/freezer",
+      "y": 180
+    },
+    "facing=north,has_ice=true": {
+      "model": "bakingdelight:block/freezer_has_ice",
+      "y": 180
+    },
+    "facing=south,has_ice=false": {
+      "model": "bakingdelight:block/freezer",
+      "y": 0
+    },
+    "facing=south,has_ice=true": {
+      "model": "bakingdelight:block/freezer_has_ice",
+      "y": 0
+    },
+    "facing=west,has_ice=false": {
+      "model": "bakingdelight:block/freezer",
+      "y": 90
+    },
+    "facing=west,has_ice=true": {
+      "model": "bakingdelight:block/freezer_has_ice",
+      "y": 90
+    },
+    "facing=east,has_ice=false": {
+      "model": "bakingdelight:block/freezer",
+      "y": 270
+    },
+    "facing=east,has_ice=true": {
+      "model": "bakingdelight:block/freezer_has_ice",
+      "y": 270
+    }
+  }
+}
