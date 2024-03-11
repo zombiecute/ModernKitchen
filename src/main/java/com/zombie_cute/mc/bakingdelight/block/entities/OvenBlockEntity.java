@@ -1,6 +1,5 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
-import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.recipe.OvenRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.OvenScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -138,21 +137,14 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                 markDirty(world, pos, state);
                 if (hasCraftingFinished()){
                     this.craftItem(entity);
-                    this.resetProgress();
-                }
-            } else if (this.getStack(INPUT_SLOT_1) == Items.MILK_BUCKET.getDefaultStack()&&
-                    this.getStack(INPUT_SLOT_2) == Items.MILK_BUCKET.getDefaultStack()&&
-                    this.getStack(INPUT_SLOT_3) == Items.MILK_BUCKET.getDefaultStack()&&
-                    this.getStack(INPUT_SLOT_4) == Items.MILK_BUCKET.getDefaultStack()) {
-                this.increaseCraftProgress();
-                markDirty(world, pos, state);
-                if (hasCraftingFinished()){
-                    this.removeStack(INPUT_SLOT_1,1);
+                    if (this.getStack(INPUT_SLOT_1).getItem() == Items.MILK_BUCKET){
+                        this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 4));
+                    } else {
+                        this.removeStack(INPUT_SLOT_1,1);
+                    }
                     this.removeStack(INPUT_SLOT_2,1);
                     this.removeStack(INPUT_SLOT_3,1);
                     this.removeStack(INPUT_SLOT_4,1);
-                    this.setStack(OUTPUT_SLOT, new ItemStack(ModItems.CHEESE,
-                            getStack(OUTPUT_SLOT).getCount() + 2));
                     this.resetProgress();
                 }
             }
@@ -198,10 +190,6 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         }
         Optional<OvenRecipe> match = entity.getWorld().getRecipeManager()
                 .getFirstMatch(OvenRecipe.Type.INSTANCE, inventory,entity.getWorld());
-        this.removeStack(INPUT_SLOT_1,1);
-        this.removeStack(INPUT_SLOT_2,1);
-        this.removeStack(INPUT_SLOT_3,1);
-        this.removeStack(INPUT_SLOT_4,1);
 
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));

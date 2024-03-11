@@ -148,27 +148,17 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                 markDirty(world, pos, state);
                 if (hasCraftingFinished()){
                     this.craftItem(entity);
+                    if (this.getStack(INPUT_SLOT_1).getItem() == Items.WATER_BUCKET ||
+                            this.getStack(INPUT_SLOT_1).getItem() == Items.LAVA_BUCKET){
+                        this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 3));
+                    } else {
+                        this.removeStack(INPUT_SLOT_1,1);
+                    }
+                    this.removeStack(INPUT_SLOT_2,1);
+                    this.removeStack(INPUT_SLOT_3,1);
                     this.resetProgress();
                 }
-            } else if (this.getStack(INPUT_SLOT_1).getItem() == Items.WATER_BUCKET){
-                this.increaseCraftProgress();
-                markDirty(world, pos, state);
-                if (hasCraftingFinished()){
-                    this.setStack(OUTPUT_SLOT, new ItemStack(Items.ICE,
-                            getStack(OUTPUT_SLOT).getCount() + 4));
-                    this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET));
-                    this.resetProgress();
-                }
-            } else if (this.getStack(INPUT_SLOT_1).getItem() == Items.LAVA_BUCKET) {
-                this.increaseCraftProgress();
-                markDirty(world, pos, state);
-                if (hasCraftingFinished()){
-                    this.setStack(OUTPUT_SLOT, new ItemStack(Items.OBSIDIAN,
-                            getStack(OUTPUT_SLOT).getCount() + 4));
-                    this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET));
-                    this.resetProgress();
-                }
-            }else {
+            } else {
                 if (this.coolTime != 0 && this.progress > 1){
                     this.progress -= 2;
                 } else {
@@ -226,9 +216,6 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         }
         Optional<FreezerRecipe> match = entity.getWorld().getRecipeManager()
                 .getFirstMatch(FreezerRecipe.Type.INSTANCE, inventory,entity.getWorld());
-        this.removeStack(INPUT_SLOT_1,1);
-        this.removeStack(INPUT_SLOT_2,1);
-        this.removeStack(INPUT_SLOT_3,1);
 
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));

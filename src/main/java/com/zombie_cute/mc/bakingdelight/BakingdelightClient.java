@@ -1,6 +1,8 @@
 package com.zombie_cute.mc.bakingdelight;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.entities.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.entities.renderer.GlassBowlBlockEntityRenderer;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.screen.FreezerScreen;
 import com.zombie_cute.mc.bakingdelight.screen.ModScreenHandlers;
@@ -10,6 +12,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
 public class BakingdelightClient implements ClientModInitializer {
@@ -23,5 +26,7 @@ public class BakingdelightClient implements ClientModInitializer {
 
         HandledScreens.register(ModScreenHandlers.OVEN_SCREEN_HANDLER_SCREEN_HANDLER, OvenScreen::new);
         HandledScreens.register(ModScreenHandlers.FREEZER_SCREEN_HANDLER_SCREEN_HANDLER, FreezerScreen::new);
+
+        BlockEntityRendererFactories.register(ModBlockEntities.GLASS_BOWL_ENTITY, GlassBowlBlockEntityRenderer::new);
     }
 }

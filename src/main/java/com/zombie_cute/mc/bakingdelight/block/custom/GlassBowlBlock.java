@@ -65,7 +65,7 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.getBlockEntity(pos) instanceof GlassBowlBlockEntity container){
             container.use(player);
-            if (container.GLASS_BOWL_INV.get(0).isEmpty()){
+            if (container.GLASS_BOWL_INV.get(1).isEmpty()){
                 world.setBlockState(pos, state.with(HAS_ITEM, false));
             } else {
                 world.setBlockState(pos, state.with(HAS_ITEM, true));
