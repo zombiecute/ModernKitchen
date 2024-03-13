@@ -3,6 +3,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Maps;
 import com.zombie_cute.mc.bakingdelight.recipe.FreezerRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.FreezerScreenHandler;
+import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -24,7 +25,8 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock.HAS_ICE;
@@ -83,14 +86,11 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
 
     @Override
     public void onOpen(PlayerEntity player) {
-        player.playSound(SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN,1.0f,1.0f);
+        playSound(ModSounds.BLOCK_FREEZER_OPEN, 1.0f, 1.5f);
     }
-
-    @Override
-    public void onClose(PlayerEntity player) {
-        player.playSound(SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE,1.0f,1.0f);
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
     }
-
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -134,13 +134,18 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         if (this.isCool()){
             --this.coolTime;
             world.setBlockState(pos, state.with(HAS_ICE,true));
+            playSound(ModSounds.BLOCK_FREEZER_RUNNING,0.3f,0.8f);
         } else {
             world.setBlockState(pos, state.with(HAS_ICE, false));
         }
         if (canUseAsIce(this.getStack(3))&&this.coolTime == 0){
             ItemStack ice = this.getStack(3);
             this.coolTime = this.getCoolTime(ice);
-            this.removeStack(ICE_SLOT,1);
+            if (this.getStack(ICE_SLOT).getItem() == Items.POWDER_SNOW_BUCKET){
+                this.setStack(ICE_SLOT, Items.BUCKET.getDefaultStack());
+            } else {
+                this.removeStack(ICE_SLOT,1);
+            }
         }
         if (isOutputSlotEmptyOrReceivable() && isCool()){
             if (this.hasRecipe(entity)){
@@ -159,17 +164,13 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                     this.resetProgress();
                 }
             } else {
-                if (this.coolTime != 0 && this.progress > 1){
-                    this.progress -= 2;
-                } else {
-                    this.resetProgress();
+                if (this.progress != 0){
+                    this.progress --;
                 }
             }
         } else {
-            if (this.coolTime != 0 && this.progress > 1){
-                this.progress -= 2;
-            } else {
-                this.resetProgress();
+            if (this.progress != 0){
+                this.progress --;
             }
             markDirty(world, pos, state);
         }
@@ -181,6 +182,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         FreezerBlockEntity.addIce(map, Items.BLUE_ICE, 5500);
         FreezerBlockEntity.addIce(map, Items.SNOW_BLOCK, 50);
         FreezerBlockEntity.addIce(map, Items.SNOW, 30);
+        FreezerBlockEntity.addIce(map, Items.POWDER_SNOW_BUCKET, 1200);
         FreezerBlockEntity.addIce(map, ModTagKeys.COOL_ITEMS, 10);
         return map;
     }

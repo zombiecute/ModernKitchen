@@ -1,29 +1,50 @@
 {
   "entity_butter_hit": {
-    "subtitle": "sounds.bakingdelight.butter_hit",
+    "subtitle": "sounds.bakingdelight.entity_butter_hit",
     "sounds": [
-      "bakingdelight:butter1",
-      "bakingdelight:butter2",
-      "bakingdelight:butter3"
+      "bakingdelight:butter_hit_1",
+      "bakingdelight:butter_hit_2",
+      "bakingdelight:butter_hit_3"
     ]
   },
   "entity_butter_shoot": {
-    "subtitle": "sounds.bakingdelight.butter_shoot",
+    "subtitle": "sounds.bakingdelight.entity_butter_shoot",
     "sounds": [
-      "bakingdelight:butter_shoot1",
-      "bakingdelight:butter_shoot2"
+      "bakingdelight:butter_shoot_1",
+      "bakingdelight:butter_shoot_2"
     ]
   },
   "entity_cherry_bomb_explosion": {
-    "subtitle": "sounds.bakingdelight.cherry_bomb_explosion",
+    "subtitle": "sounds.bakingdelight.entity_cherry_bomb_explosion",
     "sounds": [
       "bakingdelight:cherry_bomb_explosion"
     ]
   },
   "entity_cherry_bomb_shoot": {
-    "subtitle": "sounds.bakingdelight.cherry_bomb_shoot",
+    "subtitle": "sounds.bakingdelight.entity_cherry_bomb_shoot",
     "sounds": [
       "bakingdelight:cherry_bomb_shoot"
+    ]
+  },
+  "block_freezer_running": {
+    "subtitle": "sounds.bakingdelight.block_freezer_running",
+    "sounds": [
+      "bakingdelight:freezer_running"
+    ]
+  },
+  "block_freezer_open": {
+    "subtitle": "sounds.bakingdelight.block_freezer_open",
+    "sounds": [
+      "bakingdelight:freezer_open"
+    ]
+  },
+  "block_glass_bowl_whisking": {
+    "subtitle": "sounds.bakingdelight.block_glass_bowl_whisking",
+    "sounds": [
+      "bakingdelight:whisking_1",
+      "bakingdelight:whisking_2",
+      "bakingdelight:whisking_3",
+      "bakingdelight:whisking_4"
     ]
   }
 }

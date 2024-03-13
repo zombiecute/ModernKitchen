@@ -154,9 +154,9 @@ public class ModItems {
             .statusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 600,0), 1.0F)
             .build())));
     public static final Item COPPER_KNIFE = registerItem("copper_knife",
-            new SwordItem(ModToolMaterials.COPPER, 0, -2.0F, new FabricItemSettings()));
+            new KnifeItem(ModToolMaterials.COPPER, 0, -2.0F, new FabricItemSettings()));
     public static final Item AMETHYST_KNIFE = registerItem("amethyst_knife",
-            new SwordItem(ModToolMaterials.AMETHYST, 0, -2.0F, new FabricItemSettings()));
+            new KnifeItem(ModToolMaterials.AMETHYST, 0, -2.0F, new FabricItemSettings()));
     public static final Item BLACK_PEPPER_CORN = registerItem("black_pepper_corn", new AliasedBlockItem(ModBlocks.BLACK_PEPPER_CROP,
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(1).saturationModifier(1).build())));
     public static final Item BLACK_PEPPER_DUST = registerItem("black_pepper_dust", new Item(

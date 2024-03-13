@@ -12,7 +12,9 @@
 		"PF_Wrightryan"
 	],
 	"contact": {
-		"sources": "https://github.com/zombiecute/BakingDelight"
+		"homepage": "https://github.com/zombiecute/BakingDelight",
+		"sources": "https://github.com/zombiecute/BakingDelight",
+		"issues": "https://github.com/zombiecute/BakingDelight/issues"
 	},
 	"license": "MIT ",
 	"icon": "assets/bakingdelight/icon.png",
@@ -26,6 +28,9 @@
 		],
 		"fabric-datagen": [
 			"com.zombie_cute.mc.bakingdelight.BakingdelightDataGenerator"
+		],
+		"rei_client": [
+			"com.zombie_cute.mc.bakingdelight.compat.BakingDelightREIClientPlugin"
 		]
 	},
 	"mixins": [

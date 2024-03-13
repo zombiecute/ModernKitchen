@@ -28,8 +28,6 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.tick.OrderedTick;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
-
 public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -64,7 +62,7 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.getBlockEntity(pos) instanceof GlassBowlBlockEntity container){
-            container.use(player);
+            container.onUse(player);
             if (container.GLASS_BOWL_INV.get(1).isEmpty()){
                 world.setBlockState(pos, state.with(HAS_ITEM, false));
             } else {
@@ -75,11 +73,15 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
         return ActionResult.SUCCESS;
     }
     @Override
-    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-        if (world.getBlockEntity(pos) instanceof GlassBowlBlockEntity container){
-            container.destroy();
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.getBlock() != newState.getBlock()){
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof GlassBowlBlockEntity){
+                ItemScatterer.spawn(world ,pos, (GlassBowlBlockEntity)blockEntity);
+                world.updateComparators(pos,this);
+            }
         }
-        super.onBlockBreakStart(state, world, pos, player);
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Override
@@ -103,10 +105,6 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     }
 
     public static void destroyGlassBowl(World world, BlockPos pos) {
-        if(world.getBlockEntity(pos) instanceof GlassBowlBlockEntity container && (!container.GLASS_BOWL_INV.get(0).isEmpty())){
-            ItemScatterer.spawn(Objects.requireNonNull(container.getWorld()),container.getPos().getX(),container.getPos().getY(),container.getPos().getZ(),
-                    container.GLASS_BOWL_INV.get(0));
-        }
         world.playSound(null, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.4f, 1.6f + world.random.nextFloat() * 0.2f);
         world.breakBlock(pos, true);
     }

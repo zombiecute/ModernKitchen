@@ -19,6 +19,9 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +29,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.zombie_cute.mc.bakingdelight.block.custom.OvenBlock.OVEN_BURNING;
@@ -111,7 +115,9 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new OvenScreenHandler(syncId, playerInventory, this,this.propertyDelegate);
     }
-
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
+    }
     public void tick(World world, BlockPos pos, BlockState state, OvenBlockEntity entity) {
         if (world.isClient){
             return;
@@ -119,6 +125,7 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         if (this.isFuelBurning()){
             --this.burnTime;
             world.setBlockState(pos, state.with(OVEN_BURNING,true));
+            playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,0.2f);
         } else {
             world.setBlockState(pos, state.with(OVEN_BURNING,false));
         }
@@ -149,17 +156,13 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                 }
             }
             else {
-                if (this.burnTime != 0 && this.progress > 1){
-                    this.progress -= 2;
-                } else {
-                    this.resetProgress();
+                if (this.progress != 0){
+                    this.progress--;
                 }
             }
         } else {
-            if (this.burnTime != 0 && this.progress > 1){
-                this.progress -= 2;
-            } else {
-                this.resetProgress();
+            if (this.progress != 0){
+                this.progress--;
             }
             markDirty(world, pos, state);
         }

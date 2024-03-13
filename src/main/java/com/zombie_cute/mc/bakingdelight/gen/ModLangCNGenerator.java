@@ -4,9 +4,13 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
+import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlCategory;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.item.custom.*;
+import com.zombie_cute.mc.bakingdelight.item.custom.ButterItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.CuttleboneItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.TruffleItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import org.jetbrains.annotations.NotNull;
@@ -112,17 +116,21 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_HOE, "紫水晶锄");
 
         translationBuilder.add(ModBlocks.GLASS_BOWL, "玻璃碗");
+        translationBuilder.add(GlassBowlCategory.GLASS_BOWL_NAME, "搅拌");
         translationBuilder.add(ModBlocks.OVEN, "烤炉");
-        translationBuilder.add(OvenBlockEntity.OVEN_NAME, "烤炉");
+        translationBuilder.add(OvenBlockEntity.OVEN_NAME, "烘焙");
         translationBuilder.add(ModBlocks.FREEZER, "冰柜");
-        translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "冰柜");
+        translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "冷藏");
 
         translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "烘焙乐事");
 
-        translationBuilder.add("sounds.bakingdelight.butter_hit", "黄油：击中");
-        translationBuilder.add("sounds.bakingdelight.butter_shoot", "黄油：发射");
-        translationBuilder.add("sounds.bakingdelight.cherry_bomb_explosion", "樱桃：爆炸");
-        translationBuilder.add("sounds.bakingdelight.cherry_bomb_shoot", "樱桃：发射");
+        translationBuilder.add("sounds.bakingdelight.entity_butter_hit", "黄油：击中");
+        translationBuilder.add("sounds.bakingdelight.entity_butter_shoot", "黄油：发射");
+        translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_explosion", "樱桃：爆炸");
+        translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_shoot", "樱桃：发射");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_running", "冰箱：运行");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_open", "冰箱：打开");
+        translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "物品: 被搅拌");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "准备烘焙!");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "合成一把搅拌器来开始你新的厨房之旅");

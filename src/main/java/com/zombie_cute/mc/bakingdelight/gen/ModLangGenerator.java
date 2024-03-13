@@ -4,6 +4,7 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
+import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlCategory;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.item.custom.*;
@@ -17,7 +18,7 @@ public class ModLangGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        translationBuilder.add(WhiskItem.WHISK_TOOL_TIP_1, "A whisk that can be used to mix ingredients, or... stir the brains of monsters?");
+        translationBuilder.add(WhiskItem.WHISK_TOOL_TIP_1, "A whisk that can be used to mix ingredients, or... whisk the brains of monsters?");
         translationBuilder.add(CuttleboneItem.CUTTLEBONE_TOOL_TIP_1, "It can be dropped when a squid killed by an amethyst tool.");
         translationBuilder.add(TruffleItem.TRUFFLE_TOOL_TIP_1, "It can be found in podzol.");
         translationBuilder.add(WhiskItem.TOOL_TIP_0, "Press [SHIFT] to show more");
@@ -109,17 +110,21 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_HOE, "Amethyst Hoe");
 
         translationBuilder.add(ModBlocks.GLASS_BOWL, "Glass Bowl");
+        translationBuilder.add(GlassBowlCategory.GLASS_BOWL_NAME, "Whisk");
         translationBuilder.add(ModBlocks.OVEN, "Oven");
-        translationBuilder.add(OvenBlockEntity.OVEN_NAME, "Oven");
+        translationBuilder.add(OvenBlockEntity.OVEN_NAME, "Baking");
         translationBuilder.add(ModBlocks.FREEZER, "Freezer");
-        translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "Freezer");
+        translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "Refrigerate");
 
         translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "Baking Delight");
 
-        translationBuilder.add("sounds.bakingdelight.butter_hit", "Butter: Hit");
-        translationBuilder.add("sounds.bakingdelight.butter_shoot", "Butter: Shoot");
-        translationBuilder.add("sounds.bakingdelight.cherry_bomb_explosion", "Cherry: Explosion");
-        translationBuilder.add("sounds.bakingdelight.cherry_bomb_shoot", "Cherry: Shoot");
+        translationBuilder.add("sounds.bakingdelight.entity_butter_hit", "Butter: Hit");
+        translationBuilder.add("sounds.bakingdelight.entity_butter_shoot", "Butter: Shoot");
+        translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_explosion", "Cherry: Explosion");
+        translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_shoot", "Cherry: Shoot");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_running", "Freezer: Running");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_open", "Freezer: Open");
+        translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "Item: Whisked");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "Ready to Bake!");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "Craft a whisk to start your new kitchen journey.");
@@ -138,9 +143,9 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_GLASS_BOWL_TITLE, "Handle with Care");
         translationBuilder.add(ModAdvancementGenerator.GET_GLASS_BOWL_DESC, "Be careful not to break the bowl.");
         translationBuilder.add(ModAdvancementGenerator.GET_MASHED_POTATO_TITLE, "Powdery Taste");
-        translationBuilder.add(ModAdvancementGenerator.GET_MASHED_POTATO_DESC, "Put the potato in a glass bowl and stir with a whisk to obtain the mashed potato.");
+        translationBuilder.add(ModAdvancementGenerator.GET_MASHED_POTATO_DESC, "Put the potato in a glass bowl and whisk with a whisk to obtain the mashed potato.");
         translationBuilder.add(ModAdvancementGenerator.GET_POTATO_STARCH_TITLE, "Complete Powder");
-        translationBuilder.add(ModAdvancementGenerator.GET_POTATO_STARCH_DESC, "Put the mashed potato in a glass bowl and stir with a whisk to obtain the potato starch.");
+        translationBuilder.add(ModAdvancementGenerator.GET_POTATO_STARCH_DESC, "Put the mashed potato in a glass bowl and whisk with a whisk to obtain the potato starch.");
         translationBuilder.add(ModAdvancementGenerator.GET_FREEZER_TITLE, "Cool Down");
         translationBuilder.add(ModAdvancementGenerator.GET_FREEZER_DESC, "What a great freezer, it actually needs to \"burn\" ice.");
         translationBuilder.add(ModAdvancementGenerator.GET_BLUE_ICE_TITLE, "Optimal \"Fuel\"");
@@ -160,8 +165,8 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_ALL_MOUSSE_TITLE, "Fluffy!");
         translationBuilder.add(ModAdvancementGenerator.GET_ALL_MOUSSE_DESC, "Put the mousse (WIP) in the middle slot of the freezer, and put the corresponding ingredients on both sides, and you will get real mousse.");
         translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_TITLE, "Slimy Milk");
-        translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "Put the milk bucket in a glass bowl and stir with a whisk to obtain the cream bucket.");
+        translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "Put the milk bucket in a glass bowl and whisk with a whisk to obtain the cream bucket.");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_TITLE, "Sticky and Sweet");
-        translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "Put the cream in a glass bowl and stir with a whisk to obtain the butter.");
+        translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "Put the cream in a glass bowl and whisk with a whisk to obtain the butter.");
     }
 }

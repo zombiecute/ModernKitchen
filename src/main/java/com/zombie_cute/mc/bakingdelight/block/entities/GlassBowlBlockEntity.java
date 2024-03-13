@@ -3,6 +3,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.recipe.GlassBowlRecipe;
+import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -41,7 +42,7 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
         super(ModBlockEntities.GLASS_BOWL_ENTITY, pos, state);
     }
     public final DefaultedList<ItemStack> GLASS_BOWL_INV = DefaultedList.ofSize(2, ItemStack.EMPTY);
-    public void use(PlayerEntity player){
+    public void onUse(PlayerEntity player){
         Item offHandItem = player.getOffHandStack().getItem();
         Item mainHandItem = player.getMainHandStack().getItem();
         if (!GLASS_BOWL_INV.get(1).isEmpty()){
@@ -69,7 +70,7 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
                     }
                     craft(player);
                     GLASS_BOWL_INV.set(0, ItemStack.EMPTY);
-                    playSound(SoundEvents.BLOCK_ROOTED_DIRT_PLACE, 1.5F,1.5F);
+                    playSound(ModSounds.BLOCK_GLASS_BOWL_WHISKING, 1.5F,1.5F);
                 }
             } else {
                 ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
@@ -114,10 +115,6 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
         return match.isPresent();
     }
 
-    public void destroy(){
-        ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
-                GLASS_BOWL_INV.get(0));
-    }
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -146,7 +143,7 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
 
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return slot == 0;
+        return slot == 1;
     }
     public ItemStack getRendererStack(){
         return this.getStack(0);
