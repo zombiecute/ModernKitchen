@@ -1,6 +1,8 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
-import com.zombie_cute.mc.bakingdelight.recipe.OvenRecipe;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.item.ModItems;
+import com.zombie_cute.mc.bakingdelight.recipe.BakingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.OvenScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -146,6 +148,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                     this.craftItem(entity);
                     if (this.getStack(INPUT_SLOT_1).getItem() == Items.MILK_BUCKET){
                         this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 4));
+                    } else if (this.getStack(INPUT_SLOT_1).getItem() == ModItems.CREAM_BUCKET){
+                        this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 1));
                     } else {
                         this.removeStack(INPUT_SLOT_1,1);
                     }
@@ -175,7 +179,7 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
             return 0;
         }
         Item item = fuel.getItem();
-        return AbstractFurnaceBlockEntity.createFuelTimeMap().getOrDefault(item, 0) * 2;
+        return AbstractFurnaceBlockEntity.createFuelTimeMap().getOrDefault(item, 0);
     }
 
     private boolean isFuelBurning() {
@@ -191,8 +195,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<OvenRecipe> match = entity.getWorld().getRecipeManager()
-                .getFirstMatch(OvenRecipe.Type.INSTANCE, inventory,entity.getWorld());
+        Optional<BakingRecipe> match = entity.getWorld().getRecipeManager()
+                .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
@@ -211,8 +215,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<OvenRecipe> match = entity.getWorld().getRecipeManager()
-                .getFirstMatch(OvenRecipe.Type.INSTANCE, inventory,entity.getWorld());
+        Optional<BakingRecipe> match = entity.getWorld().getRecipeManager()
+                .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
         return match.isPresent() &&
                 canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&

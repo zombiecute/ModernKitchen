@@ -16,6 +16,8 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+
 public class GlassBowlBlockEntityRenderer implements BlockEntityRenderer<GlassBowlBlockEntity> {
     public GlassBowlBlockEntityRenderer(BlockEntityRendererFactory.Context context){
 
@@ -26,13 +28,13 @@ public class GlassBowlBlockEntityRenderer implements BlockEntityRenderer<GlassBo
     @Override
     public void render(GlassBowlBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-        ItemStack stack = entity.getRendererStack();
+        ItemStack stack1 = entity.getRendererStack();
+
         matrices.push();
         matrices.translate(0.5f, 0.15f,0.5f);
         matrices.scale(0.35f,0.35f,0.35f);
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(220));
-
-        itemRenderer.renderItem(stack, ModelTransformationMode.GUI, getLightLevel(entity.getWorld(),entity.getPos()), OverlayTexture.DEFAULT_UV, matrices, vertexConsumers,entity.getWorld(),1);
+        itemRenderer.renderItem(stack1, ModelTransformationMode.GUI, getLightLevel(Objects.requireNonNull(entity.getWorld()),entity.getPos()), OverlayTexture.DEFAULT_UV, matrices, vertexConsumers,entity.getWorld(),1);
         matrices.pop();
     }
     private int getLightLevel(World world, BlockPos pos){

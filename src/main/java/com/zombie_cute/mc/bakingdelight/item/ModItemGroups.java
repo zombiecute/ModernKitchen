@@ -14,9 +14,9 @@ public class ModItemGroups {
     public static final String GROUPS_TAB_NAME = "itemgroup.bakingdelight";
     public static final ItemGroup ITEM_GROUP = Registry.register(
             Registries.ITEM_GROUP,
-            new Identifier(Bakingdelight.MOD_ID,"flour_paste"),
+            new Identifier(Bakingdelight.MOD_ID,"bakingdelight_itemgroup"),
             FabricItemGroup.builder().displayName(Text.translatable(GROUPS_TAB_NAME))
-                    .icon(()->new ItemStack(ModItems.IRON_WHISK))
+                    .icon(()->new ItemStack(ModBlocks.GLASS_BOWL))
                     .entries((displayContext, entries) -> {
                         // Whisks
                         entries.add(ModItems.WOODEN_WHISK);
@@ -36,6 +36,13 @@ public class ModItemGroups {
                         // Knifes
                         entries.add(ModItems.AMETHYST_KNIFE);
                         entries.add(ModItems.COPPER_KNIFE);
+                        // Other Tools
+                        entries.add(ModItems.KNEADING_STICK);
+                        // Place Able Ingredients
+                        entries.add(ModBlocks.WHEAT_DOUGH);
+                        entries.add(ModBlocks.PIZZA_WIP);
+                        entries.add(ModBlocks.RAW_PIZZA);
+                        entries.add(ModBlocks.PIZZA);
                         // Craft Station
                         entries.add(ModBlocks.GLASS_BOWL);
                         entries.add(ModBlocks.OVEN);
@@ -50,6 +57,7 @@ public class ModItemGroups {
                         entries.add(ModItems.BLACK_PEPPER_DUST);
                         // Starch
                         entries.add(ModItems.POTATO_STARCH);
+                        entries.add(ModItems.WHEAT_FLOUR);
                         entries.add(ModItems.MIXED_DOUGH);
                         // Potato
                         entries.add(ModItems.MASHED_POTATO);
@@ -65,6 +73,7 @@ public class ModItemGroups {
                         entries.add(ModItems.TRUFFLE_EGG_TART);
                         entries.add(ModItems.BRAISED_SHRIMP_BALL);
                         entries.add(ModItems.SUNFLOWER_SEED);
+                        entries.add(ModItems.SUNFLOWER_SEED_PEEL);
                         // Puddings
                         entries.add(ModItems.PUDDING_WIP_1);
                         entries.add(ModItems.PUDDING_WIP_2);
@@ -102,6 +111,7 @@ public class ModItemGroups {
                         entries.add(ModItems.GLOW_CUTTLEBONE);
                         // Sausages
                         entries.add(ModItems.SAUSAGE);
+                        entries.add(ModItems.SECTIONED_SAUSAGE);
                         entries.add(ModItems.GRILLED_SAUSAGE);
                         entries.add(ModItems.STARCH_SAUSAGE);
                         entries.add(ModItems.GRILLED_STARCH_SAUSAGE);

@@ -7,17 +7,21 @@ import net.minecraft.util.Identifier;
 
 public class ModRecipes {
     public static void registerRecipes() {
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, OvenRecipe.Serializer.ID),
-                OvenRecipe.Serializer.INSTANCE);
-        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, OvenRecipe.Type.ID),
-                OvenRecipe.Type.INSTANCE);
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, GlassBowlRecipe.Serializer.ID),
-                GlassBowlRecipe.Serializer.INSTANCE);
-        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, GlassBowlRecipe.Type.ID),
-                GlassBowlRecipe.Type.INSTANCE);
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, FreezerRecipe.Serializer.ID),
-                FreezerRecipe.Serializer.INSTANCE);
-        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, FreezerRecipe.Type.ID),
-                FreezerRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, BakingRecipe.Serializer.ID),
+                BakingRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, BakingRecipe.Type.ID),
+                BakingRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, WhiskingRecipe.Serializer.ID),
+                WhiskingRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, WhiskingRecipe.Type.ID),
+                WhiskingRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, FreezingRecipe.Serializer.ID),
+                FreezingRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, FreezingRecipe.Type.ID),
+                FreezingRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, MixWithWaterRecipe.Serializer.ID),
+                MixWithWaterRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, MixWithWaterRecipe.Type.ID),
+                MixWithWaterRecipe.Type.INSTANCE);
     }
 }

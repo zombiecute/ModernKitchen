@@ -38,6 +38,12 @@
       "bakingdelight:freezer_open"
     ]
   },
+  "block_freezer_close": {
+    "subtitle": "sounds.bakingdelight.block_freezer_close",
+    "sounds": [
+      "bakingdelight:freezer_close"
+    ]
+  },
   "block_glass_bowl_whisking": {
     "subtitle": "sounds.bakingdelight.block_glass_bowl_whisking",
     "sounds": [

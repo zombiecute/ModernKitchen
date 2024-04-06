@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "bakingdelight:black_pepper_corn"
+      "tag": "c:crops/black_peppers"
     }
   ],
   "result": {

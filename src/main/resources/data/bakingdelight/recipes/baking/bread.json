@@ -2,16 +2,16 @@
   "type": "bakingdelight:oven_baking",
   "ingredients": [
     {
-      "item": "farmersdelight:wheat_dough"
+      "tag": "c:foods/doughs"
     },
     {
-      "item": "farmersdelight:wheat_dough"
+      "tag": "c:foods/doughs"
     },
     {
-      "item": "farmersdelight:wheat_dough"
+      "tag": "c:foods/doughs"
     },
     {
-      "item": "farmersdelight:wheat_dough"
+      "tag": "c:foods/doughs"
     }
   ],
   "output": {

@@ -6,7 +6,7 @@
       "item": "bakingdelight:potato_starch"
     },
     {
-      "item": "farmersdelight:wheat_dough"
+      "tag": "c:foods/doughs/wheat"
     }
   ],
   "result": {

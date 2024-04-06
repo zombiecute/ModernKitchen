@@ -13,6 +13,7 @@ public class ModSounds {
     public static final SoundEvent ENTITY_CHERRY_BOMB_SHOOT = registerSound("entity_cherry_bomb_shoot");
     public static final SoundEvent BLOCK_FREEZER_RUNNING = registerSound("block_freezer_running");
     public static final SoundEvent BLOCK_FREEZER_OPEN = registerSound("block_freezer_open");
+    public static final SoundEvent BLOCK_FREEZER_CLOSE = registerSound("block_freezer_close");
     public static final SoundEvent BLOCK_GLASS_BOWL_WHISKING = registerSound("block_glass_bowl_whisking");
     public static SoundEvent registerSound(String name){
         Identifier id = new Identifier(Bakingdelight.MOD_ID, name);

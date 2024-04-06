@@ -1,8 +1,11 @@
 package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,23 +24,22 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.*;
 import net.minecraft.world.tick.OrderedTick;
 import org.jetbrains.annotations.Nullable;
 
 public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     public static final BooleanProperty HAS_ITEM = BooleanProperty.of("has_item");
+    public static final BooleanProperty HAS_WATER = BooleanProperty.of("has_water");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public GlassBowlBlock(Settings settings) {
         super(settings);
-        setDefaultState(this.getStateManager().getDefaultState().with(HAS_ITEM, false).with(WATERLOGGED,false));
+        setDefaultState(this.getStateManager().getDefaultState()
+                .with(HAS_ITEM, false).with(WATERLOGGED,false).with(HAS_WATER, false));
     }
     @Override
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(HAS_ITEM, WATERLOGGED);
+        builder.add(HAS_ITEM, WATERLOGGED, HAS_WATER);
     }
     private static final VoxelShape SHAPED = Block.createCuboidShape(3,0,3,13,5,13);
     @Override
@@ -62,12 +64,7 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.getBlockEntity(pos) instanceof GlassBowlBlockEntity container){
-            container.onUse(player);
-            if (container.GLASS_BOWL_INV.get(1).isEmpty()){
-                world.setBlockState(pos, state.with(HAS_ITEM, false));
-            } else {
-                world.setBlockState(pos, state.with(HAS_ITEM, true));
-            }
+            container.onUse(player, state, world);
             return ActionResult.SUCCESS;
         }
         return ActionResult.SUCCESS;
@@ -114,5 +111,15 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
             destroyGlassBowl(world, pos);
        }
         super.onLandedUpon(world, state, pos, entity, fallDistance);
+    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, ModBlockEntities.GLASS_BOWL_ENTITY,
+                (world1, pos, state1, blockEntity) -> blockEntity.tick(world1, pos, state1));
+    }
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return !world.getBlockState(pos.down()).isAir();
     }
 }

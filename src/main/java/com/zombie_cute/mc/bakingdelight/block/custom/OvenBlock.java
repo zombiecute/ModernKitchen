@@ -1,6 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.block.custom;
 
-import com.zombie_cute.mc.bakingdelight.block.entities.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

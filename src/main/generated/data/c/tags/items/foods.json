@@ -1,0 +1,63 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:foods/breads",
+      "required": false
+    },
+    {
+      "id": "#c:foods/truffles",
+      "required": false
+    },
+    {
+      "id": "#c:foods/puddings",
+      "required": false
+    },
+    {
+      "id": "#c:foods/flours",
+      "required": false
+    },
+    {
+      "id": "#c:foods/doughs",
+      "required": false
+    },
+    {
+      "id": "#c:foods/creams",
+      "required": false
+    },
+    {
+      "id": "#c:foods/mousses",
+      "required": false
+    },
+    {
+      "id": "#c:foods/raw_fishes",
+      "required": false
+    },
+    {
+      "id": "#c:foods/cuttlebones",
+      "required": false
+    },
+    {
+      "id": "#c:foods/pizza_ingredients",
+      "required": false
+    },
+    {
+      "id": "#c:foods/pumpkins",
+      "required": false
+    },
+    "bakingdelight:black_pepper_corn",
+    "bakingdelight:black_pepper_corn",
+    "bakingdelight:sunflower_seed",
+    "bakingdelight:mashed_potato",
+    "bakingdelight:sauce_mashed_potato",
+    "bakingdelight:apple_petal",
+    "bakingdelight:cherry",
+    "bakingdelight:cheese",
+    "bakingdelight:egg_tart",
+    "bakingdelight:truffle_egg_tart",
+    "bakingdelight:braised_shrimp_ball",
+    "bakingdelight:pizza",
+    "bakingdelight:raw_pizza",
+    "bakingdelight:pizza_wip"
+  ]
+}

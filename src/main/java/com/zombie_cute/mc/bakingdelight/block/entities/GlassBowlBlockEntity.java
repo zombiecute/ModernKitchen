@@ -1,8 +1,10 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Lists;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.recipe.GlassBowlRecipe;
+import com.zombie_cute.mc.bakingdelight.recipe.WhiskingRecipe;
+import com.zombie_cute.mc.bakingdelight.recipe.MixWithWaterRecipe;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.minecraft.block.BlockState;
@@ -10,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,97 +25,173 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
-    public static final String WHISK_FAIL = "glass_bowl_message.whisk_fail";
+import static com.zombie_cute.mc.bakingdelight.block.custom.GlassBowlBlock.*;
+
+public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInventory{
+    public static final String WHISK_FAIL = "bakingdelight.glass_bowl_message.whisk_fail";
+    public static final String NEED_BOWL = "bakingdelight.glass_bowl_message.need_bowl";
     public GlassBowlBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.GLASS_BOWL_ENTITY, pos, state);
     }
     public final DefaultedList<ItemStack> GLASS_BOWL_INV = DefaultedList.ofSize(2, ItemStack.EMPTY);
-    public void onUse(PlayerEntity player){
+    public void onUse(@NotNull PlayerEntity player, BlockState state, World world){
         Item offHandItem = player.getOffHandStack().getItem();
         Item mainHandItem = player.getMainHandStack().getItem();
-        if (!GLASS_BOWL_INV.get(1).isEmpty()){
-            ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
-                GLASS_BOWL_INV.get(1));
-            GLASS_BOWL_INV.set(1, ItemStack.EMPTY);
-            playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.8F,0.8F);
-        }
-        if(GLASS_BOWL_INV.get(0).isEmpty()){
+        // 检测是否有水
+        if (world.getBlockState(pos).get(HAS_WATER)) {
+            SimpleInventory inventory = new SimpleInventory(this.size());
+            boolean isMainHand;
             if (offHandItem == Items.AIR){
-                GLASS_BOWL_INV.set(0, player.getMainHandStack().split(1));
-                if (mainHandItem != Items.AIR){
-                    playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.4F,1.4F);
-                }
+                inventory.setStack(0, mainHandItem.getDefaultStack());
+                isMainHand = true;
             } else {
-                GLASS_BOWL_INV.set(0, player.getOffHandStack().split(1));
-                playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.4F,1.4F);
+                inventory.setStack(0, offHandItem.getDefaultStack());
+                isMainHand = false;
+            }
+            // 混合处理
+            Optional<MixWithWaterRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+                    .getFirstMatch(MixWithWaterRecipe.Type.INSTANCE, inventory,this.getWorld());
+            if (match.isPresent()){
+                ItemScatterer.spawn(this.getWorld(),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
+                        new ItemStack(match.get().getOutput(null).getItem(),1));
+                if (isMainHand){
+                    player.getMainHandStack().split(1);
+                } else {
+                    player.getOffHandStack().split(1);
+                }
+                world.setBlockState(pos,state.with(HAS_WATER, false));
+                playSound(SoundEvents.ITEM_BUCKET_FILL,1.0f);
+            } else if (mainHandItem == Items.GLASS_BOTTLE){
+                player.getMainHandStack().split(1);
+                player.giveItemStack(Items.POTION.getDefaultStack());
+                world.setBlockState(pos,state.with(HAS_WATER, false));
+                playSound(SoundEvents.ITEM_BUCKET_FILL,1.0f);
+            } else
+            if (mainHandItem == Items.BUCKET) {
+                player.getMainHandStack().split(1);
+                player.giveItemStack(Items.WATER_BUCKET.getDefaultStack());
+                world.setBlockState(pos,state.with(HAS_WATER, false));
+                playSound(SoundEvents.ITEM_BUCKET_FILL,1.0f);
             }
         } else {
-            if (isWhisk(mainHandItem)) {
-                if (hasRecipe()){
-                    if (GLASS_BOWL_INV.get(0).getItem() == ModItems.CREAM){
-                        ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
-                                Items.BOWL.getDefaultStack());
+            // 取出成品
+            if (!GLASS_BOWL_INV.get(1).isEmpty()){
+                if (GLASS_BOWL_INV.get(1).getItem() == ModItems.MASHED_POTATO){
+                    if (mainHandItem == Items.BOWL){
+                        player.getMainHandStack().split(1);
+                        getResultItem(world,state,player,false);
+                    } else {
+                        player.sendMessage(Text.translatable(NEED_BOWL),true);
                     }
-                    craft(player);
-                    GLASS_BOWL_INV.set(0, ItemStack.EMPTY);
-                    playSound(ModSounds.BLOCK_GLASS_BOWL_WHISKING, 1.5F,1.5F);
+                } else {
+                    getResultItem(world,state,player,true);
                 }
             } else {
-                ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
-                        GLASS_BOWL_INV.get(0));
-                GLASS_BOWL_INV.set(0, ItemStack.EMPTY);
-                playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.8F,0.8F);
+                // 没有东西时，往碗里面装水
+                if (GLASS_BOWL_INV.get(0).isEmpty() &&
+                        !world.getBlockState(pos).get(HAS_ITEM) &&
+                        mainHandItem == Items.POTION){
+                    player.getMainHandStack().split(1);
+                    player.setStackInHand(player.getActiveHand(),Items.GLASS_BOTTLE.getDefaultStack());
+                    world.setBlockState(pos,state.with(HAS_WATER, true));
+                    playSound(SoundEvents.ITEM_BUCKET_EMPTY,1.0f);
+                } else if (GLASS_BOWL_INV.get(0).isEmpty() &&
+                        !world.getBlockState(pos).get(HAS_ITEM) &&
+                        mainHandItem == Items.WATER_BUCKET) {
+                    player.getMainHandStack().split(1);
+                    player.setStackInHand(player.getActiveHand(),Items.BUCKET.getDefaultStack());
+                    world.setBlockState(pos,state.with(HAS_WATER, true));
+                    playSound(SoundEvents.ITEM_BUCKET_EMPTY,1.0f);
+                } else {
+                    // 存入物品
+                    if(GLASS_BOWL_INV.get(0).isEmpty()){
+                        if (offHandItem == Items.AIR){
+                            GLASS_BOWL_INV.set(0, player.getMainHandStack().split(1));
+                            if (mainHandItem != Items.AIR){
+                                playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.4F);
+                            }
+                        } else {
+                            GLASS_BOWL_INV.set(0, player.getOffHandStack().split(1));
+                            playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.4F);
+                        }
+                    } else {
+                        // 判断搅拌器
+                        if (isWhisk(mainHandItem)) {
+                            if (hasRecipe()){
+                                // 生成空碗
+                                if (GLASS_BOWL_INV.get(0).getItem() == ModItems.CREAM ||
+                                GLASS_BOWL_INV.get(0).getItem() == ModItems.MASHED_POTATO){
+                                    ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
+                                            Items.BOWL.getDefaultStack());
+                                }
+                                craft();
+                                player.getMainHandStack().damage(1, (LivingEntity) player, playerEntity -> playerEntity.sendToolBreakStatus(Hand.MAIN_HAND));
+                                GLASS_BOWL_INV.set(0, ItemStack.EMPTY);
+                                playSound(ModSounds.BLOCK_GLASS_BOWL_WHISKING, 1.5F);
+                                world.setBlockState(pos,state.with(HAS_ITEM,true));
+                            }
+                        }
+                        spawnItem(0);
+                    }
+                }
             }
         }
         markDirty();
     }
-    public void playSound(SoundEvent sound, float volume, float pitch) {
-        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
-    }
-    private static List<Item> Whisk(){
-        ArrayList<Item> list = Lists.newArrayList();
-        GlassBowlBlockEntity.addWhisk(list);
-        return list;
-    }
-    private static void addWhisk(ArrayList<Item> map) {
-        for (RegistryEntry<Item> registryEntry : Registries.ITEM.iterateEntries(ModTagKeys.WHISKS)) {
-            map.add(registryEntry.value());
+    private void getResultItem(World world, BlockState state, PlayerEntity player, boolean spawn){
+        if (spawn){
+            spawnItem(1);
+        } else {
+            player.giveItemStack(GLASS_BOWL_INV.get(1));
+            GLASS_BOWL_INV.set(1, ItemStack.EMPTY);
+            playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.8F);
         }
+        world.setBlockState(pos,state.with(HAS_ITEM,false));
     }
-    private boolean isWhisk(Item item) {
+    private void spawnItem(int slot){
+        ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
+                GLASS_BOWL_INV.get(slot));
+        GLASS_BOWL_INV.set(slot, ItemStack.EMPTY);
+        playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.8F);
+    }
+    public void playSound(SoundEvent sound, float volume) {
+        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, world.random.nextFloat()+0.1f);
+    }
+    private boolean isWhisk(@NotNull Item item) {
         ItemStack stack = item.getDefaultStack();
-        return GlassBowlBlockEntity.Whisk().contains(stack.getItem());
+        ArrayList<Item> list = Lists.newArrayList();
+        for (RegistryEntry<Item> registryEntry : Registries.ITEM.iterateEntries(ModTagKeys.WHISKS)) {
+            list.add(registryEntry.value());
+        }
+        return list.contains(stack.getItem());
     }
-
-    private void craft(PlayerEntity player){
+    private void craft(){
         SimpleInventory inventory = new SimpleInventory(this.size());
         inventory.setStack(0,this.getStack(0));
-        Optional<GlassBowlRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()
-                .getFirstMatch(GlassBowlRecipe.Type.INSTANCE, inventory,this.getWorld());
+        Optional<WhiskingRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+                .getFirstMatch(WhiskingRecipe.Type.INSTANCE, inventory,this.getWorld());
         this.setStack(1, new ItemStack(match.get().getOutput(null).getItem(),1));
-        player.getMainHandStack().damage(1, (LivingEntity) player, playerEntity -> playerEntity.sendToolBreakStatus(Hand.MAIN_HAND));
     }
     private boolean hasRecipe() {
         SimpleInventory inventory = new SimpleInventory(this.size());
         inventory.setStack(0,this.getStack(0));
-        Optional<GlassBowlRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()
-                .getFirstMatch(GlassBowlRecipe.Type.INSTANCE, inventory,this.getWorld());
+        Optional<WhiskingRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+                .getFirstMatch(WhiskingRecipe.Type.INSTANCE, inventory,this.getWorld());
         return match.isPresent();
     }
-
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -130,28 +207,15 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     public DefaultedList<ItemStack> getItems() {
         return GLASS_BOWL_INV;
     }
-
-    @Override
-    public int[] getAvailableSlots(Direction side) {
-        return new int[1];
-    }
-
-    @Override
-    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return slot == 0;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return slot == 1;
-    }
     public ItemStack getRendererStack(){
         return this.getStack(0);
     }
 
     @Override
     public void markDirty() {
-        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        if (world != null) {
+            world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        }
         super.markDirty();
     }
 
@@ -164,5 +228,26 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
+    }
+
+    public void tick(World world, BlockPos pos, BlockState state) {
+        if (state.get(WATERLOGGED)){
+            world.setBlockState(pos,state.with(HAS_WATER,true));
+            if (!GLASS_BOWL_INV.get(0).isEmpty()){
+                spawnItem(0);
+                markDirty();
+            }
+            if (!GLASS_BOWL_INV.get(1).isEmpty()){
+                spawnItem(1);
+                markDirty();
+            }
+        }
+        if (state.get(HAS_WATER)){
+            if (!GLASS_BOWL_INV.get(1).isEmpty()){
+                spawnItem(1);
+                markDirty();
+            }
+            world.setBlockState(pos, state.with(HAS_ITEM,false));
+        }
     }
 }

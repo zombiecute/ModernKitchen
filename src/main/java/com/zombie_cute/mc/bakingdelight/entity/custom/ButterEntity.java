@@ -73,9 +73,9 @@ public class ButterEntity extends ThrownItemEntity {
                 int i2 = slowness.mapDuration(i -> (int) (e * (double) i + 0.5));
                 int i3 = mining_fatigue.mapDuration(i -> (int) (e * (double) i + 0.5));
                 int i4 = weakness.mapDuration(i -> (int) (e * (double) i + 0.5));
-                StatusEffectInstance Slowness = new StatusEffectInstance(SLOWNESS, i2, slowness.getAmplifier(), slowness.isAmbient(), slowness.shouldShowParticles());
-                StatusEffectInstance MiningFatigue = new StatusEffectInstance(MINING_FATIGUE, i3, slowness.getAmplifier(), slowness.isAmbient(), slowness.shouldShowParticles());
-                StatusEffectInstance Weakness = new StatusEffectInstance(WEAKNESS, i4, slowness.getAmplifier(), slowness.isAmbient(), slowness.shouldShowParticles());
+                StatusEffectInstance Slowness = new StatusEffectInstance(SLOWNESS, i2, slowness.getAmplifier(), slowness.isAmbient(), false);
+                StatusEffectInstance MiningFatigue = new StatusEffectInstance(MINING_FATIGUE, i3, mining_fatigue.getAmplifier(), mining_fatigue.isAmbient(), false);
+                StatusEffectInstance Weakness = new StatusEffectInstance(WEAKNESS, i4, weakness.getAmplifier(), weakness.isAmbient(), false);
                 if (Slowness.isDurationBelow(20)||
                         MiningFatigue.isDurationBelow(20)||
                         Weakness.isDurationBelow(20)) continue;

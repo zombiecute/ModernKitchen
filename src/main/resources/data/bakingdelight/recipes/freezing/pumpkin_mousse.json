@@ -2,13 +2,13 @@
   "type": "bakingdelight:freezing",
   "ingredients": [
     {
-      "item": "farmersdelight:pumpkin_slice"
+      "tag": "c:foods/pumpkins"
     },
     {
       "item": "bakingdelight:mousse_wip"
     },
     {
-      "item": "farmersdelight:pumpkin_slice"
+      "tag": "c:foods/pumpkins"
     }
   ],
   "output": {

@@ -4,7 +4,10 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
-import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlCategory;
+import com.zombie_cute.mc.bakingdelight.block.entities.PizzaWIPBlockEntity;
+import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlWhiskingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.item.custom.ButterItem;
@@ -29,8 +32,10 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(WhiskItem.TOOL_TIP_0, "按住 [SHIFT] 以显示更多");
         translationBuilder.add(ButterItem.BUTTER_TOOL_TIP_0, "黏糊糊的质感...或许除了做食物以外另有其用");
 
-
         translationBuilder.add(GlassBowlBlockEntity.WHISK_FAIL, "这东西似乎不是搅拌器能处理的");
+        translationBuilder.add(GlassBowlBlockEntity.NEED_BOWL, "你需要一个碗来盛出这些东西");
+        translationBuilder.add(PizzaWIPBlockEntity.NEED_INGREDIENT, "你需要在这里放一个适当的食材");
+        translationBuilder.add(PizzaWIPBlockEntity.NEED_CHEESE, "你需要在这里放一个奶酪");
 
         translationBuilder.add(ModItems.WOODEN_WHISK, "木搅拌器");
         translationBuilder.add(ModItems.STONE_WHISK, "石搅拌器");
@@ -43,18 +48,22 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
 
         translationBuilder.add(ModItems.COPPER_KNIFE, "铜刀");
         translationBuilder.add(ModItems.AMETHYST_KNIFE, "紫水晶刀");
+        translationBuilder.add(ModItems.KNEADING_STICK, "擀面杖");
 
         translationBuilder.add(ModItems.EGG_TART, "蛋挞");
         translationBuilder.add(ModItems.APPLE_PUDDING, "苹果布丁");
         translationBuilder.add(ModItems.BRAISED_SHRIMP_BALL, "红烧虾球");
         translationBuilder.add(ModItems.MATCHA_PUDDING, "抹茶补丁");
         translationBuilder.add(ModItems.SUNFLOWER_SEED, "葵花籽");
+        translationBuilder.add(ModItems.SUNFLOWER_SEED_PEEL, "葵花籽皮");
         translationBuilder.add(ModItems.TRUFFLE_EGG_TART, "松露蛋挞");
         translationBuilder.add(ModItems.PUDDING_WIP_1, "布丁（半成品）");
         translationBuilder.add(ModItems.PUDDING_WIP_2, "布丁（半成品）");
 
         translationBuilder.add(ModItems.POTATO_STARCH, "马铃薯淀粉");
         translationBuilder.add(ModItems.MIXED_DOUGH, "混合面团");
+        translationBuilder.add(ModItems.WHEAT_FLOUR, "小麦粉");
+        translationBuilder.add(ModBlocks.WHEAT_DOUGH, "小麦面团");
 
         translationBuilder.add(ModItems.BLACK_PEPPER_CORN, "黑胡椒粒");
         translationBuilder.add(ModItems.BLACK_PEPPER_DUST, "黑胡椒粉");
@@ -100,6 +109,7 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.GLOW_CUTTLEBONE, "发光鱿鱼骨");
 
         translationBuilder.add(ModItems.SAUSAGE, "香肠");
+        translationBuilder.add(ModItems.SECTIONED_SAUSAGE, "切片香肠");
         translationBuilder.add(ModItems.GRILLED_SAUSAGE, "烤香肠");
         translationBuilder.add(ModItems.STARCH_SAUSAGE, "淀粉肠");
         translationBuilder.add(ModItems.GRILLED_STARCH_SAUSAGE, "烤淀粉肠");
@@ -115,12 +125,23 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_SHOVEL, "紫水晶锹");
         translationBuilder.add(ModItems.AMETHYST_HOE, "紫水晶锄");
 
+        translationBuilder.add(ModEntities.BUTTER,"黄油");
+        translationBuilder.add(ModEntities.CHERRY_BOMB,"樱桃");
+
+        translationBuilder.add(ModBlocks.PIZZA, "披萨");
+        translationBuilder.add(ModBlocks.RAW_PIZZA, "生披萨");
+        translationBuilder.add(ModBlocks.PIZZA_WIP, "披萨（半成品）");
+
+
         translationBuilder.add(ModBlocks.GLASS_BOWL, "玻璃碗");
-        translationBuilder.add(GlassBowlCategory.GLASS_BOWL_NAME, "搅拌");
+        translationBuilder.add(GlassBowlWhiskingCategory.GLASS_BOWL_NAME, "搅拌");
+        translationBuilder.add("display_name.bakingdelight.water_glass_bowl_name","与水混合");
         translationBuilder.add(ModBlocks.OVEN, "烤炉");
         translationBuilder.add(OvenBlockEntity.OVEN_NAME, "烘焙");
         translationBuilder.add(ModBlocks.FREEZER, "冰柜");
         translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "冷藏");
+        translationBuilder.add(PizzaMakingCategory.PIZZA_TITLE, "制作披萨");
+
 
         translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "烘焙乐事");
 
@@ -130,6 +151,7 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_shoot", "樱桃：发射");
         translationBuilder.add("sounds.bakingdelight.block_freezer_running", "冰箱：运行");
         translationBuilder.add("sounds.bakingdelight.block_freezer_open", "冰箱：打开");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_close", "冰箱：关闭");
         translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "物品: 被搅拌");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "准备烘焙!");
@@ -174,6 +196,20 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "将奶桶放入玻璃碗，再用搅拌器搅拌即可获得奶油桶");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_TITLE, "甜而粘口");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "将奶油放入玻璃碗，再用搅拌器搅拌即可获得黄油");
-
+        translationBuilder.add("advancement.bakingdelight.get_start_desc", "准备烘焙！");
+        translationBuilder.add("advancement.bakingdelight.get_kneading_stick.title", "李奶奶的擀面杖");
+        translationBuilder.add("advancement.bakingdelight.get_kneading_stick.desc", "其实只是一根普通的木头棒子罢");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_flour.title", "做更好的面包");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_flour.desc", "搅拌小麦以获得小麦粉");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_dough.title", "一大坨");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_dough.desc", "将水倒入玻璃碗中，加入小麦粉，揉成面团！你可以用揉面棒将它擀平，也可以去烤面包");
+        translationBuilder.add("advancement.bakingdelight.get_raw_pizza.title", "准备开业！");
+        translationBuilder.add("advancement.bakingdelight.get_raw_pizza.desc", "首先，在擀平的面团中加入奶酪，然后加入5种你喜欢的食材，最后加入一个奶酪");
+        translationBuilder.add("advancement.bakingdelight.get_pizza.title", "披萨！");
+        translationBuilder.add("advancement.bakingdelight.get_pizza.desc", "按照黑胡椒粉、糖、黑胡椒粉、生披萨的顺序放入烤炉");
+        translationBuilder.add("advancement.bakingdelight.get_black_pepper.title", "箱底之下");
+        translationBuilder.add("advancement.bakingdelight.get_black_pepper.desc", "在村民家中或遗迹中发现新作物");
+        translationBuilder.add("advancement.bakingdelight.get_cheese.title", "一点都不酸");
+        translationBuilder.add("advancement.bakingdelight.get_cheese.desc", "将奶放入烤炉中去煮");
     }
 }

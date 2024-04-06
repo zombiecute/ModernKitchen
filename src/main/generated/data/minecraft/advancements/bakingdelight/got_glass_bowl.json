@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:bakingdelight/root",
+  "parent": "minecraft:bakingdelight/got_whisk",
   "criteria": {
     "glass_bowl": {
       "conditions": {

@@ -6,10 +6,10 @@
       "item": "bakingdelight:cream"
     },
     {
-      "item": "farmersdelight:pumpkin_slice"
+      "tag": "c:foods/pumpkins"
     },
     {
-      "item": "farmersdelight:pumpkin_slice"
+      "tag": "c:foods/pumpkins"
     }
   ],
   "result": {

@@ -4,10 +4,16 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
-import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlCategory;
+import com.zombie_cute.mc.bakingdelight.block.entities.PizzaWIPBlockEntity;
+import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlWhiskingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.item.custom.*;
+import com.zombie_cute.mc.bakingdelight.item.custom.ButterItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.CuttleboneItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.TruffleItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -25,6 +31,9 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ButterItem.BUTTER_TOOL_TIP_0, "Sticky texture...Maybe it's used for something other than food");
 
         translationBuilder.add(GlassBowlBlockEntity.WHISK_FAIL, "This thing doesn't seem to be able to be handled by the whisk.");
+        translationBuilder.add(GlassBowlBlockEntity.NEED_BOWL, "You need a bowl to take out this item.");
+        translationBuilder.add(PizzaWIPBlockEntity.NEED_INGREDIENT, "You need to put a proper ingredient here.");
+        translationBuilder.add(PizzaWIPBlockEntity.NEED_CHEESE, "You need to put a cheese here.");
 
         translationBuilder.add(ModItems.WOODEN_WHISK, "Wooden Whisk");
         translationBuilder.add(ModItems.STONE_WHISK, "Stone Whisk");
@@ -38,17 +47,22 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.COPPER_KNIFE, "Copper Knife");
         translationBuilder.add(ModItems.AMETHYST_KNIFE, "Amethyst Knife");
 
+        translationBuilder.add(ModItems.KNEADING_STICK, "Kneading Stick");
+
         translationBuilder.add(ModItems.EGG_TART, "Egg Tart");
         translationBuilder.add(ModItems.APPLE_PUDDING, "Apple Pudding");
         translationBuilder.add(ModItems.BRAISED_SHRIMP_BALL, "Braised Shrimp Ball");
         translationBuilder.add(ModItems.MATCHA_PUDDING, "Matcha Pudding");
         translationBuilder.add(ModItems.SUNFLOWER_SEED, "Sunflower Seed");
+        translationBuilder.add(ModItems.SUNFLOWER_SEED_PEEL, "Sunflower Seed Peel");
         translationBuilder.add(ModItems.TRUFFLE_EGG_TART, "Truffle Egg Tart");
         translationBuilder.add(ModItems.PUDDING_WIP_1, "Pudding (Work In Progress)");
         translationBuilder.add(ModItems.PUDDING_WIP_2, "Pudding (Work In Progress)");
 
         translationBuilder.add(ModItems.POTATO_STARCH, "Potato Starch");
         translationBuilder.add(ModItems.MIXED_DOUGH, "Mixed Dough");
+        translationBuilder.add(ModItems.WHEAT_FLOUR, "Wheat Flour");
+        translationBuilder.add(ModBlocks.WHEAT_DOUGH, "Wheat Dough");
 
         translationBuilder.add(ModItems.BLACK_PEPPER_CORN, "Black Pepper Corn");
         translationBuilder.add(ModItems.BLACK_PEPPER_DUST, "Black Pepper Dust");
@@ -94,6 +108,7 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.GLOW_CUTTLEBONE, "Glow Cuttlebone");
 
         translationBuilder.add(ModItems.SAUSAGE, "Sausage");
+        translationBuilder.add(ModItems.SECTIONED_SAUSAGE, "Sectioned Sausage");
         translationBuilder.add(ModItems.GRILLED_SAUSAGE, "Grilled Sausage");
         translationBuilder.add(ModItems.STARCH_SAUSAGE, "Starch Sausage");
         translationBuilder.add(ModItems.GRILLED_STARCH_SAUSAGE, "Grilled Starch Sausage");
@@ -109,12 +124,21 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_SHOVEL, "Amethyst Shovel");
         translationBuilder.add(ModItems.AMETHYST_HOE, "Amethyst Hoe");
 
+        translationBuilder.add(ModEntities.BUTTER,"Butter");
+        translationBuilder.add(ModEntities.CHERRY_BOMB,"Cherry");
+
+        translationBuilder.add(ModBlocks.PIZZA, "Pizza");
+        translationBuilder.add(ModBlocks.RAW_PIZZA, "Raw Pizza");
+        translationBuilder.add(ModBlocks.PIZZA_WIP, "Pizza (Work In Progress)");
+
         translationBuilder.add(ModBlocks.GLASS_BOWL, "Glass Bowl");
-        translationBuilder.add(GlassBowlCategory.GLASS_BOWL_NAME, "Whisk");
+        translationBuilder.add(GlassBowlWhiskingCategory.GLASS_BOWL_NAME, "Whisk");
+        translationBuilder.add("display_name.bakingdelight.water_glass_bowl_name","Mix with Water");
         translationBuilder.add(ModBlocks.OVEN, "Oven");
         translationBuilder.add(OvenBlockEntity.OVEN_NAME, "Baking");
         translationBuilder.add(ModBlocks.FREEZER, "Freezer");
         translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "Refrigerate");
+        translationBuilder.add(PizzaMakingCategory.PIZZA_TITLE, "Pizza Making");
 
         translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "Baking Delight");
 
@@ -124,6 +148,7 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.entity_cherry_bomb_shoot", "Cherry: Shoot");
         translationBuilder.add("sounds.bakingdelight.block_freezer_running", "Freezer: Running");
         translationBuilder.add("sounds.bakingdelight.block_freezer_open", "Freezer: Open");
+        translationBuilder.add("sounds.bakingdelight.block_freezer_close", "Freezer: Close");
         translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "Item: Whisked");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "Ready to Bake!");
@@ -168,5 +193,20 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "Put the milk bucket in a glass bowl and whisk with a whisk to obtain the cream bucket.");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_TITLE, "Sticky and Sweet");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "Put the cream in a glass bowl and whisk with a whisk to obtain the butter.");
+        translationBuilder.add("advancement.bakingdelight.get_start_desc", "Ready to bake!");
+        translationBuilder.add("advancement.bakingdelight.get_kneading_stick.title", "Grandma's Kneading Stick");
+        translationBuilder.add("advancement.bakingdelight.get_kneading_stick.desc", "It's just an ordinary wooden stick.");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_flour.title", "Better Bread Making");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_flour.desc", "Whisk wheat to obtain the wheat flour.");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_dough.title", "Sticky Mess");
+        translationBuilder.add("advancement.bakingdelight.get_wheat_dough.desc", "Pour the water into a glass bowl, add the wheat flour and turn it into a dough! You can roll out with a kneading stick and flatten it, or you can go bake bread.");
+        translationBuilder.add("advancement.bakingdelight.get_raw_pizza.title", "Getting ready to open a pizzeria!");
+        translationBuilder.add("advancement.bakingdelight.get_raw_pizza.desc", "First, add the cheese to the flattened dough, then add 5 of your favorite ingredients and finish with a cheese.");
+        translationBuilder.add("advancement.bakingdelight.get_pizza.title", "PIZZA!");
+        translationBuilder.add("advancement.bakingdelight.get_pizza.desc", "Place in the oven in the order of black pepper dust, sugar, black pepper dust, raw pizza.");
+        translationBuilder.add("advancement.bakingdelight.get_black_pepper.title", "Underchest");
+        translationBuilder.add("advancement.bakingdelight.get_black_pepper.desc", "Finding new crops in villagers' homes or ruins.");
+        translationBuilder.add("advancement.bakingdelight.get_cheese.title", "Not Sour");
+        translationBuilder.add("advancement.bakingdelight.get_cheese.desc", "Put the milk in the oven to cook.");
     }
 }

@@ -3,7 +3,8 @@
   "package": "com.zombie_cute.mc.bakingdelight.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "TestMixin"
+    "EnchantmentEnhancementMixin",
+    "EnchantmentHelperEnhancementMixin"
   ],
   "injectors": {
     "defaultRequire": 1

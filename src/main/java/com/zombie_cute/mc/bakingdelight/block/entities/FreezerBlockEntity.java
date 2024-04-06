@@ -1,10 +1,11 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Maps;
-import com.zombie_cute.mc.bakingdelight.recipe.FreezerRecipe;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.recipe.FreezingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.FreezerScreenHandler;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
-import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
+import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -54,7 +55,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     private int maxProgress = 400;
     private int coolTime = 0;
     public FreezerBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FREEZER_BLOCK_ENTITY, pos, state);
+        super(ModBlockEntities.FREEZER_ENTITY, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
@@ -82,11 +83,6 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                 return 2;
             }
         };
-    }
-
-    @Override
-    public void onOpen(PlayerEntity player) {
-        playSound(ModSounds.BLOCK_FREEZER_OPEN, 1.0f, 1.5f);
     }
     public void playSound(SoundEvent sound, float volume, float pitch) {
         Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
@@ -183,7 +179,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         FreezerBlockEntity.addIce(map, Items.SNOW_BLOCK, 50);
         FreezerBlockEntity.addIce(map, Items.SNOW, 30);
         FreezerBlockEntity.addIce(map, Items.POWDER_SNOW_BUCKET, 1200);
-        FreezerBlockEntity.addIce(map, ModTagKeys.COOL_ITEMS, 10);
+        FreezerBlockEntity.addIce(map, ForgeTagKeys.COLD_ITEMS, 10);
         return map;
     }
     private static void addIce(Map<Item, Integer> coolTimes, TagKey<Item> tag, int coolTime) {
@@ -216,8 +212,8 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<FreezerRecipe> match = entity.getWorld().getRecipeManager()
-                .getFirstMatch(FreezerRecipe.Type.INSTANCE, inventory,entity.getWorld());
+        Optional<FreezingRecipe> match = entity.getWorld().getRecipeManager()
+                .getFirstMatch(FreezingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
@@ -233,8 +229,8 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<FreezerRecipe> match = entity.getWorld().getRecipeManager()
-                .getFirstMatch(FreezerRecipe.Type.INSTANCE, inventory,entity.getWorld());
+        Optional<FreezingRecipe> match = entity.getWorld().getRecipeManager()
+                .getFirstMatch(FreezingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
         return match.isPresent() &&
                 canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&
@@ -285,5 +281,29 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
         return dir == Direction.DOWN && slot >= 4;
+    }
+    public ItemStack getIceSlot(){
+        if (world != null) {
+            return this.getStack(ICE_SLOT);
+        } else return ItemStack.EMPTY;
+    }
+    public ItemStack getCraftSlot(){
+        if (world != null) {
+            if (this.getStack(OUTPUT_SLOT).isEmpty()){
+                return this.getStack(INPUT_SLOT_2);
+            } else {
+                return this.getStack(OUTPUT_SLOT);
+            }
+        } else return ItemStack.EMPTY;
+    }
+    public ItemStack getSlot1(){
+        if (world != null) {
+            return this.getStack(5);
+        } else return ItemStack.EMPTY;
+    }
+    public ItemStack getSlot2(){
+        if (world != null) {
+            return this.getStack(6);
+        } else return ItemStack.EMPTY;
     }
 }

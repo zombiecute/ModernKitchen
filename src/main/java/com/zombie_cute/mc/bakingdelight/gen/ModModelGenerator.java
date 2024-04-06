@@ -20,9 +20,7 @@ public class ModModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MASHED_POTATO_BLOCK);
-        blockStateModelGenerator.registerSimpleState(ModBlocks.OVEN);
-        blockStateModelGenerator.registerSimpleState(ModBlocks.FREEZER);
-        blockStateModelGenerator.registerSimpleState(ModBlocks.GLASS_BOWL);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.RAW_PIZZA);
         blockStateModelGenerator.registerCrop(ModBlocks.BLACK_PEPPER_CROP, BlackPepperCropBlock.AGE, 0,1,2,3,4,5,6);
     }
 
@@ -32,6 +30,11 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModBlocks.GLASS_BOWL.asItem(), registerItemBlockModel(ModBlocks.GLASS_BOWL));
         itemModelGenerator.register(ModBlocks.OVEN.asItem(),registerItemBlockModel(ModBlocks.OVEN));
         itemModelGenerator.register(ModBlocks.FREEZER.asItem(),registerItemBlockModel(ModBlocks.FREEZER));
+        itemModelGenerator.register(ModBlocks.WHEAT_DOUGH.asItem(),registerItemBlockModel(ModBlocks.WHEAT_DOUGH));
+        itemModelGenerator.register(ModBlocks.PIZZA.asItem(),registerItemBlockModel(ModBlocks.PIZZA));
+        itemModelGenerator.register(ModBlocks.PIZZA_WIP.asItem(),registerItemBlockModel(ModBlocks.PIZZA_WIP));
+        itemModelGenerator.register(ModBlocks.RAW_PIZZA.asItem(),registerItemBlockModel(ModBlocks.RAW_PIZZA));
+
 
         itemModelGenerator.register(ModItems.BLACK_PEPPER_DUST, Models.GENERATED);
         itemModelGenerator.register(ModItems.WOODEN_WHISK, Models.HANDHELD);
@@ -43,6 +46,8 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.NETHERITE_WHISK, Models.HANDHELD);
 
         itemModelGenerator.register(ModItems.AMETHYST_KNIFE, Models.HANDHELD);
+
+        itemModelGenerator.register(ModItems.KNEADING_STICK, Models.HANDHELD);
 
         itemModelGenerator.register(ModItems.AMETHYST_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.AMETHYST_PICKAXE, Models.HANDHELD);
@@ -59,10 +64,12 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.BRAISED_SHRIMP_BALL, Models.GENERATED);
         itemModelGenerator.register(ModItems.MATCHA_PUDDING, Models.GENERATED);
         itemModelGenerator.register(ModItems.SUNFLOWER_SEED, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SUNFLOWER_SEED_PEEL, Models.GENERATED);
         itemModelGenerator.register(ModItems.TRUFFLE_EGG_TART, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.POTATO_STARCH, Models.GENERATED);
         itemModelGenerator.register(ModItems.MIXED_DOUGH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.WHEAT_FLOUR, Models.GENERATED);
         itemModelGenerator.register(ModItems.PUDDING_WIP_1, Models.GENERATED);
         itemModelGenerator.register(ModItems.PUDDING_WIP_2, Models.GENERATED);
 
@@ -106,6 +113,7 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.PRAWN, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.SAUSAGE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SECTIONED_SAUSAGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRILLED_SAUSAGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.STARCH_SAUSAGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRILLED_STARCH_SAUSAGE, Models.GENERATED);

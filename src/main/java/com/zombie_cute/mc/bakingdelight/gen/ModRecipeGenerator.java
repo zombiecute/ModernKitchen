@@ -2,6 +2,7 @@ package com.zombie_cute.mc.bakingdelight.gen;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
+import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
@@ -26,7 +27,7 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                         FabricRecipeProvider.conditionsFromItem(ModItems.MASHED_POTATO))
                 .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.BLACK_PEPPER_DUST, 1)
-                .input(ModItems.BLACK_PEPPER_CORN)
+                .input(ForgeTagKeys.CROP_BLACK_PEPPER)
                 .criterion(FabricRecipeProvider.hasItem(ModItems.BLACK_PEPPER_CORN),
                         FabricRecipeProvider.conditionsFromItem(ModItems.BLACK_PEPPER_CORN))
                 .offerTo(exporter);
@@ -275,6 +276,15 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .input('R', Items.REDSTONE)
                 .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
                         FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ModItems.KNEADING_STICK)
+                .pattern("  S")
+                .pattern(" P ")
+                .pattern("S  ")
+                .input('S', Items.STICK)
+                .input('P', ItemTags.PLANKS)
+                .criterion(FabricRecipeProvider.hasItem(Items.STICK),
+                        FabricRecipeProvider.conditionsFromItem(Items.STICK))
                 .offerTo(exporter);
     }
 }

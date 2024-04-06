@@ -1,7 +1,8 @@
 package com.zombie_cute.mc.bakingdelight;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.entities.renderer.FreezerBlockEntityRenderer;
 import com.zombie_cute.mc.bakingdelight.block.entities.renderer.GlassBowlBlockEntityRenderer;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.screen.FreezerScreen;
@@ -19,6 +20,9 @@ public class BakingdelightClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GLASS_BOWL, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.FREEZER, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.WHEAT_DOUGH, RenderLayer.getTranslucent());
+
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BLACK_PEPPER_CROP, RenderLayer.getCutout());
 
         EntityRendererRegistry.register(ModEntities.BUTTER, FlyingItemEntityRenderer::new);
@@ -28,5 +32,6 @@ public class BakingdelightClient implements ClientModInitializer {
         HandledScreens.register(ModScreenHandlers.FREEZER_SCREEN_HANDLER_SCREEN_HANDLER, FreezerScreen::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.GLASS_BOWL_ENTITY, GlassBowlBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.FREEZER_ENTITY, FreezerBlockEntityRenderer::new);
     }
 }
