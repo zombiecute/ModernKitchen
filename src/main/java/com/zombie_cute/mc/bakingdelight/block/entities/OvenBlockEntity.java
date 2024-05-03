@@ -4,7 +4,9 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.recipe.BakingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.OvenScreenHandler;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -172,14 +174,14 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         }
     }
     public static boolean canUseAsFuel(ItemStack stack) {
-        return AbstractFurnaceBlockEntity.createFuelTimeMap().containsKey(stack.getItem());
+        return FuelRegistry.INSTANCE.get(stack.getItem()) != null;
     }
     private int getFuelTime(ItemStack fuel){
         if (fuel.isEmpty()) {
             return 0;
         }
-        Item item = fuel.getItem();
-        return AbstractFurnaceBlockEntity.createFuelTimeMap().getOrDefault(item, 0);
+        Integer time = FuelRegistry.INSTANCE.get(fuel.getItem());
+        return  time == null ? 0 : time;
     }
 
     private boolean isFuelBurning() {
