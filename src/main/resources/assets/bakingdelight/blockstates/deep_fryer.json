@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=north,has_oil=false": {
+      "model": "bakingdelight:block/deep_fryer",
+      "y": 90
+    },
+    "facing=south,has_oil=false": {
+      "model": "bakingdelight:block/deep_fryer",
+      "y": 270
+    },
+    "facing=west,has_oil=false": {
+      "model": "bakingdelight:block/deep_fryer",
+      "y": 0
+    },
+    "facing=east,has_oil=false": {
+      "model": "bakingdelight:block/deep_fryer",
+      "y": 180
+    },
+    "facing=north,has_oil=true": {
+      "model": "bakingdelight:block/deep_fryer_has_oil",
+      "y": 90
+    },
+    "facing=south,has_oil=true": {
+      "model": "bakingdelight:block/deep_fryer_has_oil",
+      "y": 270
+    },
+    "facing=west,has_oil=true": {
+      "model": "bakingdelight:block/deep_fryer_has_oil",
+      "y": 0
+    },
+    "facing=east,has_oil=true": {
+      "model": "bakingdelight:block/deep_fryer_has_oil",
+      "y": 180
+    }
+  }
+}

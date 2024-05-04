@@ -1,19 +1,22 @@
 package com.zombie_cute.mc.bakingdelight.gen;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.PizzaWIPBlockEntity;
-import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlWhiskingCategory;
-import com.zombie_cute.mc.bakingdelight.compat.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
+import com.zombie_cute.mc.bakingdelight.block.entities.*;
+import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.glass_bowl.GlassBowlMixWithWaterCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.glass_bowl.GlassBowlWhiskingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.transform.OvenTransformCategory;
+import com.zombie_cute.mc.bakingdelight.effects.ModEffectsAndPotions;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.item.custom.ButterItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.CuttleboneItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.TruffleItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
+import com.zombie_cute.mc.bakingdelight.screen.custom.AdvanceFurnaceScreen;
+import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterControllerScreen;
+import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterIOScreen;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import org.jetbrains.annotations.NotNull;
@@ -25,17 +28,37 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(@NotNull TranslationBuilder translationBuilder) {
-        translationBuilder.add(WhiskItem.WHISK_TOOL_TIP_1, "一款可以用于搅拌食物的搅拌器，" +
-                "或者...用它来搅匀怪物的脑浆？");
-        translationBuilder.add(CuttleboneItem.CUTTLEBONE_TOOL_TIP_1, "当紫水晶工具击杀鱿鱼时掉落");
-        translationBuilder.add(TruffleItem.TRUFFLE_TOOL_TIP_1, "可以从灰化土中找到");
-        translationBuilder.add(WhiskItem.TOOL_TIP_0, "按住 [SHIFT] 以显示更多");
-        translationBuilder.add(ButterItem.BUTTER_TOOL_TIP_0, "黏糊糊的质感...或许除了做食物以外另有其用");
+        translationBuilder.add(ToolTips.SHIFT_FRONT, "按住 ");
+        translationBuilder.add(ToolTips.SHIFT_END, " 以查看概要");
+        translationBuilder.add(ToolTips.WHISK_1, "一款搅拌器可以用于搅拌或打发食材");
+        translationBuilder.add(ToolTips.WHISK_2, "或者...？用它来搅匀怪物的脑浆？");
+        translationBuilder.add(ToolTips.BUTTER_1, "黏糊糊的质感...或许除了用于");
+        translationBuilder.add(ToolTips.BUTTER_2, "制作食物另有其用？");
+        translationBuilder.add(ToolTips.TRUFFLE, "可以在灰化土中找到");
+        translationBuilder.add(ToolTips.CUTTLEBONE, "被紫水晶工具击杀时掉落");
+        translationBuilder.add(ToolTips.FILTER_1, "一款由线织成的过滤器，可以");
+        translationBuilder.add(ToolTips.FILTER_2, "放在木盆中用于过滤油和渣");
+        translationBuilder.add(ToolTips.KNEADING_STICK, "打人与擀面兼备");
+        translationBuilder.add(ToolTips.SPATULA, "可以搭配受热的烤盘一起使用来炒菜");
+        translationBuilder.add(ToolTips.BDC_1, "它是构成沼气池的核心部件，当它下有一个平");
+        translationBuilder.add(ToolTips.BDC_2, "整的完全密封的长方体区域时，这块区域就会");
+        translationBuilder.add(ToolTips.BDC_3, "被自动的识别为沼气池的一部分。");
+        translationBuilder.add(ToolTips.BDI_1, "当其下方存在一个工作的沼气池控制器时，它将被");
+        translationBuilder.add(ToolTips.BDI_2, "激活，这时，你只需将任意的食物装入其中，他就");
+        translationBuilder.add(ToolTips.BDI_3, "会开始发酵，并产生沼气。当它的侧面存在一个燃");
+        translationBuilder.add(ToolTips.BDI_4, "气罐时，就可以为燃气罐充气。");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_1, "当它的侧面有一个装有气体的燃气罐时，右键即可");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_2, "有几率激活它。激活后，它可以加热其上方的方块，");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_3, "烤盘，烤炉，高级熔炉，油炸锅等均可兼容。");
+        translationBuilder.add(ToolTips.CROWBAR, "物理学圣剑");
+
+        translationBuilder.add(AdvanceFurnaceScreen.TOOLTIP,"点击以获取经验值");
 
         translationBuilder.add(GlassBowlBlockEntity.WHISK_FAIL, "这东西似乎不是搅拌器能处理的");
         translationBuilder.add(GlassBowlBlockEntity.NEED_BOWL, "你需要一个碗来盛出这些东西");
         translationBuilder.add(PizzaWIPBlockEntity.NEED_INGREDIENT, "你需要在这里放一个适当的食材");
         translationBuilder.add(PizzaWIPBlockEntity.NEED_CHEESE, "你需要在这里放一个奶酪");
+        translationBuilder.add(FreezerBlock.FAIL_TO_OPEN, "冰箱的门被意外的阻挡了");
 
         translationBuilder.add(ModItems.WOODEN_WHISK, "木搅拌器");
         translationBuilder.add(ModItems.STONE_WHISK, "石搅拌器");
@@ -49,13 +72,22 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.COPPER_KNIFE, "铜刀");
         translationBuilder.add(ModItems.AMETHYST_KNIFE, "紫水晶刀");
         translationBuilder.add(ModItems.KNEADING_STICK, "擀面杖");
+        translationBuilder.add(ModItems.CROWBAR, "撬棍");
+        translationBuilder.add(ModItems.SPATULA, "锅铲");
+        translationBuilder.add(ModItems.FILTER, "过滤网");
 
         translationBuilder.add(ModItems.EGG_TART, "蛋挞");
         translationBuilder.add(ModItems.APPLE_PUDDING, "苹果布丁");
         translationBuilder.add(ModItems.BRAISED_SHRIMP_BALL, "红烧虾球");
-        translationBuilder.add(ModItems.MATCHA_PUDDING, "抹茶补丁");
+        translationBuilder.add(ModItems.MATCHA_PUDDING, "抹茶布丁");
         translationBuilder.add(ModItems.SUNFLOWER_SEED, "葵花籽");
         translationBuilder.add(ModItems.SUNFLOWER_SEED_PEEL, "葵花籽皮");
+        translationBuilder.add(ModItems.SUNFLOWER_SEED_PULP, "葵花籽肉");
+        translationBuilder.add(ModItems.ROASTED_SUNFLOWER_SEED, "炒葵花籽");
+        translationBuilder.add(ModItems.OIL_IMPURITY, "油渣");
+        translationBuilder.add(ModItems.VEGETABLE_OIL_BOTTLE, "植物油瓶");
+        translationBuilder.add(ModItems.VEGETABLE_OIL_BUCKET, "植物油桶");
+
         translationBuilder.add(ModItems.TRUFFLE_EGG_TART, "松露蛋挞");
         translationBuilder.add(ModItems.PUDDING_WIP_1, "布丁（半成品）");
         translationBuilder.add(ModItems.PUDDING_WIP_2, "布丁（半成品）");
@@ -125,6 +157,30 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_SHOVEL, "紫水晶锹");
         translationBuilder.add(ModItems.AMETHYST_HOE, "紫水晶锄");
 
+        translationBuilder.add(ModItems.EMPTY_CAKE, "饼皮");
+        translationBuilder.add(ModItems.BLUE_ORCHID_FLOWER_CAKE, "兰花饼");
+        translationBuilder.add(ModItems.CHERRY_CAKE, "樱桃饼");
+        translationBuilder.add(ModItems.LILAC_CAKE, "丁香饼");
+        translationBuilder.add(ModItems.ORANGE_TULIP_CAKE, "橙色郁金香饼");
+        translationBuilder.add(ModItems.OXEYE_DAISY_CAKE, "滨菊饼");
+        translationBuilder.add(ModItems.PINK_TULIP_CAKE, "粉色郁金香饼");
+        translationBuilder.add(ModItems.ROSE_CAKE, "玫瑰饼");
+        translationBuilder.add(ModItems.SUNFLOWER_CAKE, "向日葵饼");
+        translationBuilder.add(ModItems.WHITE_TULIP_CAKE, "白色郁金香饼");
+        translationBuilder.add(ModItems.WITHER_ROSE_CAKE, "凋灵玫瑰饼");
+
+        translationBuilder.add(ModItems.RAW_ONION_RING, "生洋葱圈");
+        translationBuilder.add(ModItems.ONION_RING, "鸡肉洋葱圈");
+        translationBuilder.add(ModItems.FRIED_COD, "油炸鳕鱼");
+        translationBuilder.add(ModItems.FRIED_SALMON, "油炸鲑鱼");
+        translationBuilder.add(ModItems.FRIED_MILK_WIP, "油炸牛奶（半成品）");
+        translationBuilder.add(ModItems.FRIED_MILK, "油炸牛奶");
+        translationBuilder.add(ModItems.FRIED_APPLE, "油炸苹果");
+        translationBuilder.add(ModItems.RAW_POTATO_CHIP, "生土豆片");
+        translationBuilder.add(ModItems.POTATO_CHIP, "薯片");
+        translationBuilder.add(ModItems.CHEESE_BALL, "起司球");
+        translationBuilder.add(ModItems.FRIED_DOUGH_STICK, "油条");
+
         translationBuilder.add(ModEntities.BUTTER,"黄油");
         translationBuilder.add(ModEntities.CHERRY_BOMB,"樱桃");
 
@@ -135,15 +191,77 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
 
         translationBuilder.add(ModBlocks.GLASS_BOWL, "玻璃碗");
         translationBuilder.add(GlassBowlWhiskingCategory.GLASS_BOWL_NAME, "搅拌");
-        translationBuilder.add("display_name.bakingdelight.water_glass_bowl_name","与水混合");
+        translationBuilder.add(GlassBowlMixWithWaterCategory.WATER_GLASS_BOWL_NAME,"与水混合");
         translationBuilder.add(ModBlocks.OVEN, "烤炉");
+        translationBuilder.add(ModBlocks.ADVANCE_FURNACE, "高级熔炉");
+        translationBuilder.add(AdvanceFurnaceBlockEntity.ADVANCE_FURNACE_NAME, "高级熔炉");
+        translationBuilder.add(ModBlocks.BAKING_TRAY, "烤盘");
         translationBuilder.add(OvenBlockEntity.OVEN_NAME, "烘焙");
         translationBuilder.add(ModBlocks.FREEZER, "冰柜");
         translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "冷藏");
         translationBuilder.add(PizzaMakingCategory.PIZZA_TITLE, "制作披萨");
+        translationBuilder.add(OvenTransformCategory.TRANSFORM_TITLE, "世界交互");
+        translationBuilder.add(ModBlocks.DEEP_FRYER, "油炸锅");
+        translationBuilder.add(BakingTrayCategory.BAKING_TRAY_NAME, "炒菜");
+        translationBuilder.add(ModBlocks.WOODEN_BASIN, "木盆");
+        translationBuilder.add(WoodenBasinBlockEntity.WOODEN_BASIN_NAME, "榨油");
+        translationBuilder.add(ModBlocks.GAS_CANISTER, "燃气罐");
+        translationBuilder.add(GasCanisterBlockEntity.GAS_CANISTER_NAME, "储气量");
+        translationBuilder.add(ModBlocks.BIOGAS_DIGESTER_CONTROLLER, "沼气池控制器");
+        translationBuilder.add(BiogasDigesterControllerScreen.UNAVAILABLE, "控制器下方的空间不完整、不封闭或者过大");
+        translationBuilder.add(BiogasDigesterControllerScreen.SIZE, "控制器下方的空间的大小");
+        translationBuilder.add(BiogasDigesterControllerScreen.GAS_VALUE, "当前的储气量");
+        translationBuilder.add(BiogasDigesterControllerScreen.MAX_GAS_VALUE, "沼气池的最大储气量");
+        translationBuilder.add(ModBlocks.BIOGAS_DIGESTER_IO, "沼气池输入输出接口");
+        translationBuilder.add(BiogasDigesterIOScreen.UNAVAILABLE, "此接口下方的方块不是控制器，或者控制器不可用");
+        translationBuilder.add(BiogasFermentationCategory.BIOGAS_FERMENTATION_NAME, "沼气发酵");
+        translationBuilder.add(BiogasFermentationCategory.FOOD, "任意食物");
+        translationBuilder.add(ModBlocks.BURNING_GAS_COOKING_STOVE, "燃烧中的燃气灶");
+        translationBuilder.add(ModBlocks.GAS_COOKING_STOVE, "燃气灶");
+        translationBuilder.add(ModBlocks.DEEP_FRY_BASKET, "油炸篮");
+        translationBuilder.add(DeepFryerBlockEntity.DEEP_FRYER_NAME, "油炸");
+        translationBuilder.add(DeepFryerBlockEntity.ADD_OIL, "你需要向其中加入食用油");
+        translationBuilder.add(DeepFryerBlockEntity.TOO_HOT, "太烫了！请用油炸篮来取物");
 
+        translationBuilder.add(ModBlocks.CREAM_FLUID_BLOCK, "奶油");
+        translationBuilder.add(ModBlocks.VEGETABLE_OIL_FLUID_BLOCK, "植物油");
 
-        translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "烘焙乐事");
+        translationBuilder.add(ModEffectsAndPotions.STICKY,"黏糊糊");
+
+        translationBuilder.add("item.minecraft.potion.effect.sticky_potion","黏脚药水");
+        translationBuilder.add("item.minecraft.potion.effect.sticky_long_potion","黏脚药水");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_potion","鱿鱼药水");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_long_potion","鱿鱼药水");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_strong_potion","鱿鱼药水");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_potion","发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_long_potion","发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_strong_potion","发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.sticky_potion","喷溅型黏脚药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.sticky_long_potion","喷溅型黏脚药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_potion","喷溅型鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_long_potion","喷溅型鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_strong_potion","喷溅型鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_potion","喷溅型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_long_potion","喷溅型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_strong_potion","喷溅型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.sticky_potion","滞留型黏脚药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.sticky_long_potion","滞留型黏脚药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_potion","滞留型鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_long_potion","滞留型鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_strong_potion","滞留型鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_potion","滞留型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_long_potion","滞留型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_strong_potion","滞留型发光鱿鱼药水");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.sticky_potion","黏脚之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.sticky_long_potion","黏脚之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_potion","鱿鱼之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_long_potion","鱿鱼之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_strong_potion","鱿鱼之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_potion","发光鱿鱼之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_long_potion","发光鱿鱼之箭");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_strong_potion","发光鱿鱼之箭");
+
+        translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "现代厨房");
 
         translationBuilder.add("sounds.bakingdelight.entity_butter_hit", "黄油：击中");
         translationBuilder.add("sounds.bakingdelight.entity_butter_shoot", "黄油：发射");
@@ -153,8 +271,13 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.block_freezer_open", "冰箱：打开");
         translationBuilder.add("sounds.bakingdelight.block_freezer_close", "冰箱：关闭");
         translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "物品: 被搅拌");
+        translationBuilder.add("sounds.bakingdelight.block_food_frying", "食物: 煎炸");
+        translationBuilder.add("sounds.bakingdelight.item_crowbar_hit", "撬棍: 击打");
+        translationBuilder.add("sounds.bakingdelight.item_crowbar_attack", "撬棍: 击中生物");
+        translationBuilder.add("sounds.bakingdelight.block_gas_canister_filling", "燃气罐: 填充");
+        translationBuilder.add("sounds.bakingdelight.block_gas_cooking_stove_ignite", "燃气灶：尝试点燃");
 
-        translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "准备烘焙!");
+        translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "真相就是搅拌器");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "合成一把搅拌器来开始你新的厨房之旅");
         translationBuilder.add(ModAdvancementGenerator.GET_AMETHYST_TOOL_TITLE, "亮晶晶!");
         translationBuilder.add(ModAdvancementGenerator.GET_AMETHYST_TOOL_DESC, "合成一把紫水晶工具");
@@ -196,7 +319,7 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "将奶桶放入玻璃碗，再用搅拌器搅拌即可获得奶油桶");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_TITLE, "甜而粘口");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "将奶油放入玻璃碗，再用搅拌器搅拌即可获得黄油");
-        translationBuilder.add("advancement.bakingdelight.get_start_desc", "准备烘焙！");
+        translationBuilder.add("advancement.bakingdelight.get_start_desc", "在吃完这一块面包后，是否觉得它太过于平庸了？是时候准备一些全新的食物了！");
         translationBuilder.add("advancement.bakingdelight.get_kneading_stick.title", "李奶奶的擀面杖");
         translationBuilder.add("advancement.bakingdelight.get_kneading_stick.desc", "其实只是一根普通的木头棒子罢");
         translationBuilder.add("advancement.bakingdelight.get_wheat_flour.title", "做更好的面包");
@@ -211,5 +334,33 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.get_black_pepper.desc", "在村民家中或遗迹中发现新作物");
         translationBuilder.add("advancement.bakingdelight.get_cheese.title", "一点都不酸");
         translationBuilder.add("advancement.bakingdelight.get_cheese.desc", "将奶放入烤炉中去煮");
+        translationBuilder.add("advancement.bakingdelight.get_advance_furnace.title", "四倍速");
+        translationBuilder.add("advancement.bakingdelight.get_advance_furnace.desc", "合成一个高级熔炉，它比普通熔炉快四倍！");
+        translationBuilder.add("advancement.bakingdelight.get_baking_tray.title", "不只是一个“烤”盘");
+        translationBuilder.add("advancement.bakingdelight.get_baking_tray.desc", "它可以被放在高级熔炉里面来升级你的炉子");
+        translationBuilder.add("advancement.bakingdelight.get_crowbar.title", "统治物理学");
+        translationBuilder.add("advancement.bakingdelight.get_crowbar.desc", "一个超棒的工具好吗？既可以右键降级烤炉，还可以右键快速破坏门窗。记住千万不要拿他打人");
+        translationBuilder.add("advancement.bakingdelight.wooden_basin.title", "不是洗脸盆！");
+        translationBuilder.add("advancement.bakingdelight.wooden_basin.desc", "显然它是用来榨油的工具");
+        translationBuilder.add("advancement.bakingdelight.filter.title", "开始劳苦的一生");
+        translationBuilder.add("advancement.bakingdelight.filter.desc", "把过滤器和炒制的油料作物（例如葵花籽）放入木盆，并用脚踩木盆来榨油");
+        translationBuilder.add("advancement.bakingdelight.vegetable_oil.title", "第一桶油");
+        translationBuilder.add("advancement.bakingdelight.vegetable_oil.desc", "恭喜你你离油炸食物已经不远啦");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.title", "煎熬（对食物而言）");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "右键倒入油或存入或取出物品，潜行加右键可查看其状态。它必须在有油和被燃气灶加热时才能工作");
+        translationBuilder.add("advancement.bakingdelight.deep_fry_basket.title", "当心热油烫手");
+        translationBuilder.add("advancement.bakingdelight.deep_fry_basket.desc", "记得用油炸篮来从油炸锅中取物，当心油锅杀人事件");
+        translationBuilder.add("advancement.bakingdelight.all_fried.title", "完全煎炸");
+        translationBuilder.add("advancement.bakingdelight.all_fried.desc", "品尝所有的油炸食品！");
+        translationBuilder.add("advancement.bakingdelight.wither_rose_cake.title", "绽放与终结");
+        translationBuilder.add("advancement.bakingdelight.wither_rose_cake.desc", "吃下凋灵玫瑰饼，然后好好思考你的人生");
+        translationBuilder.add("advancement.bakingdelight.bdc_bdi.title", "沼气工业");
+        translationBuilder.add("advancement.bakingdelight.bdc_bdi.desc", "合成一个沼气池控制器和沼气池输入输出接口。记得看清它们的使用说明，然后建造你的沼气发酵池吧");
+        translationBuilder.add("advancement.bakingdelight.gas_canister.title", "再靠近一点就会爆炸！");
+        translationBuilder.add("advancement.bakingdelight.gas_canister.desc", "它可以从沼气池输入输出接口那里装载气体，也可以为燃气灶供气。不过记住一定要注意安全！");
+        translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.title", "另起炉灶");
+        translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.desc", "燃气灶可以加热很多东西，包括你自己");
+        translationBuilder.add("advancement.bakingdelight.spatula.title", "炒菜时间到！");
+        translationBuilder.add("advancement.bakingdelight.spatula.desc", "对一个烤盘用燃气灶加热，这时往它上面放入食材再拿锅铲翻炒即可炒菜");
     }
 }

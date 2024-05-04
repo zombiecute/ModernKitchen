@@ -1,6 +1,7 @@
 package com.zombie_cute.mc.bakingdelight.item.custom;
 
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
@@ -8,6 +9,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -23,13 +25,20 @@ public class WhiskItem extends MiningToolItem {
     public static final Set<Enchantment> ALLOWED_ENCHANTMENTS = Set.of(Enchantments.VANISHING_CURSE, Enchantments.SHARPNESS,
             Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS, Enchantments.KNOCKBACK, Enchantments.FIRE_ASPECT, Enchantments.LOOTING,
             Enchantments.UNBREAKING, Enchantments.EFFICIENCY, Enchantments.SILK_TOUCH, Enchantments.FORTUNE);
-    public static final String TOOL_TIP_0 = "tooltips.bakingdelight.tool_tip_0";
-    public static final String WHISK_TOOL_TIP_1 = "tooltips.whisk_tool_tip_1";
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
         if(Screen.hasShiftDown()){
-            tooltip.add(Text.translatable(WHISK_TOOL_TIP_1).formatted(Formatting.AQUA));
+            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
+            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.WHITE);
+            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
+            tooltip.add(mutableText);
+            tooltip.add(Text.literal(" "));
+            tooltip.add(Text.translatable(ToolTips.WHISK_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.WHISK_2).formatted(Formatting.GOLD));
         }else {
-            tooltip.add(Text.translatable(TOOL_TIP_0).formatted(Formatting.GRAY));
+            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
+            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.GRAY);
+            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
+            tooltip.add(mutableText);
         }
         super.appendTooltip(stack, world, tooltip, context);
     }

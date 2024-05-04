@@ -1,6 +1,7 @@
 package com.zombie_cute.mc.bakingdelight.recipe;
 
 import com.zombie_cute.mc.bakingdelight.Bakingdelight;
+import com.zombie_cute.mc.bakingdelight.recipe.custom.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -23,5 +24,9 @@ public class ModRecipes {
                 MixWithWaterRecipe.Serializer.INSTANCE);
         Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, MixWithWaterRecipe.Type.ID),
                 MixWithWaterRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, DeepFryingRecipe.Serializer.ID),
+                DeepFryingRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, DeepFryingRecipe.Type.ID),
+                DeepFryingRecipe.Type.INSTANCE);
     }
 }

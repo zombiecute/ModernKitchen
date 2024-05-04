@@ -2,8 +2,8 @@
 	"schemaVersion": 1,
 	"id": "bakingdelight",
 	"version": "${version}",
-	"name": "Baking Delight",
-	"description": "Added baking features to Minecraft to make better food!",
+	"name": "Modern Kitchen",
+	"description": "Allow Minecraft to have a more enriched way of processing ingredients.",
 	"authors": [
 		"zombie_cute",
 		"Bianca_Sylvia",
@@ -30,7 +30,7 @@
 			"com.zombie_cute.mc.bakingdelight.BakingdelightDataGenerator"
 		],
 		"rei_client": [
-			"com.zombie_cute.mc.bakingdelight.compat.BakingDelightREIClientPlugin"
+			"com.zombie_cute.mc.bakingdelight.compat.rei.BakingDelightREIClientPlugin"
 		]
 	},
 	"mixins": [

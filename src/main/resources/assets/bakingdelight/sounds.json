@@ -52,5 +52,35 @@
       "bakingdelight:whisking_3",
       "bakingdelight:whisking_4"
     ]
+  },
+  "block_food_frying": {
+    "subtitle": "sounds.bakingdelight.block_food_frying",
+    "sounds": [
+      "bakingdelight:food_frying"
+    ]
+  },
+  "item_crowbar_hit": {
+    "subtitle": "sounds.bakingdelight.item_crowbar_hit",
+    "sounds": [
+      "bakingdelight:crowbar_hit"
+    ]
+  },
+  "item_crowbar_attack": {
+    "subtitle": "sounds.bakingdelight.item_crowbar_attack",
+    "sounds": [
+      "bakingdelight:crowbar_attack"
+    ]
+  },
+  "block_gas_canister_filling": {
+    "subtitle": "sounds.bakingdelight.block_gas_canister_filling",
+    "sounds": [
+      "bakingdelight:gas_canister_filling"
+    ]
+  },
+  "block_gas_cooking_stove_ignite": {
+    "subtitle": "sounds.bakingdelight.block_gas_cooking_stove_ignite",
+    "sounds": [
+      "bakingdelight:gas_cooking_stove_ignite"
+    ]
   }
 }

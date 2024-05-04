@@ -38,8 +38,32 @@ public class ModCompostingChances {
         CompostingChanceRegistry.INSTANCE.add(ModBlocks.MASHED_POTATO_BLOCK.asItem(), 0.8f);
         CompostingChanceRegistry.INSTANCE.add(ModItems.CRYSTAL_DUMPLING, 1f);
         CompostingChanceRegistry.INSTANCE.add(ModItems.SUNFLOWER_SEED_PEEL, 0.05f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.SUNFLOWER_SEED_PULP, 0.15f);
         CompostingChanceRegistry.INSTANCE.add(ModBlocks.PIZZA_WIP.asItem(), 0.6f);
         CompostingChanceRegistry.INSTANCE.add(ModBlocks.RAW_PIZZA.asItem(), 1f);
         CompostingChanceRegistry.INSTANCE.add(ModBlocks.PIZZA.asItem(), 1f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.OIL_IMPURITY, 0.2f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.ROASTED_SUNFLOWER_SEED, 0.4f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.BLUE_ORCHID_FLOWER_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.EMPTY_CAKE, 0.3f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.CHERRY_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.LILAC_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.ORANGE_TULIP_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.OXEYE_DAISY_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.PINK_TULIP_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.ROSE_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.SUNFLOWER_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.WHITE_TULIP_CAKE, 0.5f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.WITHER_ROSE_CAKE, 1.0f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.RAW_ONION_RING, 0.3f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.ONION_RING, 0.6f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.FRIED_MILK_WIP, 0.3f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.FRIED_MILK, 0.8f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.FRIED_APPLE, 0.7f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.RAW_POTATO_CHIP, 0.1f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.POTATO_CHIP, 0.4f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.CHEESE_BALL, 0.4f);
+        CompostingChanceRegistry.INSTANCE.add(ModItems.FRIED_DOUGH_STICK, 0.3f);
+
     }
 }

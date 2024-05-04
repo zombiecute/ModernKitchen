@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "bakingdelight:oven",
-    "bakingdelight:freezer"
+    "bakingdelight:freezer",
+    "bakingdelight:deep_fryer",
+    "bakingdelight:baking_tray",
+    "bakingdelight:advance_furnace",
+    "bakingdelight:gas_canister",
+    "bakingdelight:biogas_digester_controller",
+    "bakingdelight:biogas_digester_io",
+    "bakingdelight:gas_cooking_stove",
+    "bakingdelight:burning_gas_cooking_stove"
   ]
 }

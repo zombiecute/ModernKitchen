@@ -1,5 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.entity.custom;
 
+import com.zombie_cute.mc.bakingdelight.effects.ModEffectsAndPotions;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
@@ -59,7 +60,7 @@ public class ButterEntity extends ThrownItemEntity {
             Box box = this.getBoundingBox().expand(3.0, 2.0, 3.0);
             List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
             Entity entity2 = this.getEffectCause();
-            StatusEffectInstance slowness = new StatusEffectInstance(StatusEffects.SLOWNESS,80,9);
+            StatusEffectInstance sticky = new StatusEffectInstance(ModEffectsAndPotions.STICKY,80,0);
             StatusEffectInstance mining_fatigue = new StatusEffectInstance(StatusEffects.MINING_FATIGUE,80,9);
             StatusEffectInstance weakness = new StatusEffectInstance(StatusEffects.WEAKNESS,80,9);
             for (LivingEntity livingEntity : list) {
@@ -67,19 +68,19 @@ public class ButterEntity extends ThrownItemEntity {
                 if (!livingEntity.isAffectedBySplashPotions() || !((d = this.squaredDistanceTo(livingEntity)) < 16.0))
                     continue;
                 double e = livingEntity == entity ? 1.0 : 1.0 - Math.sqrt(d) / 4.0;
-                StatusEffect SLOWNESS = slowness.getEffectType();
+                StatusEffect STICKY = sticky.getEffectType();
                 StatusEffect MINING_FATIGUE = mining_fatigue.getEffectType();
                 StatusEffect WEAKNESS = weakness.getEffectType();
-                int i2 = slowness.mapDuration(i -> (int) (e * (double) i + 0.5));
+                int i2 = sticky.mapDuration(i -> (int) (e * (double) i + 0.5));
                 int i3 = mining_fatigue.mapDuration(i -> (int) (e * (double) i + 0.5));
                 int i4 = weakness.mapDuration(i -> (int) (e * (double) i + 0.5));
-                StatusEffectInstance Slowness = new StatusEffectInstance(SLOWNESS, i2, slowness.getAmplifier(), slowness.isAmbient(), false);
+                StatusEffectInstance Sticky = new StatusEffectInstance(STICKY, i2, sticky.getAmplifier(), sticky.isAmbient(), true);
                 StatusEffectInstance MiningFatigue = new StatusEffectInstance(MINING_FATIGUE, i3, mining_fatigue.getAmplifier(), mining_fatigue.isAmbient(), false);
                 StatusEffectInstance Weakness = new StatusEffectInstance(WEAKNESS, i4, weakness.getAmplifier(), weakness.isAmbient(), false);
-                if (Slowness.isDurationBelow(20)||
+                if (Sticky.isDurationBelow(20)||
                         MiningFatigue.isDurationBelow(20)||
                         Weakness.isDurationBelow(20)) continue;
-                livingEntity.addStatusEffect(Slowness, entity2);
+                livingEntity.addStatusEffect(Sticky, entity2);
                 livingEntity.addStatusEffect(MiningFatigue, entity2);
                 livingEntity.addStatusEffect(Weakness, entity2);
             }

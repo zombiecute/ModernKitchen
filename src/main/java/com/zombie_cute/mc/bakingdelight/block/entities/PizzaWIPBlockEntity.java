@@ -3,6 +3,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.minecraft.block.BlockState;
@@ -45,14 +46,28 @@ public class PizzaWIPBlockEntity extends BlockEntity implements ImplementedInven
         return PIZZA_INV;
     }
     public void onUse(PlayerEntity player, BlockState state, World world) {
-        Item item = player.getMainHandStack().getItem();
+        if (world.isClient){
+            return;
+        }
+        Item item;
+        boolean isMainHand;
+        if (player.getOffHandStack().isEmpty()){
+            item = player.getMainHandStack().getItem();
+            isMainHand = true;
+        } else {
+            item = player.getOffHandStack().getItem();
+            isMainHand = false;
+        }
         int currentState = state.get(CRAFT_STATE);
         if (currentState < 5){
             if (isPizzaIngredients(item)){
                 int next = currentState + 1;
                 world.setBlockState(pos, state.with(CRAFT_STATE, next));
-                player.getMainHandStack().split(1);
-                this.setStack(currentState, item.getDefaultStack());
+                if (isMainHand){
+                    this.setStack(currentState, player.getMainHandStack().split(1));
+                } else {
+                    this.setStack(currentState, player.getOffHandStack().split(1));
+                }
                 playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f, world.random.nextFloat() + 0.1f);
             } else {
                 player.sendMessage(Text.translatable(NEED_INGREDIENT),true);
@@ -62,13 +77,14 @@ public class PizzaWIPBlockEntity extends BlockEntity implements ImplementedInven
                 for (int i = 0;i < 5;i++){
                     this.setStack(i,ItemStack.EMPTY);
                 }
-                player.getMainHandStack().split(1);
+                player.getMainHandStack().decrement(1);
                 playSound(SoundEvents.BLOCK_HONEY_BLOCK_PLACE,1.0f, world.random.nextFloat() + 0.1f);
                 world.setBlockState(pos, ModBlocks.RAW_PIZZA.getDefaultState());
             } else {
                 player.sendMessage(Text.translatable(NEED_CHEESE), true);
             }
         }
+        markDirty();
     }
     private boolean isPizzaIngredients(@NotNull Item item) {
         ItemStack stack = item.getDefaultStack();

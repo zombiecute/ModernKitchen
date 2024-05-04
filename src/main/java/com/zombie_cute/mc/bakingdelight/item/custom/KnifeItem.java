@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class KnifeItem extends ToolItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-    public static final Set<Enchantment> ALLOWED_ENCHANTMENTS = Set.of(Enchantments.VANISHING_CURSE, Enchantments.SHARPNESS,
+    public static final Set<Enchantment> ALLOWED_ENCHANTMENTS = Set.of(Enchantments.SHARPNESS,
             Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS, Enchantments.KNOCKBACK, Enchantments.FIRE_ASPECT, Enchantments.LOOTING,
             Enchantments.UNBREAKING);
     public KnifeItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Item.Settings settings) {

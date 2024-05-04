@@ -1,12 +1,13 @@
 package com.zombie_cute.mc.bakingdelight.block.custom;
 
-import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -15,10 +16,12 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -28,17 +31,17 @@ import java.util.Objects;
 
 public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final BooleanProperty HAS_ICE = BooleanProperty.of("has_ice");
     public static final BooleanProperty IS_OPEN = BooleanProperty.of("is_open");
     private static final VoxelShape TYPE_WEST = Block.createCuboidShape(2,0,0,15,16,16);
     private static final VoxelShape TYPE_EAST = Block.createCuboidShape(1,0,0,14,16,16);
     private static final VoxelShape TYPE_SOUTH = Block.createCuboidShape(0,0,1,16,16,14);
     private static final VoxelShape TYPE_NORTH = Block.createCuboidShape(0,0,2,16,16,15);
+    public static final String FAIL_TO_OPEN = "bakingdelight.freezer_message.fail_to_open";
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite())
-                .with(HAS_ICE,false).with(IS_OPEN,false);
+                .with(IS_OPEN,false);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING,HAS_ICE,IS_OPEN);
+        builder.add(FACING,IS_OPEN);
     }
 
     @Override
@@ -101,6 +104,13 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
         if (state.getBlock() != newState.getBlock()){
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof FreezerBlockEntity){
+                if (((FreezerBlockEntity) blockEntity).getExperience() != 0){
+                    ExperienceOrbEntity xp =
+                            new ExperienceOrbEntity(world,pos.getX(),pos.getY(),pos.getZ(),
+                                    ((FreezerBlockEntity) blockEntity).getExperience());
+                    world.spawnEntity(xp);
+                    world.updateComparators(pos,this);
+                }
                 ItemScatterer.spawn(world ,pos, (FreezerBlockEntity)blockEntity);
                 world.updateComparators(pos,this);
             }
@@ -109,24 +119,98 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
     }
 
     @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (!world.getBlockState(getSideBlock(state, pos)).isAir() && state.get(IS_OPEN)){
+            world.setBlockState(pos, state.with(IS_OPEN, false));
+        }
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient){
+            Direction direction = state.get(FACING);
+            BlockPos facingBlock = pos;
+            BlockPos sideBlock = pos;
+            switch (direction){
+                case EAST: {
+                    facingBlock = pos.east(1);
+                    sideBlock = pos.east(1).south(1);
+                    break;
+                }
+                case SOUTH: {
+                    facingBlock = pos.south(1);
+                    sideBlock = pos.south(1).west(1);
+                    break;
+                }
+                case WEST: {
+                    facingBlock = pos.west(1);
+                    sideBlock = pos.west(1).north(1);
+                    break;
+                }
+                case NORTH: {
+                    facingBlock = pos.north(1);
+                    sideBlock = pos.north(1).east(1);
+                    break;
+                }
+            }
+            if (!world.getBlockState(getSideBlock(state, pos)).isAir()){
+                world.setBlockState(pos, state.with(IS_OPEN, false));
+                player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
+                return ActionResult.PASS;
+            }
             if (state.get(IS_OPEN)){
-                if (player.isSneaking()){
-                    world.setBlockState(pos,state.with(IS_OPEN, false));
-                    Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_CLOSE, SoundCategory.BLOCKS, 1.7f, world.random.nextFloat()+0.8f);
-                } else {
-                    NamedScreenHandlerFactory screenHandlerFactory = ((FreezerBlockEntity) world.getBlockEntity(pos));
-                    if (screenHandlerFactory != null){
-                        player.openHandledScreen(screenHandlerFactory);
+                if (world.getBlockState(facingBlock).isAir()){
+                    if (player.isSneaking()){
+                        if (world.getBlockState(sideBlock).isAir()){
+                            world.setBlockState(pos,state.with(IS_OPEN, false));
+                            Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_CLOSE, SoundCategory.BLOCKS, 1.7f, world.random.nextFloat()+0.8f);
+                        } else {
+                            player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
+                            return ActionResult.PASS;
+                        }
+                    } else {
+                        NamedScreenHandlerFactory screenHandlerFactory = ((FreezerBlockEntity) world.getBlockEntity(pos));
+                        if (screenHandlerFactory != null){
+                            player.openHandledScreen(screenHandlerFactory);
+                        }
                     }
+                } else {
+                    player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
+                    return ActionResult.PASS;
                 }
             } else {
-                world.setBlockState(pos,state.with(IS_OPEN, true));
-                Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_OPEN, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat()+0.8f);
+                if (world.getBlockState(facingBlock).isAir() && world.getBlockState(sideBlock).isAir()){
+                    world.setBlockState(pos,state.with(IS_OPEN, true));
+                    Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_OPEN, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat()+0.8f);
+                } else {
+                    player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
+                    return ActionResult.PASS;
+                }
+            }
+        return ActionResult.SUCCESS;
+    }
+
+    private static BlockPos getSideBlock(BlockState state, BlockPos pos) {
+        Direction direction = state.get(FACING);
+        BlockPos sideBlock = pos;
+        switch (direction){
+            case EAST: {
+                sideBlock = pos.east(1).south(1);
+                break;
+            }
+            case SOUTH: {
+                sideBlock = pos.south(1).west(1);
+                break;
+            }
+            case WEST: {
+                sideBlock = pos.west(1).north(1);
+                break;
+            }
+            case NORTH: {
+                sideBlock = pos.north(1).east(1);
+                break;
             }
         }
-        return ActionResult.SUCCESS;
+        return sideBlock;
     }
 
     @Nullable

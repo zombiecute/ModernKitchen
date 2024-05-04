@@ -2,6 +2,7 @@ package com.zombie_cute.mc.bakingdelight.item.custom;
 
 import com.zombie_cute.mc.bakingdelight.entity.custom.ButterEntity;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -18,13 +20,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem.TOOL_TIP_0;
-
 public class ButterItem extends Item {
     public ButterItem(Settings settings) {
         super(settings);
     }
-    public static final String BUTTER_TOOL_TIP_0 = "tooltips.bakingdelight.butter_tool_tip_0";
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack heldStack = player.getStackInHand(hand);
@@ -46,10 +45,19 @@ public class ButterItem extends Item {
         return TypedActionResult.success(heldStack, world.isClient());
     }
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
-        if (Screen.hasShiftDown()) {
-            tooltip.add(Text.translatable(BUTTER_TOOL_TIP_0).formatted(Formatting.DARK_GREEN));
-        } else {
-            tooltip.add(Text.translatable(TOOL_TIP_0).formatted(Formatting.GRAY));
+        if(Screen.hasShiftDown()){
+            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
+            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.WHITE);
+            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
+            tooltip.add(mutableText);
+            tooltip.add(Text.literal(" "));
+            tooltip.add(Text.translatable(ToolTips.BUTTER_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.BUTTER_2).formatted(Formatting.GOLD));
+        }else {
+            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
+            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.GRAY);
+            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
+            tooltip.add(mutableText);
         }
         super.appendTooltip(stack, world, tooltip, context);
     }

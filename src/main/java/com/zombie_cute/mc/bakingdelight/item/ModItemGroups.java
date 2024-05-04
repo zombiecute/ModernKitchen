@@ -18,7 +18,7 @@ public class ModItemGroups {
             FabricItemGroup.builder().displayName(Text.translatable(GROUPS_TAB_NAME))
                     .icon(()->new ItemStack(ModBlocks.GLASS_BOWL))
                     .entries((displayContext, entries) -> {
-                        // Whisks
+                        // Whisks & Glass Bowl
                         entries.add(ModItems.WOODEN_WHISK);
                         entries.add(ModItems.STONE_WHISK);
                         entries.add(ModItems.COPPER_WHISK);
@@ -27,27 +27,42 @@ public class ModItemGroups {
                         entries.add(ModItems.DIAMOND_WHISK);
                         entries.add(ModItems.NETHERITE_WHISK);
                         entries.add(ModItems.AMETHYST_WHISK);
-                        // Amethyst Tools
+                        entries.add(ModBlocks.GLASS_BOWL);
+                        // Amethyst Tools & Knifes & Stir-frying
                         entries.add(ModItems.AMETHYST_SWORD);
                         entries.add(ModItems.AMETHYST_PICKAXE);
                         entries.add(ModItems.AMETHYST_AXE);
                         entries.add(ModItems.AMETHYST_SHOVEL);
                         entries.add(ModItems.AMETHYST_HOE);
-                        // Knifes
                         entries.add(ModItems.AMETHYST_KNIFE);
                         entries.add(ModItems.COPPER_KNIFE);
-                        // Other Tools
+                        entries.add(ModItems.SPATULA);
+                        entries.add(ModBlocks.BAKING_TRAY);
+                        // Pizza Making & Oven
                         entries.add(ModItems.KNEADING_STICK);
-                        // Place Able Ingredients
                         entries.add(ModBlocks.WHEAT_DOUGH);
                         entries.add(ModBlocks.PIZZA_WIP);
                         entries.add(ModBlocks.RAW_PIZZA);
                         entries.add(ModBlocks.PIZZA);
-                        // Craft Station
-                        entries.add(ModBlocks.GLASS_BOWL);
+                        entries.add(ModItems.CHEESE);
+                        entries.add(ModBlocks.ADVANCE_FURNACE);
                         entries.add(ModBlocks.OVEN);
+                        entries.add(ModItems.CROWBAR);
+                        // Oil Extraction
+                        entries.add(ModItems.FILTER);
+                        entries.add(ModBlocks.WOODEN_BASIN);
+                        entries.add(ModItems.VEGETABLE_OIL_BOTTLE);
+                        entries.add(ModItems.VEGETABLE_OIL_BUCKET);
+                        entries.add(ModItems.OIL_IMPURITY);
+                        entries.add(ModBlocks.DEEP_FRYER);
+                        entries.add(ModBlocks.DEEP_FRY_BASKET);
+                        // Gas System
+                        entries.add(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
+                        entries.add(ModBlocks.BIOGAS_DIGESTER_IO);
+                        entries.add(ModBlocks.GAS_CANISTER);
+                        entries.add(ModBlocks.GAS_COOKING_STOVE);
+                        // Freezer
                         entries.add(ModBlocks.FREEZER);
-                        // Ingredients
                         entries.add(ModItems.ICE_BRICK);
                         // Truffles
                         entries.add(ModItems.BLACK_TRUFFLE);
@@ -65,15 +80,32 @@ public class ModItemGroups {
                         entries.add(ModBlocks.MASHED_POTATO_BLOCK);
                         // Snacks
                         entries.add(ModItems.APPLE_PETAL);
+                        entries.add(ModItems.FRIED_APPLE);
+                        entries.add(ModItems.RAW_ONION_RING);
+                        entries.add(ModItems.ONION_RING);
+                        entries.add(ModItems.FRIED_COD);
+                        entries.add(ModItems.FRIED_SALMON);
+                        entries.add(ModItems.FRIED_MILK_WIP);
+                        entries.add(ModItems.FRIED_MILK);
+                        entries.add(ModItems.RAW_POTATO_CHIP);
+                        entries.add(ModItems.POTATO_CHIP);
+                        entries.add(ModItems.CHEESE_BALL);
+                        entries.add(ModItems.FRIED_DOUGH_STICK);
+
                         entries.add(ModItems.CHERRY);
                         entries.add(ModItems.CHERRY_BOMB);
+
                         entries.add(ModItems.BUTTER);
-                        entries.add(ModItems.CHEESE);
+
                         entries.add(ModItems.EGG_TART);
                         entries.add(ModItems.TRUFFLE_EGG_TART);
+
                         entries.add(ModItems.BRAISED_SHRIMP_BALL);
+
                         entries.add(ModItems.SUNFLOWER_SEED);
                         entries.add(ModItems.SUNFLOWER_SEED_PEEL);
+                        entries.add(ModItems.SUNFLOWER_SEED_PULP);
+                        entries.add(ModItems.ROASTED_SUNFLOWER_SEED);
                         // Puddings
                         entries.add(ModItems.PUDDING_WIP_1);
                         entries.add(ModItems.PUDDING_WIP_2);
@@ -116,6 +148,18 @@ public class ModItemGroups {
                         entries.add(ModItems.STARCH_SAUSAGE);
                         entries.add(ModItems.GRILLED_STARCH_SAUSAGE);
                         entries.add(ModItems.LITTLE_OCTOPUS_SAUSAGE);
+                        // Cakes
+                        entries.add(ModItems.EMPTY_CAKE);
+                        entries.add(ModItems.BLUE_ORCHID_FLOWER_CAKE);
+                        entries.add(ModItems.CHERRY_CAKE);
+                        entries.add(ModItems.LILAC_CAKE);
+                        entries.add(ModItems.ORANGE_TULIP_CAKE);
+                        entries.add(ModItems.OXEYE_DAISY_CAKE);
+                        entries.add(ModItems.PINK_TULIP_CAKE);
+                        entries.add(ModItems.ROSE_CAKE);
+                        entries.add(ModItems.SUNFLOWER_CAKE);
+                        entries.add(ModItems.WHITE_TULIP_CAKE);
+                        entries.add(ModItems.WITHER_ROSE_CAKE);
                     }).build());
     public static void registerItemGroup(){
         Bakingdelight.LOGGER.info("Registering Item Group for " + Bakingdelight.MOD_ID);

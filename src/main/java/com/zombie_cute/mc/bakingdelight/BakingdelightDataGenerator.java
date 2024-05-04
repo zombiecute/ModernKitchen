@@ -16,5 +16,6 @@ public class BakingdelightDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModBlockTagGenerator::new);
 		pack.addProvider(ModItemTagGenerator::new);
 		pack.addProvider(ModAdvancementGenerator::new);
+		pack.addProvider(ModFluidTagGenerator::new);
 	}
 }

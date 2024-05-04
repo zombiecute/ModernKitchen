@@ -1,6 +1,19 @@
 {
   "replace": false,
   "values": [
+    "bakingdelight:sunflower_seed_pulp",
+    "bakingdelight:empty_cake",
+    "bakingdelight:raw_onion_ring",
+    "bakingdelight:onion_ring",
+    "bakingdelight:fried_cod",
+    "bakingdelight:fried_salmon",
+    "bakingdelight:fried_milk_wip",
+    "bakingdelight:fried_milk",
+    "bakingdelight:fried_apple",
+    "bakingdelight:raw_potato_chip",
+    "bakingdelight:potato_chip",
+    "bakingdelight:cheese_ball",
+    "bakingdelight:fried_dough_stick",
     {
       "id": "#c:foods/breads",
       "required": false
@@ -35,6 +48,10 @@
     },
     {
       "id": "#c:foods/cuttlebones",
+      "required": false
+    },
+    {
+      "id": "#c:flower_cakes",
       "required": false
     },
     {

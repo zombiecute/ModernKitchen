@@ -19,12 +19,20 @@ public class ModBlockLootGenerator extends FabricBlockLootTableProvider {
     public void generate() {
         addDrop(ModBlocks.MASHED_POTATO_BLOCK);
         addDrop(ModBlocks.GLASS_BOWL);
-        addDrop(ModBlocks.OVEN);
         addDrop(ModBlocks.FREEZER);
         addDrop(ModBlocks.WHEAT_DOUGH);
         addDrop(ModBlocks.PIZZA_WIP);
         addDrop(ModBlocks.RAW_PIZZA);
-
+        addDrop(ModBlocks.BAKING_TRAY);
+        addDrop(ModBlocks.DEEP_FRYER);
+        addDrop(ModBlocks.ADVANCE_FURNACE);
+        addDrop(ModBlocks.OVEN);
+        addDrop(ModBlocks.WOODEN_BASIN);
+        addDrop(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
+        addDrop(ModBlocks.BIOGAS_DIGESTER_IO);
+        addDrop(ModBlocks.GAS_COOKING_STOVE);
+        addDrop(ModBlocks.BURNING_GAS_COOKING_STOVE,ModBlocks.GAS_COOKING_STOVE);
+        addDrop(ModBlocks.DEEP_FRY_BASKET);
 
         BlockStatePropertyLootCondition.Builder builder2 = BlockStatePropertyLootCondition
                 .builder(ModBlocks.BLACK_PEPPER_CROP)

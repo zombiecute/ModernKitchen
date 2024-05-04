@@ -19,12 +19,7 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class GlassBowlBlockEntityRenderer implements BlockEntityRenderer<GlassBowlBlockEntity> {
-    public GlassBowlBlockEntityRenderer(BlockEntityRendererFactory.Context context){
-
-    }
-
-
-
+    public GlassBowlBlockEntityRenderer(BlockEntityRendererFactory.Context context){}
     @Override
     public void render(GlassBowlBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();

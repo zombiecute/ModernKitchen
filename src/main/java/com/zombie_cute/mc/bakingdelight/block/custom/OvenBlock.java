@@ -2,12 +2,17 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
+import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -18,6 +23,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
@@ -65,6 +73,13 @@ public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
             if (state.getBlock() != newState.getBlock()){
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof OvenBlockEntity){
+                    if (((OvenBlockEntity) blockEntity).getExperience() != 0){
+                        ExperienceOrbEntity xp =
+                                new ExperienceOrbEntity(world,pos.getX(),pos.getY(),pos.getZ(),
+                                        ((OvenBlockEntity) blockEntity).getExperience());
+                        world.spawnEntity(xp);
+                        world.updateComparators(pos,this);
+                    }
                     ItemScatterer.spawn(world ,pos, (OvenBlockEntity)blockEntity);
                     world.updateComparators(pos,this);
                 }
@@ -76,11 +91,24 @@ public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
             if (!world.isClient){
                 NamedScreenHandlerFactory screenHandlerFactory = ((OvenBlockEntity) world.getBlockEntity(pos));
-                if (screenHandlerFactory != null){
+                if (isCrowbar(player)){
+                    if (world.getBlockEntity(pos) instanceof OvenBlockEntity container) {
+                        container.onUse(state, world);
+                        return ActionResult.SUCCESS;
+                    }
+                } else if (screenHandlerFactory != null){
                     player.openHandledScreen(screenHandlerFactory);
                 }
             }
             return ActionResult.SUCCESS;
+    }
+    private boolean isCrowbar(PlayerEntity player) {
+        Item item = player.getMainHandStack().getItem();
+        List<Item> items = new ArrayList<>();
+        for (RegistryEntry<Item> registryEntry: Registries.ITEM.iterateEntries(ModTagKeys.CROWBARS)){
+            items.add(registryEntry.value());
+        }
+        return items.contains(item);
     }
 
 

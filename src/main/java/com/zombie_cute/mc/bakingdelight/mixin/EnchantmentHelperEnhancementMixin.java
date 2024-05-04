@@ -1,8 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.mixin;
 
-import com.zombie_cute.mc.bakingdelight.item.custom.KneadingStickItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.KnifeItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -40,6 +38,18 @@ public abstract class EnchantmentHelperEnhancementMixin {
                     .forEach(enchantment -> addEntry(possibleEnchantmentList, power, enchantment));
             possibleEnchantmentList.removeIf(enchantmentLevelEntry ->
                     !KneadingStickItem.ALLOWED_ENCHANTMENTS.contains(enchantmentLevelEntry.enchantment));
+        } else if (stack.getItem() instanceof CrowbarItem) {
+            CrowbarItem.ALLOWED_ENCHANTMENTS.stream()
+                    .filter(enchantment -> !containsEnchantment(possibleEnchantmentList, enchantment))
+                    .forEach(enchantment -> addEntry(possibleEnchantmentList, power, enchantment));
+            possibleEnchantmentList.removeIf(enchantmentLevelEntry ->
+                    !CrowbarItem.ALLOWED_ENCHANTMENTS.contains(enchantmentLevelEntry.enchantment));
+        } else if (stack.getItem() instanceof SpatulaItem) {
+            SpatulaItem.ALLOWED_ENCHANTMENTS.stream()
+                    .filter(enchantment -> !containsEnchantment(possibleEnchantmentList, enchantment))
+                    .forEach(enchantment -> addEntry(possibleEnchantmentList, power, enchantment));
+            possibleEnchantmentList.removeIf(enchantmentLevelEntry ->
+                    !SpatulaItem.ALLOWED_ENCHANTMENTS.contains(enchantmentLevelEntry.enchantment));
         }
     }
 

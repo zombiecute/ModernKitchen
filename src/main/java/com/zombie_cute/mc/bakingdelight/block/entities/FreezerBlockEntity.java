@@ -2,8 +2,9 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Maps;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
-import com.zombie_cute.mc.bakingdelight.recipe.FreezingRecipe;
-import com.zombie_cute.mc.bakingdelight.screen.FreezerScreenHandler;
+import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.recipe.custom.FreezingRecipe;
+import com.zombie_cute.mc.bakingdelight.screen.custom.FreezerScreenHandler;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -40,9 +41,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock.HAS_ICE;
-
-public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, IsStateChange, SidedInventory {
+public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, SidedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(20,ItemStack.EMPTY);
     private static final int INPUT_SLOT_1 = 0;
     private static final int INPUT_SLOT_2 = 1;
@@ -54,6 +53,8 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     private int progress = 0;
     private int maxProgress = 400;
     private int coolTime = 0;
+    private int maxCoolTime = 1;
+    private int experiences = 0;
     public FreezerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.FREEZER_ENTITY, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
@@ -62,6 +63,9 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                 return switch (index) {
                     case 0 -> FreezerBlockEntity.this.progress;
                     case 1 -> FreezerBlockEntity.this.maxProgress;
+                    case 2 -> FreezerBlockEntity.this.coolTime;
+                    case 3 -> FreezerBlockEntity.this.maxCoolTime;
+                    case 4 -> FreezerBlockEntity.this.experiences;
                     default -> 0;
                 };
             }
@@ -75,12 +79,21 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                     case 1 :{
                         FreezerBlockEntity.this.maxProgress = value;break;
                     }
+                    case 2 :{
+                        FreezerBlockEntity.this.coolTime = value;break;
+                    }
+                    case 3 :{
+                        FreezerBlockEntity.this.maxCoolTime = value;break;
+                    }
+                    case 4 :{
+                        FreezerBlockEntity.this.experiences = value;break;
+                    }
                 }
             }
 
             @Override
             public int size() {
-                return 2;
+                return 5;
             }
         };
     }
@@ -93,6 +106,8 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         Inventories.writeNbt(nbt, inventory);
         nbt.putInt("freezer.progress",progress);
         nbt.putInt("freezer.fuelTime", coolTime);
+        nbt.putInt("freezer.maxCoolTime", maxCoolTime);
+        nbt.putInt("freezer.experiences", experiences);
     }
 
     @Override
@@ -101,6 +116,12 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         Inventories.readNbt(nbt, inventory);
         progress = nbt.getInt("freezer.progress");
         coolTime = nbt.getInt("freezer.coolTime");
+        maxCoolTime = nbt.getInt("freezer.maxCoolTime");
+        experiences = nbt.getInt("freezer.experiences");
+    }
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Override
@@ -127,50 +148,53 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         if (world.isClient){
             return;
         }
-        if (this.isCool()){
-            --this.coolTime;
-            world.setBlockState(pos, state.with(HAS_ICE,true));
+        if (isCool()){
+            --coolTime;
             playSound(ModSounds.BLOCK_FREEZER_RUNNING,0.3f,0.8f);
+            if (isOutputSlotEmptyOrReceivable()){
+                if (hasRecipe(entity)){
+                    increaseCraftProgress();
+                    markDirty(world, pos, state);
+                    if (hasCraftingFinished()){
+                        craftItem(entity);
+                        if (getStack(INPUT_SLOT_1).getItem() == Items.WATER_BUCKET ||
+                                getStack(INPUT_SLOT_1).getItem() == Items.LAVA_BUCKET){
+                            setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 3));
+                        } else {
+                            removeStack(INPUT_SLOT_1,1);
+                        }
+                        removeStack(INPUT_SLOT_2,1);
+                        removeStack(INPUT_SLOT_3,1);
+                        resetProgress();
+                    }
+                } else {
+                    if (this.progress != 0){
+                        resetProgress();
+                    }
+                }
+            }
         } else {
-            world.setBlockState(pos, state.with(HAS_ICE, false));
+            if (hasRecipe(entity)){
+                progress--;
+            } else {
+                resetProgress();
+            }
+            maxCoolTime = 1;
+            markDirty(world, pos, state);
         }
         if (canUseAsIce(this.getStack(3))&&this.coolTime == 0){
             ItemStack ice = this.getStack(3);
             this.coolTime = this.getCoolTime(ice);
+            maxCoolTime = coolTime;
             if (this.getStack(ICE_SLOT).getItem() == Items.POWDER_SNOW_BUCKET){
                 this.setStack(ICE_SLOT, Items.BUCKET.getDefaultStack());
             } else {
                 this.removeStack(ICE_SLOT,1);
             }
         }
-        if (isOutputSlotEmptyOrReceivable() && isCool()){
-            if (this.hasRecipe(entity)){
-                this.increaseCraftProgress();
-                markDirty(world, pos, state);
-                if (hasCraftingFinished()){
-                    this.craftItem(entity);
-                    if (this.getStack(INPUT_SLOT_1).getItem() == Items.WATER_BUCKET ||
-                            this.getStack(INPUT_SLOT_1).getItem() == Items.LAVA_BUCKET){
-                        this.setStack(INPUT_SLOT_1, new ItemStack(Items.BUCKET, 3));
-                    } else {
-                        this.removeStack(INPUT_SLOT_1,1);
-                    }
-                    this.removeStack(INPUT_SLOT_2,1);
-                    this.removeStack(INPUT_SLOT_3,1);
-                    this.resetProgress();
-                }
-            } else {
-                if (this.progress != 0){
-                    this.progress --;
-                }
-            }
-        } else {
-            if (this.progress != 0){
-                this.progress --;
-            }
-            markDirty(world, pos, state);
-        }
     }
+
+
     public static Map<Item, Integer> createCoolTimeMap() {
         LinkedHashMap<Item, Integer> map = Maps.newLinkedHashMap();
         FreezerBlockEntity.addIce(map, Items.ICE, 60);
@@ -212,9 +236,9 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<FreezingRecipe> match = entity.getWorld().getRecipeManager()
+        Optional<FreezingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
                 .getFirstMatch(FreezingRecipe.Type.INSTANCE, inventory,entity.getWorld());
-
+        experiences += 3;
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
     }
@@ -229,12 +253,14 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<FreezingRecipe> match = entity.getWorld().getRecipeManager()
+        Optional<FreezingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
                 .getFirstMatch(FreezingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
-        return match.isPresent() &&
-                canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&
-                canInsertItemIntoOutputSlot(match.get().getOutput(entity.world.getRegistryManager()).getItem());
+        if (entity.world != null) {
+            return match.isPresent() &&
+                    canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&
+                    canInsertItemIntoOutputSlot(match.get().getOutput(entity.world.getRegistryManager()).getItem());
+        } else return false;
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
@@ -247,13 +273,6 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
 
     private boolean isOutputSlotEmptyOrReceivable() {
         return this.getStack(OUTPUT_SLOT).isEmpty() || this.getStack(OUTPUT_SLOT).getCount() < this.getStack(OUTPUT_SLOT).getMaxCount();
-    }
-
-    public boolean isCooling() {
-        if (world == null){
-            return false;
-        }
-        return isCooling(world,pos);
     }
 
     @Override
@@ -305,5 +324,11 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         if (world != null) {
             return this.getStack(6);
         } else return ItemStack.EMPTY;
+    }
+    public void setExperience(int experiences){
+        this.experiences = experiences;
+    }
+    public int getExperience(){
+        return experiences;
     }
 }

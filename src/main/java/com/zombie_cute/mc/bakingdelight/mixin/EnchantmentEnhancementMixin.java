@@ -1,8 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.mixin;
 
-import com.zombie_cute.mc.bakingdelight.item.custom.KneadingStickItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.KnifeItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
+import com.zombie_cute.mc.bakingdelight.item.custom.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,6 +32,22 @@ public class EnchantmentEnhancementMixin {
             cir.setReturnValue(canBeEnchanted);
         } else if (stack.getItem() instanceof KneadingStickItem) {
             for (Enchantment enchantment : KneadingStickItem.ALLOWED_ENCHANTMENTS) {
+                if ((Object)this == enchantment) {
+                    canBeEnchanted = true;
+                    break;
+                }
+            }
+            cir.setReturnValue(canBeEnchanted);
+        } else if (stack.getItem() instanceof CrowbarItem) {
+            for (Enchantment enchantment : CrowbarItem.ALLOWED_ENCHANTMENTS) {
+                if ((Object)this == enchantment) {
+                    canBeEnchanted = true;
+                    break;
+                }
+            }
+            cir.setReturnValue(canBeEnchanted);
+        } else if (stack.getItem() instanceof SpatulaItem) {
+            for (Enchantment enchantment : SpatulaItem.ALLOWED_ENCHANTMENTS) {
                 if ((Object)this == enchantment) {
                     canBeEnchanted = true;
                     break;

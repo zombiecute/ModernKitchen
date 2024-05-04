@@ -31,4 +31,5 @@ public abstract class AbstractPizzaBlock extends Block {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return !world.getBlockState(pos.down()).isAir();
     }
+
 }

@@ -1,19 +1,22 @@
 package com.zombie_cute.mc.bakingdelight.gen;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.PizzaWIPBlockEntity;
-import com.zombie_cute.mc.bakingdelight.compat.glass_bowl.GlassBowlWhiskingCategory;
-import com.zombie_cute.mc.bakingdelight.compat.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
+import com.zombie_cute.mc.bakingdelight.block.entities.*;
+import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.glass_bowl.GlassBowlMixWithWaterCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.glass_bowl.GlassBowlWhiskingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.pizza.PizzaMakingCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.transform.OvenTransformCategory;
+import com.zombie_cute.mc.bakingdelight.effects.ModEffectsAndPotions;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.item.custom.ButterItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.CuttleboneItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.TruffleItem;
-import com.zombie_cute.mc.bakingdelight.item.custom.WhiskItem;
+import com.zombie_cute.mc.bakingdelight.screen.custom.AdvanceFurnaceScreen;
+import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterControllerScreen;
+import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterIOScreen;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -24,16 +27,38 @@ public class ModLangGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        translationBuilder.add(WhiskItem.WHISK_TOOL_TIP_1, "A whisk that can be used to mix ingredients, or... whisk the brains of monsters?");
-        translationBuilder.add(CuttleboneItem.CUTTLEBONE_TOOL_TIP_1, "It can be dropped when a squid killed by an amethyst tool.");
-        translationBuilder.add(TruffleItem.TRUFFLE_TOOL_TIP_1, "It can be found in podzol.");
-        translationBuilder.add(WhiskItem.TOOL_TIP_0, "Press [SHIFT] to show more");
-        translationBuilder.add(ButterItem.BUTTER_TOOL_TIP_0, "Sticky texture...Maybe it's used for something other than food");
+        translationBuilder.add(ToolTips.SHIFT_FRONT, "Hold ");
+        translationBuilder.add(ToolTips.SHIFT_END, " to view summary");
+        translationBuilder.add(ToolTips.WHISK_1, "A whisk that can be used to mix ingredients,");
+        translationBuilder.add(ToolTips.WHISK_2, "or... whisk the brains of monsters?");
+        translationBuilder.add(ToolTips.BUTTER_1, "Sticky texture...Maybe it's used ");
+        translationBuilder.add(ToolTips.BUTTER_2, "for something other than food");
+        translationBuilder.add(ToolTips.TRUFFLE, "It can be found in podzol");
+        translationBuilder.add(ToolTips.CUTTLEBONE, "It can be dropped when a squid killed by an amethyst tool");
+        translationBuilder.add(ToolTips.FILTER_1, "A filter made of string that can be placed");
+        translationBuilder.add(ToolTips.FILTER_2, "in a wooden basin to filter oil and slags");
+        translationBuilder.add(ToolTips.KNEADING_STICK, "It beats and kneads people");
+        translationBuilder.add(ToolTips.SPATULA, "It can be used with a heated tray to stir-fry foods");
+        translationBuilder.add(ToolTips.BDC_1, "It is the core component that makes up the biogas digester,");
+        translationBuilder.add(ToolTips.BDC_2, "and when a flat and completely sealed cuboid area exists underneath it,");
+        translationBuilder.add(ToolTips.BDC_3, "it will automatically recognize this area as the digester.");
+        translationBuilder.add(ToolTips.BDI_1, "It will be activated when it is a working biogas digester controller");
+        translationBuilder.add(ToolTips.BDI_2, "underneath it, at which point you just need to fill it with any food");
+        translationBuilder.add(ToolTips.BDI_3, "to start fermenting it to produce biogas. If a gas canister attached to");
+        translationBuilder.add(ToolTips.BDI_4, "the side of it, it will allow you to fill the gas canister with biogas.");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_1, "When it is flanked by a gas canister containing gas, right-click to activate it,");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_2, "and when activated, it can heat up the block above it, including baking tray,");
+        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_3, "oven, advance furnace, and deep fryer, all of which are compatible.");
+        translationBuilder.add(ToolTips.CROWBAR, "The Holy Sword of Physics");
+
+
+        translationBuilder.add(AdvanceFurnaceScreen.TOOLTIP,"Click to gain experiences");
 
         translationBuilder.add(GlassBowlBlockEntity.WHISK_FAIL, "This thing doesn't seem to be able to be handled by the whisk.");
         translationBuilder.add(GlassBowlBlockEntity.NEED_BOWL, "You need a bowl to take out this item.");
         translationBuilder.add(PizzaWIPBlockEntity.NEED_INGREDIENT, "You need to put a proper ingredient here.");
         translationBuilder.add(PizzaWIPBlockEntity.NEED_CHEESE, "You need to put a cheese here.");
+        translationBuilder.add(FreezerBlock.FAIL_TO_OPEN, "The freezer door is blocked by a block.");
 
         translationBuilder.add(ModItems.WOODEN_WHISK, "Wooden Whisk");
         translationBuilder.add(ModItems.STONE_WHISK, "Stone Whisk");
@@ -48,6 +73,10 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_KNIFE, "Amethyst Knife");
 
         translationBuilder.add(ModItems.KNEADING_STICK, "Kneading Stick");
+        translationBuilder.add(ModItems.CROWBAR, "Crowbar");
+        translationBuilder.add(ModItems.SPATULA, "Spatula");
+        translationBuilder.add(ModItems.FILTER, "Filter");
+
 
         translationBuilder.add(ModItems.EGG_TART, "Egg Tart");
         translationBuilder.add(ModItems.APPLE_PUDDING, "Apple Pudding");
@@ -55,6 +84,12 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.MATCHA_PUDDING, "Matcha Pudding");
         translationBuilder.add(ModItems.SUNFLOWER_SEED, "Sunflower Seed");
         translationBuilder.add(ModItems.SUNFLOWER_SEED_PEEL, "Sunflower Seed Peel");
+        translationBuilder.add(ModItems.SUNFLOWER_SEED_PULP, "Sunflower Seed Pulp");
+        translationBuilder.add(ModItems.ROASTED_SUNFLOWER_SEED, "Stir-fried Sunflower Seed");
+        translationBuilder.add(ModItems.OIL_IMPURITY, "Oil Slag");
+        translationBuilder.add(ModItems.VEGETABLE_OIL_BOTTLE, "Vegetable Oil Bottle");
+        translationBuilder.add(ModItems.VEGETABLE_OIL_BUCKET, "Vegetable Oil Bucket");
+
         translationBuilder.add(ModItems.TRUFFLE_EGG_TART, "Truffle Egg Tart");
         translationBuilder.add(ModItems.PUDDING_WIP_1, "Pudding (Work In Progress)");
         translationBuilder.add(ModItems.PUDDING_WIP_2, "Pudding (Work In Progress)");
@@ -124,6 +159,31 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.AMETHYST_SHOVEL, "Amethyst Shovel");
         translationBuilder.add(ModItems.AMETHYST_HOE, "Amethyst Hoe");
 
+        translationBuilder.add(ModItems.EMPTY_CAKE, "Piecrust");
+        translationBuilder.add(ModItems.BLUE_ORCHID_FLOWER_CAKE, "Blue Orchid Cake");
+        translationBuilder.add(ModItems.CHERRY_CAKE, "Cherry Cake");
+        translationBuilder.add(ModItems.LILAC_CAKE, "Lilac Cake");
+        translationBuilder.add(ModItems.ORANGE_TULIP_CAKE, "Orange Tulip Cake");
+        translationBuilder.add(ModItems.OXEYE_DAISY_CAKE, "Oxeye Daisy Cake");
+        translationBuilder.add(ModItems.PINK_TULIP_CAKE, "Pink Tulip Cake");
+        translationBuilder.add(ModItems.ROSE_CAKE, "Rose Cake");
+        translationBuilder.add(ModItems.SUNFLOWER_CAKE, "Sunflower Cake");
+        translationBuilder.add(ModItems.WHITE_TULIP_CAKE, "White Tulip Cake");
+        translationBuilder.add(ModItems.WITHER_ROSE_CAKE, "Wither Rose Cake");
+
+        translationBuilder.add(ModItems.RAW_ONION_RING, "Raw Onion Ring");
+        translationBuilder.add(ModItems.ONION_RING, "Chicken Onion Rings");
+        translationBuilder.add(ModItems.FRIED_COD, "Deep-fried Cod");
+        translationBuilder.add(ModItems.FRIED_SALMON, "Deep-fried Salmon");
+        translationBuilder.add(ModItems.FRIED_MILK_WIP, "Deep-fried Milk (Work In Progress)");
+        translationBuilder.add(ModItems.FRIED_MILK, "Deep-fried Milk");
+        translationBuilder.add(ModItems.FRIED_APPLE, "Deep-fried Apple");
+        translationBuilder.add(ModItems.RAW_POTATO_CHIP, "Sliced Raw Potato");
+        translationBuilder.add(ModItems.POTATO_CHIP, "Potato Chip");
+        translationBuilder.add(ModItems.CHEESE_BALL, "Cheese Ball");
+        translationBuilder.add(ModItems.FRIED_DOUGH_STICK, "Deep-fried Dough Stick");
+
+
         translationBuilder.add(ModEntities.BUTTER,"Butter");
         translationBuilder.add(ModEntities.CHERRY_BOMB,"Cherry");
 
@@ -133,14 +193,78 @@ public class ModLangGenerator extends FabricLanguageProvider {
 
         translationBuilder.add(ModBlocks.GLASS_BOWL, "Glass Bowl");
         translationBuilder.add(GlassBowlWhiskingCategory.GLASS_BOWL_NAME, "Whisk");
-        translationBuilder.add("display_name.bakingdelight.water_glass_bowl_name","Mix with Water");
+        translationBuilder.add(GlassBowlMixWithWaterCategory.WATER_GLASS_BOWL_NAME,"Mix with Water");
         translationBuilder.add(ModBlocks.OVEN, "Oven");
+        translationBuilder.add(ModBlocks.ADVANCE_FURNACE, "Advance Furnace");
+        translationBuilder.add(ModBlocks.BAKING_TRAY, "Baking Tray");
+        translationBuilder.add(ModBlocks.DEEP_FRYER, "Deep Fryer");
+        translationBuilder.add(BakingTrayCategory.BAKING_TRAY_NAME, "Stir-fried Dish");
+        translationBuilder.add(ModBlocks.WOODEN_BASIN, "Wooden Basin");
+        translationBuilder.add(WoodenBasinBlockEntity.WOODEN_BASIN_NAME, "Oil Extraction");
+        translationBuilder.add(ModBlocks.GAS_CANISTER, "Gas Canister");
+        translationBuilder.add(GasCanisterBlockEntity.GAS_CANISTER_NAME, "Gas Capacity");
+        translationBuilder.add(ModBlocks.BIOGAS_DIGESTER_CONTROLLER, "Biogas Digester Controller");
+        translationBuilder.add(BiogasDigesterControllerScreen.UNAVAILABLE, "The space under the controller is incomplete, not enclosed, or too large.");
+        translationBuilder.add(BiogasDigesterControllerScreen.SIZE, "Size of the space under the controller.");
+        translationBuilder.add(BiogasDigesterControllerScreen.GAS_VALUE, "Current gas storage capacity of the digester.");
+        translationBuilder.add(BiogasDigesterControllerScreen.MAX_GAS_VALUE, "Maximum gas storage capacity of the digester.");
+        translationBuilder.add(ModBlocks.BIOGAS_DIGESTER_IO, "Biogas Digester I/O port");
+        translationBuilder.add(BiogasDigesterIOScreen.UNAVAILABLE, "The block below the port is not a controller, or the controller is not activated");
+        translationBuilder.add(BiogasFermentationCategory.BIOGAS_FERMENTATION_NAME, "Biogas Fermentation");
+        translationBuilder.add(BiogasFermentationCategory.FOOD, "Any Food");
+        translationBuilder.add(ModBlocks.BURNING_GAS_COOKING_STOVE, "Burning Gas Cooking Stove");
+        translationBuilder.add(ModBlocks.GAS_COOKING_STOVE, "Gas Cooking Stove");
+        translationBuilder.add(ModBlocks.DEEP_FRY_BASKET, "Deep Fry Basket");
+        translationBuilder.add(DeepFryerBlockEntity.ADD_OIL, "You need to add cooking oil to it.");
+        translationBuilder.add(DeepFryerBlockEntity.TOO_HOT, "It's too hot! Please hold the deep fry basket to remove the items");
+        translationBuilder.add(DeepFryerBlockEntity.DEEP_FRYER_NAME, "Deep Frying");
+
         translationBuilder.add(OvenBlockEntity.OVEN_NAME, "Baking");
+        translationBuilder.add(AdvanceFurnaceBlockEntity.ADVANCE_FURNACE_NAME, "Advance Furnace");
         translationBuilder.add(ModBlocks.FREEZER, "Freezer");
         translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "Refrigerate");
         translationBuilder.add(PizzaMakingCategory.PIZZA_TITLE, "Pizza Making");
+        translationBuilder.add(OvenTransformCategory.TRANSFORM_TITLE, "Transform");
 
-        translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "Baking Delight");
+        translationBuilder.add(ModBlocks.CREAM_FLUID_BLOCK, "Cream");
+        translationBuilder.add(ModBlocks.VEGETABLE_OIL_FLUID_BLOCK, "Vegetable Oil");
+
+        translationBuilder.add(ModEffectsAndPotions.STICKY,"Sticky");
+
+        translationBuilder.add("item.minecraft.potion.effect.sticky_potion","Potion of Sticky");
+        translationBuilder.add("item.minecraft.potion.effect.sticky_long_potion","Potion of Sticky");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_potion","Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_long_potion","Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.potion.effect.squid_power_strong_potion","Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_potion","Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_long_potion","Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.potion.effect.glow_squid_power_strong_potion","Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.sticky_potion","Splash Potion of Sticky");
+        translationBuilder.add("item.minecraft.splash_potion.effect.sticky_long_potion","Splash Potion of Sticky");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_potion","Splash Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_long_potion","Splash Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.squid_power_strong_potion","Splash Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_potion","Splash Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_long_potion","Splash Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.splash_potion.effect.glow_squid_power_strong_potion","Splash Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.sticky_potion","Lingering Potion of Sticky");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.sticky_long_potion","Lingering Potion of Sticky");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_potion","Lingering Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_long_potion","Lingering Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.squid_power_strong_potion","Lingering Potion of the Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_potion","Lingering Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_long_potion","Lingering Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.lingering_potion.effect.glow_squid_power_strong_potion","Lingering Potion of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.sticky_potion","Arrow of Sticky");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.sticky_long_potion","Arrow of Sticky");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_potion","Arrow of the Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_long_potion","Arrow of the Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.squid_power_strong_potion","Arrow of the Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_potion","Arrow of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_long_potion","Arrow of the Glow Squid Power");
+        translationBuilder.add("item.minecraft.tipped_arrow.effect.glow_squid_power_strong_potion","Arrow of the Glow Squid Power");
+
+        translationBuilder.add(ModItemGroups.GROUPS_TAB_NAME, "Modern Kitchen");
 
         translationBuilder.add("sounds.bakingdelight.entity_butter_hit", "Butter: Hit");
         translationBuilder.add("sounds.bakingdelight.entity_butter_shoot", "Butter: Shoot");
@@ -150,8 +274,14 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.block_freezer_open", "Freezer: Open");
         translationBuilder.add("sounds.bakingdelight.block_freezer_close", "Freezer: Close");
         translationBuilder.add("sounds.bakingdelight.block_glass_bowl_whisking", "Item: Whisked");
+        translationBuilder.add("sounds.bakingdelight.block_food_frying", "Food: Frying");
+        translationBuilder.add("sounds.bakingdelight.item_crowbar_hit", "Crowbar: Hit");
+        translationBuilder.add("sounds.bakingdelight.item_crowbar_attack", "Crowbar: Attack");
+        translationBuilder.add("sounds.bakingdelight.block_gas_canister_filling", "Gas Canister: Filling");
+        translationBuilder.add("sounds.bakingdelight.block_gas_cooking_stove_ignite", "Gas Cooking Stove: Try to Ignite");
 
-        translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "Ready to Bake!");
+
+        translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "The truth is it's a whisk");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "Craft a whisk to start your new kitchen journey.");
         translationBuilder.add(ModAdvancementGenerator.GET_AMETHYST_TOOL_TITLE, "Sparkling!");
         translationBuilder.add(ModAdvancementGenerator.GET_AMETHYST_TOOL_DESC, "Craft a amethyst tool.");
@@ -193,7 +323,7 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModAdvancementGenerator.GET_CREAM_BUCKET_DESC, "Put the milk bucket in a glass bowl and whisk with a whisk to obtain the cream bucket.");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_TITLE, "Sticky and Sweet");
         translationBuilder.add(ModAdvancementGenerator.GET_BUTTER_DESC, "Put the cream in a glass bowl and whisk with a whisk to obtain the butter.");
-        translationBuilder.add("advancement.bakingdelight.get_start_desc", "Ready to bake!");
+        translationBuilder.add("advancement.bakingdelight.get_start_desc", "After eating this piece of bread, does it seem too mediocre? It's time to prepare some brand new food!");
         translationBuilder.add("advancement.bakingdelight.get_kneading_stick.title", "Grandma's Kneading Stick");
         translationBuilder.add("advancement.bakingdelight.get_kneading_stick.desc", "It's just an ordinary wooden stick.");
         translationBuilder.add("advancement.bakingdelight.get_wheat_flour.title", "Better Bread Making");
@@ -208,5 +338,36 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.get_black_pepper.desc", "Finding new crops in villagers' homes or ruins.");
         translationBuilder.add("advancement.bakingdelight.get_cheese.title", "Not Sour");
         translationBuilder.add("advancement.bakingdelight.get_cheese.desc", "Put the milk in the oven to cook.");
+        translationBuilder.add("advancement.bakingdelight.get_advance_furnace.title", "4x speed");
+        translationBuilder.add("advancement.bakingdelight.get_advance_furnace.desc", "Craft an advanced furnace, which is 4 times faster than a normal furnace!");
+        translationBuilder.add("advancement.bakingdelight.get_baking_tray.title", "Not just a \"Baking\" Tray");
+        translationBuilder.add("advancement.bakingdelight.get_baking_tray.desc", "It can be placed inside an advanced furnace to upgrade your furnace to oven.");
+        translationBuilder.add("advancement.bakingdelight.get_crowbar.title", "Rule Physics");
+        translationBuilder.add("advancement.bakingdelight.get_crowbar.desc", "An awesome tool alright? You can right-click to demote the oven as well as right-click to quickly destroy doors and windows. Just remember, don't hit anyone with it.");
+        translationBuilder.add("advancement.bakingdelight.wooden_basin.title", "It's not a Washbasin!");
+        translationBuilder.add("advancement.bakingdelight.wooden_basin.desc", "Apparently it's a tool for extracting oil.");
+        translationBuilder.add("advancement.bakingdelight.filter.title", "Beginning of a life of labor");
+        translationBuilder.add("advancement.bakingdelight.filter.desc", "Putting filters and stir-fried oil crops (like sunflower seeds) into wooden basin and pressing the oil with feet on the basin");
+        translationBuilder.add("advancement.bakingdelight.vegetable_oil.title", "Glossy");
+        translationBuilder.add("advancement.bakingdelight.vegetable_oil.desc", "Congratulations, you're not far from deep-frying food.");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.title", "Ordeal (For Food)");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "Right click to put in oil or take out or deposit an item, sneak and right click to see its status. It must work when oil is present and heated by a gas cooking stove.");
+        translationBuilder.add("advancement.bakingdelight.deep_fry_basket.title", "Watch out for hot oil");
+        translationBuilder.add("advancement.bakingdelight.deep_fry_basket.desc", "Remember to use a deep fry basket to get items out of the deep fryer, beware of fryer killers!");
+        translationBuilder.add("advancement.bakingdelight.all_fried.title", "All Fried");
+        translationBuilder.add("advancement.bakingdelight.all_fried.desc", "Savor all the fried foods!");
+        translationBuilder.add("advancement.bakingdelight.wither_rose_cake.title", "Bloom & Doom");
+        translationBuilder.add("advancement.bakingdelight.wither_rose_cake.desc", "Eat the wither rose cake, then think about your life.");
+        translationBuilder.add("advancement.bakingdelight.bdc_bdi.title", "Biogas Industry");
+        translationBuilder.add("advancement.bakingdelight.bdc_bdi.desc", "Craft a biogas digester controller and a biogas digester I/O port. Remember to read their instructions and build your biogas digester!");
+        translationBuilder.add("advancement.bakingdelight.gas_canister.title", "Flammable and Explosive");
+        translationBuilder.add("advancement.bakingdelight.gas_canister.desc", "It can either load gas from the biogas digester I/O port or supply gas to a gas cooking stove. Remember to be safe though!");
+        translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.title", "Lit the Stove");
+        translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.desc", "Gas cooking stove can heat a lot of things, including yourself");
+        translationBuilder.add("advancement.bakingdelight.spatula.title", "It's stir-fry time!");
+        translationBuilder.add("advancement.bakingdelight.spatula.desc", "Heat up a baking tray on the burning gas cooking stove, then add ingredients to it and stir-fry with a spatula.");
+
+
+
     }
 }

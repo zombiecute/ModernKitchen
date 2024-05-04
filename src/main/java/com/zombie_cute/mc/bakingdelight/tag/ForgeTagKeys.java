@@ -7,7 +7,19 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class ForgeTagKeys {
+
+    // Create Mod
+    public static final TagKey<Item> UPRIGHT_ON_BELT = createModItemTag("upright_on_belt");
+    public static final TagKey<Block> PASSIVE_BOILER_HEATERS = createModBlockTag("passive_boiler_heaters");
+    // Farmer's Delight Mod
+    public static final TagKey<Block> HEAT_SOURCES = fdModBlockTag("heat_sources");
+    // C
+    public static final TagKey<Item> C_WHEAT_FLOUR = forgeItemTag("wheat_flour");
+    public static final TagKey<Item> C_FLOUR = forgeItemTag("flour");
+    public static final TagKey<Item> C_WHEAT_DOUGH = forgeItemTag("wheat_dough");
+    public static final TagKey<Item> C_DOUGH = forgeItemTag("dough");
     public static final TagKey<Item> FOODS = forgeItemTag("foods");
+        public static final TagKey<Item> FLOWER_CAKES = forgeItemTag("flower_cakes");
         public static final TagKey<Item> TRUFFLES = forgeItemTag("foods/truffles");
         public static final TagKey<Item> PUDDINGS = forgeItemTag("foods/puddings");
         public static final TagKey<Item> FLOURS = forgeItemTag("foods/flours");
@@ -43,5 +55,14 @@ public class ForgeTagKeys {
     private static TagKey<Item> forgeItemTag(String path) {
         // Change namespace to 'c'. Porting Lib does this too.
         return TagKey.of(RegistryKeys.ITEM, new Identifier("c", path));
+    }
+    private static TagKey<Item> createModItemTag(String path){
+        return TagKey.of(RegistryKeys.ITEM, new Identifier("create", path));
+    }
+    private static TagKey<Block> createModBlockTag(String path){
+        return TagKey.of(RegistryKeys.BLOCK, new Identifier("create", path));
+    }
+    private static TagKey<Block> fdModBlockTag(String path){
+        return TagKey.of(RegistryKeys.BLOCK, new Identifier("farmersdelight", path));
     }
 }

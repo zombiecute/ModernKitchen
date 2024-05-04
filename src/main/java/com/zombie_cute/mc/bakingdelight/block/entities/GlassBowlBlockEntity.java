@@ -2,9 +2,10 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.recipe.WhiskingRecipe;
-import com.zombie_cute.mc.bakingdelight.recipe.MixWithWaterRecipe;
+import com.zombie_cute.mc.bakingdelight.recipe.custom.WhiskingRecipe;
+import com.zombie_cute.mc.bakingdelight.recipe.custom.MixWithWaterRecipe;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.minecraft.block.BlockState;
@@ -40,7 +41,7 @@ import java.util.Optional;
 
 import static com.zombie_cute.mc.bakingdelight.block.custom.GlassBowlBlock.*;
 
-public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInventory{
+public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInventory {
     public static final String WHISK_FAIL = "bakingdelight.glass_bowl_message.whisk_fail";
     public static final String NEED_BOWL = "bakingdelight.glass_bowl_message.need_bowl";
     public GlassBowlBlockEntity(BlockPos pos, BlockState state) {
@@ -202,7 +203,9 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
         super.readNbt(nbt);
         Inventories.readNbt(nbt, GLASS_BOWL_INV);
     }
-
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
+    }
     @Override
     public DefaultedList<ItemStack> getItems() {
         return GLASS_BOWL_INV;
@@ -210,7 +213,6 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     public ItemStack getRendererStack(){
         return this.getStack(0);
     }
-
     @Override
     public void markDirty() {
         if (world != null) {
@@ -231,6 +233,9 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
+        if (world.isClient){
+            return;
+        }
         if (state.get(WATERLOGGED)){
             world.setBlockState(pos,state.with(HAS_WATER,true));
             if (!GLASS_BOWL_INV.get(0).isEmpty()){

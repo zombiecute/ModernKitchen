@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_oil=false": {
+      "model": "bakingdelight:block/wooden_basin"
+    },
+    "has_oil=true": {
+      "model": "bakingdelight:block/wooden_basin_has_oil"
+    }
+  }
+}

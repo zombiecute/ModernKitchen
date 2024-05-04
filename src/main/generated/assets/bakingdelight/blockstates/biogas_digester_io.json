@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bakingdelight:block/biogas_digester_io"
+    }
+  }
+}

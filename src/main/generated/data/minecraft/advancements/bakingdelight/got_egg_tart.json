@@ -19,7 +19,7 @@
     "description": {
       "translate": "advancement.bakingdelight.get_egg_tart_desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "bakingdelight:egg_tart"

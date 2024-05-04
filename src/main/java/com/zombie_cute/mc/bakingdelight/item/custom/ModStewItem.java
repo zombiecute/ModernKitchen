@@ -15,7 +15,11 @@ public class ModStewItem extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (user instanceof PlayerEntity player){
-            player.giveItemStack(Items.BOWL.getDefaultStack());
+            if (stack.getCount() == 1){
+                player.setStackInHand(player.getActiveHand(),Items.BOWL.getDefaultStack());
+            } else {
+                player.giveItemStack(Items.BOWL.getDefaultStack());
+            }
         }
         return super.finishUsing(stack, world, user);
     }

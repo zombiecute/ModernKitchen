@@ -1,14 +1,15 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.custom.AdvanceFurnaceBlock;
+import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.recipe.BakingRecipe;
-import com.zombie_cute.mc.bakingdelight.screen.OvenScreenHandler;
+import com.zombie_cute.mc.bakingdelight.recipe.custom.BakingRecipe;
+import com.zombie_cute.mc.bakingdelight.screen.custom.OvenScreenHandler;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,6 +28,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -36,9 +38,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.zombie_cute.mc.bakingdelight.block.custom.OvenBlock.FACING;
 import static com.zombie_cute.mc.bakingdelight.block.custom.OvenBlock.OVEN_BURNING;
 
-public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, IsStateChange, SidedInventory {
+public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, SidedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(6,ItemStack.EMPTY);
     private static final int INPUT_SLOT_1 = 0;
     private static final int INPUT_SLOT_2 = 1;
@@ -51,6 +54,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     private int progress = 0;
     private int maxProgress = 200;
     private int burnTime = 0;
+    private int maxBurnTime = 1;
+    private int experiences = 0;
 
     public OvenBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OVEN_BLOCK_ENTITY, pos, state);
@@ -60,6 +65,9 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                 return switch (index) {
                     case 0 -> OvenBlockEntity.this.progress;
                     case 1 -> OvenBlockEntity.this.maxProgress;
+                    case 2 -> OvenBlockEntity.this.burnTime;
+                    case 3 -> OvenBlockEntity.this.maxBurnTime;
+                    case 4 -> OvenBlockEntity.this.experiences;
                     default -> 0;
                 };
             }
@@ -73,12 +81,21 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                     case 1 :{
                         OvenBlockEntity.this.maxProgress = value;break;
                     }
+                    case 2 :{
+                        OvenBlockEntity.this.burnTime = value;break;
+                    }
+                    case 3 :{
+                        OvenBlockEntity.this.maxBurnTime = value;break;
+                    }
+                    case 4 :{
+                        OvenBlockEntity.this.experiences = value;break;
+                    }
                 }
             }
 
             @Override
             public int size() {
-                return 2;
+                return 5;
             }
         };
     }
@@ -89,6 +106,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         Inventories.writeNbt(nbt, inventory);
         nbt.putInt("oven.progress",progress);
         nbt.putInt("oven.fuelTime", burnTime);
+        nbt.putInt("oven.maxFuelTime", maxBurnTime);
+        nbt.putInt("oven.experiences", experiences);
     }
 
     @Override
@@ -97,8 +116,13 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         Inventories.readNbt(nbt, inventory);
         progress = nbt.getInt("oven.progress");
         burnTime = nbt.getInt("oven.fuelTime");
+        maxBurnTime = nbt.getInt("oven.maxFuelTime");
+        experiences = nbt.getInt("oven.experiences");
     }
-
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
+    }
     @Override
     public DefaultedList<ItemStack> getItems() {
         return inventory;
@@ -122,27 +146,52 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     public void playSound(SoundEvent sound, float volume, float pitch) {
         Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
     }
+    private int tick = 20;
     public void tick(World world, BlockPos pos, BlockState state, OvenBlockEntity entity) {
         if (world.isClient){
             return;
         }
-        if (this.isFuelBurning()){
-            --this.burnTime;
+        tick--;
+        if (tick == 0) tick = 20;
+        boolean alwaysBurning = world.getBlockEntity(pos.down()) instanceof BurningGasCookingStoveBlockEntity;
+        if (alwaysBurning){
+            burnTime = 1;
+            maxBurnTime = 1;
             world.setBlockState(pos, state.with(OVEN_BURNING,true));
-            playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,0.2f);
+            markDirty(world, pos, state);
+            if (tick % 3 == 0) playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,world.random.nextFloat()+0.3f);
+            checkAndCraft(world, pos, state, entity);
         } else {
-            world.setBlockState(pos, state.with(OVEN_BURNING,false));
-        }
-        if (canUseAsFuel(this.getStack(4))&&(this.burnTime == 0)){
-            ItemStack fuel = this.getStack(4);
-            this.burnTime = this.getFuelTime(fuel);
-            if (this.getStack(FUEL_SLOT).getItem() == Items.LAVA_BUCKET){
-                this.setStack(FUEL_SLOT, Items.BUCKET.getDefaultStack());
+            if (isFuelBurning()){
+                --burnTime;
+                world.setBlockState(pos, state.with(OVEN_BURNING,true));
+                if (tick % 3 == 0) playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,0.2f);
+                checkAndCraft(world, pos, state, entity);
             } else {
-                this.removeStack(FUEL_SLOT,1);
+                if (hasRecipe(entity)){
+                    progress--;
+                } else {
+                    resetProgress();
+                }
+                maxBurnTime = 1;
+                world.setBlockState(pos, state.with(OVEN_BURNING,false));
+                markDirty(world, pos, state);
+            }
+            if (canUseAsFuel(getStack(4))&&(burnTime == 0)&&hasRecipe(entity)){
+                ItemStack fuel = this.getStack(4);
+                burnTime = this.getFuelTime(fuel);
+                maxBurnTime = burnTime;
+                if (this.getStack(FUEL_SLOT).getItem() == Items.LAVA_BUCKET){
+                    this.setStack(FUEL_SLOT, Items.BUCKET.getDefaultStack());
+                } else {
+                    this.removeStack(FUEL_SLOT,1);
+                }
             }
         }
-        if ( isOutputSlotEmptyOrReceivable() && isFuelBurning() ){
+    }
+
+    private void checkAndCraft(World world, BlockPos pos, BlockState state, OvenBlockEntity entity) {
+        if (isOutputSlotEmptyOrReceivable()){
             if (this.hasRecipe(entity)){
                 this.increaseCraftProgress();
                 markDirty(world, pos, state);
@@ -162,15 +211,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
                 }
             }
             else {
-                if (this.progress != 0){
-                    this.progress--;
-                }
+                resetProgress();
             }
-        } else {
-            if (this.progress != 0){
-                this.progress--;
-            }
-            markDirty(world, pos, state);
         }
     }
     public static boolean canUseAsFuel(ItemStack stack) {
@@ -183,13 +225,12 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         Integer time = FuelRegistry.INSTANCE.get(fuel.getItem());
         return  time == null ? 0 : time;
     }
-
     private boolean isFuelBurning() {
         return this.burnTime > 0;
     }
 
     private void resetProgress() {
-        this.progress = 0;
+        progress = 0;
     }
 
     private void craftItem(OvenBlockEntity entity) {
@@ -197,15 +238,15 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         for(int i = 0; i< entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<BakingRecipe> match = entity.getWorld().getRecipeManager()
+        Optional<BakingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
                 .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
-
+        experiences += 4;
         this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
     }
 
     private boolean hasCraftingFinished() {
-        return  progress >= maxProgress;
+        return progress >= maxProgress;
     }
 
     private void increaseCraftProgress() {
@@ -214,15 +255,18 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
 
     private boolean hasRecipe(OvenBlockEntity entity) {
         SimpleInventory inventory = new SimpleInventory(entity.size());
-        for(int i = 0; i< entity.size();i++){
+        for(int i = 0; i < entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
         }
-        Optional<BakingRecipe> match = entity.getWorld().getRecipeManager()
+        Optional<BakingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
                 .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
 
-        return match.isPresent() &&
-                canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&
-                canInsertItemIntoOutputSlot(match.get().getOutput(entity.world.getRegistryManager()).getItem());
+        if (entity.world != null) {
+            return match.isPresent() &&
+                    canInsertAmountIntoOutputSlot(match.get().getOutput(null)) &&
+                    canInsertItemIntoOutputSlot(match.get().getOutput(entity.world.getRegistryManager()).getItem());
+        }
+        return false;
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
@@ -236,13 +280,6 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     private boolean isOutputSlotEmptyOrReceivable() {
         return this.getStack(OUTPUT_SLOT).isEmpty() || this.getStack(OUTPUT_SLOT).getCount() < this.getStack(OUTPUT_SLOT).getMaxCount();
     }
-    public boolean isBurning(){
-        if (world == null){
-            return false;
-        }
-        return isHeated(world,pos);
-    }
-
     @Override
     public int[] getAvailableSlots(Direction side) {
         int[] result = new int[getItems().size()];
@@ -251,7 +288,6 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         }
         return result;
     }
-
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
         if (dir == Direction.UP && slot == 4){
@@ -270,5 +306,17 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         if (dir == Direction.DOWN && slot == 4){
             return stack.isOf(Items.BUCKET);
         } else return dir == Direction.DOWN && slot == 5;
+    }
+
+    public void onUse(BlockState state, World world) {
+        playSound(SoundEvents.BLOCK_STONE_BREAK,2.3f,world.random.nextFloat()/2 +0.5f);
+        ItemScatterer.spawn(world,pos.getX(),pos.getY(),pos.getZ(),ModBlocks.BAKING_TRAY.asItem().getDefaultStack());
+        world.setBlockState(pos, ModBlocks.ADVANCE_FURNACE.getDefaultState().with(AdvanceFurnaceBlock.FACING,state.get(FACING)).with(AdvanceFurnaceBlock.BURNING,false));
+    }
+    public void setExperience(int experiences){
+        this.experiences = experiences;
+    }
+    public int getExperience(){
+        return experiences;
     }
 }

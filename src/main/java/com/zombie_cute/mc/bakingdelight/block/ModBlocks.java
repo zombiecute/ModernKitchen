@@ -2,10 +2,12 @@ package com.zombie_cute.mc.bakingdelight.block;
 
 import com.zombie_cute.mc.bakingdelight.Bakingdelight;
 import com.zombie_cute.mc.bakingdelight.block.custom.*;
+import com.zombie_cute.mc.bakingdelight.fluid.ModFluid;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -37,7 +39,32 @@ public class ModBlocks {
     public static final Block PIZZA_WIP = registerBlockWithoutItem("pizza_wip", new PizzaWIPBlock());
     public static final Block RAW_PIZZA = registerBlockWithoutItem("raw_pizza", new RawPizzaBlock());
     public static final Block PIZZA = registerBlockWithoutItem("pizza", new PizzaBlock());
+    public static final Block BAKING_TRAY = registerBlock("baking_tray", new BakingTrayBlock());
+    public static final Block DEEP_FRYER = registerBlock("deep_fryer", new DeepFryerBlock());
+    public static final Block ADVANCE_FURNACE = registerBlock("advance_furnace", new AdvanceFurnaceBlock());
+    public static final Block CREAM_FLUID_BLOCK = registerBlockWithoutItem("cream_fluid_block",
+            new FluidBlock(ModFluid.STILL_CREAM,FabricBlockSettings.copyOf(Blocks.WATER)));
+    public static final Block WOODEN_BASIN = registerBlock("wooden_basin",
+            new WoodenBasinBlock());
+    public static final Block VEGETABLE_OIL_FLUID_BLOCK = registerBlockWithoutItem("vegetable_oil_fluid_block",
+            new FluidBlock(ModFluid.STILL_VEGETABLE_OIL,FabricBlockSettings.copyOf(Blocks.WATER)));
+    public static final Block GAS_CANISTER = registerBlockWithoutItem("gas_canister",
+            new GasCanisterBlock());
+    public static final Block BIOGAS_DIGESTER_CONTROLLER = registerBlock("biogas_digester_controller",
+            new BiogasDigesterControllerBlock());
+    public static final Block BIOGAS_DIGESTER_IO = registerBlock("biogas_digester_io",
+            new BiogasDigesterIOBlock());
+    public static final Block BURNING_GAS_COOKING_STOVE = registerBlock("burning_gas_cooking_stove",
+            new BurningGasCookingStoveBlock());
+    public static final Block GAS_COOKING_STOVE = registerBlock("gas_cooking_stove",
+            new GasCookingStoveBlock());
+    public static final Block DEEP_FRY_BASKET = registerBlockWithoutItem("deep_fry_basket",
+            new DeepFryBasketBlock());
 
+    public static final BlockItem DEEP_FRY_BASKET_ITEM = Registry.register(Registries.ITEM,new Identifier(Bakingdelight.MOD_ID,"deep_fry_basket"),
+            new BlockItem(DEEP_FRY_BASKET,new FabricItemSettings().maxCount(1)));
+    public static final BlockItem GAS_CANISTER_ITEM = Registry.register(Registries.ITEM,new Identifier(Bakingdelight.MOD_ID,"gas_canister"),
+            new BlockItem(GAS_CANISTER,new FabricItemSettings().maxCount(1)));
     public static final BlockItem PIZZA_ITEM = Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID, "pizza"),
             new BlockItem(PIZZA, new FabricItemSettings().maxCount(1)));
     public static final BlockItem RAW_PIZZA_ITEM = Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID, "raw_pizza"),

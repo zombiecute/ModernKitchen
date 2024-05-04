@@ -48,7 +48,7 @@ public class PizzaWIPBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new  PizzaWIPBlockEntity(pos, state);
+        return new PizzaWIPBlockEntity(pos, state);
     }
     @Override
     public BlockRenderType getRenderType(BlockState state) {

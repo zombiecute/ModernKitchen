@@ -1,0 +1,130 @@
+{
+  "parent": "minecraft:bakingdelight/got_deep_fryer",
+  "criteria": {
+    "apple": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:fried_apple"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "cheese_ball": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:cheese_ball"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "cod": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:fried_cod"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "dough_stick": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:fried_dough_stick"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "milk": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:fried_milk"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "onion_ring": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:onion_ring"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "potato_chip": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:potato_chip"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "salmon": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:fried_salmon"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.bakingdelight.all_fried.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "bakingdelight:fried_milk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.bakingdelight.all_fried.title"
+    }
+  },
+  "requirements": [
+    [
+      "potato_chip"
+    ],
+    [
+      "onion_ring"
+    ],
+    [
+      "salmon"
+    ],
+    [
+      "milk"
+    ],
+    [
+      "dough_stick"
+    ],
+    [
+      "cod"
+    ],
+    [
+      "apple"
+    ],
+    [
+      "cheese_ball"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": true
+}

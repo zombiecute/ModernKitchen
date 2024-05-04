@@ -20,7 +20,14 @@ public class ModModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MASHED_POTATO_BLOCK);
+
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BIOGAS_DIGESTER_IO);
         blockStateModelGenerator.registerSimpleState(ModBlocks.RAW_PIZZA);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BAKING_TRAY);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BURNING_GAS_COOKING_STOVE);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.GAS_COOKING_STOVE);
+
         blockStateModelGenerator.registerCrop(ModBlocks.BLACK_PEPPER_CROP, BlackPepperCropBlock.AGE, 0,1,2,3,4,5,6);
     }
 
@@ -34,7 +41,16 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModBlocks.PIZZA.asItem(),registerItemBlockModel(ModBlocks.PIZZA));
         itemModelGenerator.register(ModBlocks.PIZZA_WIP.asItem(),registerItemBlockModel(ModBlocks.PIZZA_WIP));
         itemModelGenerator.register(ModBlocks.RAW_PIZZA.asItem(),registerItemBlockModel(ModBlocks.RAW_PIZZA));
-
+        itemModelGenerator.register(ModBlocks.BAKING_TRAY.asItem(),registerItemBlockModel(ModBlocks.BAKING_TRAY));
+        itemModelGenerator.register(ModBlocks.DEEP_FRYER.asItem(),registerItemBlockModel(ModBlocks.DEEP_FRYER));
+        itemModelGenerator.register(ModBlocks.ADVANCE_FURNACE.asItem(),registerItemBlockModel(ModBlocks.ADVANCE_FURNACE));
+        itemModelGenerator.register(ModBlocks.WOODEN_BASIN.asItem(),registerItemBlockModel(ModBlocks.WOODEN_BASIN));
+        itemModelGenerator.register(ModBlocks.GAS_CANISTER.asItem(),registerItemBlockModel(ModBlocks.GAS_CANISTER));
+        itemModelGenerator.register(ModBlocks.BIOGAS_DIGESTER_CONTROLLER.asItem(),registerItemBlockModel(ModBlocks.BIOGAS_DIGESTER_CONTROLLER));
+        itemModelGenerator.register(ModBlocks.BIOGAS_DIGESTER_IO.asItem(),registerItemBlockModel(ModBlocks.BIOGAS_DIGESTER_IO));
+        itemModelGenerator.register(ModBlocks.BURNING_GAS_COOKING_STOVE.asItem(),registerItemBlockModel(ModBlocks.BURNING_GAS_COOKING_STOVE));
+        itemModelGenerator.register(ModBlocks.GAS_COOKING_STOVE.asItem(),registerItemBlockModel(ModBlocks.GAS_COOKING_STOVE));
+        itemModelGenerator.register(ModBlocks.DEEP_FRY_BASKET.asItem(),registerItemBlockModel(ModBlocks.DEEP_FRY_BASKET));
 
         itemModelGenerator.register(ModItems.BLACK_PEPPER_DUST, Models.GENERATED);
         itemModelGenerator.register(ModItems.WOODEN_WHISK, Models.HANDHELD);
@@ -48,6 +64,8 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.AMETHYST_KNIFE, Models.HANDHELD);
 
         itemModelGenerator.register(ModItems.KNEADING_STICK, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.SPATULA, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.FILTER, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.AMETHYST_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.AMETHYST_PICKAXE, Models.HANDHELD);
@@ -65,6 +83,12 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MATCHA_PUDDING, Models.GENERATED);
         itemModelGenerator.register(ModItems.SUNFLOWER_SEED, Models.GENERATED);
         itemModelGenerator.register(ModItems.SUNFLOWER_SEED_PEEL, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SUNFLOWER_SEED_PULP, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ROASTED_SUNFLOWER_SEED, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OIL_IMPURITY, Models.GENERATED);
+        itemModelGenerator.register(ModItems.VEGETABLE_OIL_BOTTLE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.VEGETABLE_OIL_BUCKET, Models.GENERATED);
+
         itemModelGenerator.register(ModItems.TRUFFLE_EGG_TART, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.POTATO_STARCH, Models.GENERATED);
@@ -118,6 +142,30 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.STARCH_SAUSAGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRILLED_STARCH_SAUSAGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.LITTLE_OCTOPUS_SAUSAGE, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.EMPTY_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BLUE_ORCHID_FLOWER_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CHERRY_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.LILAC_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ORANGE_TULIP_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.PINK_TULIP_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OXEYE_DAISY_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ROSE_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SUNFLOWER_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.WHITE_TULIP_CAKE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.WITHER_ROSE_CAKE, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.RAW_ONION_RING, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ONION_RING, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_COD, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_SALMON, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_MILK_WIP, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_MILK, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_APPLE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.RAW_POTATO_CHIP, Models.GENERATED);
+        itemModelGenerator.register(ModItems.POTATO_CHIP, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CHEESE_BALL, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRIED_DOUGH_STICK, Models.GENERATED);
 
     }
     private static Model registerItemBlockModel(Block parent, TextureKey ... requiredTextureKeys) {

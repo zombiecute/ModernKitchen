@@ -15,6 +15,11 @@ public class ModSounds {
     public static final SoundEvent BLOCK_FREEZER_OPEN = registerSound("block_freezer_open");
     public static final SoundEvent BLOCK_FREEZER_CLOSE = registerSound("block_freezer_close");
     public static final SoundEvent BLOCK_GLASS_BOWL_WHISKING = registerSound("block_glass_bowl_whisking");
+    public static final SoundEvent BLOCK_FOOD_FRYING = registerSound("block_food_frying");
+    public static final SoundEvent ITEM_CROWBAR_HIT = registerSound("item_crowbar_hit");
+    public static final SoundEvent ITEM_CROWBAR_ATTACK = registerSound("item_crowbar_attack");
+    public static final SoundEvent BLOCK_GAS_CANISTER_FILLING = registerSound("block_gas_canister_filling");
+    public static final SoundEvent BLOCK_GAS_COOKING_STOVE_IGNITE = registerSound("block_gas_cooking_stove_ignite");
     public static SoundEvent registerSound(String name){
         Identifier id = new Identifier(Bakingdelight.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

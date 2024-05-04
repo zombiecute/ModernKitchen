@@ -1,12 +1,14 @@
 package com.zombie_cute.mc.bakingdelight.gen;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -44,11 +46,50 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         // Mineable
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.OVEN);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.FREEZER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.DEEP_FRYER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BAKING_TRAY);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.ADVANCE_FURNACE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.GAS_CANISTER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BIOGAS_DIGESTER_IO);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.GAS_COOKING_STOVE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.WOODEN_BASIN);
+
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.FREEZER);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BAKING_TRAY);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.GAS_CANISTER);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BIOGAS_DIGESTER_IO);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.GAS_COOKING_STOVE);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+
 
         getOrCreateTagBuilder(BlockTags.CROPS).add(ModBlocks.BLACK_PEPPER_CROP);
         getOrCreateTagBuilder(BlockTags.BEE_GROWABLES).add(ModBlocks.BLACK_PEPPER_CROP);
         getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(ModBlocks.BLACK_PEPPER_CROP);
+        // Heater
+        getOrCreateTagBuilder(ForgeTagKeys.PASSIVE_BOILER_HEATERS).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+        getOrCreateTagBuilder(ForgeTagKeys.HEAT_SOURCES).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+        // Crowbar Destroyable
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).add(Blocks.IRON_BARS);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.TRAPDOORS);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.DOORS);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.FENCES);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.FENCE_GATES);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.RAILS);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptional(new Identifier("create:andesite_bars"));
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptional(new Identifier("create:brass_bars"));
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptional(new Identifier("create:copper_bars"));
 
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(new Identifier("c:glass_panes"));
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(new Identifier("c:glasses"));
+        // Baking Tray Heat Sources
+        getOrCreateTagBuilder(ModTagKeys.DANGER_BLOCKS).add(Blocks.LAVA);
+        getOrCreateTagBuilder(ModTagKeys.DANGER_BLOCKS).add(Blocks.MAGMA_BLOCK);
+        getOrCreateTagBuilder(ModTagKeys.DANGER_BLOCKS).addOptionalTag(BlockTags.CAMPFIRES);
+        getOrCreateTagBuilder(ModTagKeys.DANGER_BLOCKS).addOptionalTag(ForgeTagKeys.HEAT_SOURCES);
+        getOrCreateTagBuilder(ModTagKeys.DANGER_BLOCKS).addOptionalTag(ForgeTagKeys.PASSIVE_BOILER_HEATERS);
     }
 }
