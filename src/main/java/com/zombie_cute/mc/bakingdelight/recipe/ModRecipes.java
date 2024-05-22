@@ -28,5 +28,9 @@ public class ModRecipes {
                 DeepFryingRecipe.Serializer.INSTANCE);
         Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, DeepFryingRecipe.Type.ID),
                 DeepFryingRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, CuisineRecipe.Serializer.ID),
+                CuisineRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, CuisineRecipe.Type.ID),
+                CuisineRecipe.Type.INSTANCE);
     }
 }

@@ -21,8 +21,8 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
     public static final Block MASHED_POTATO_BLOCK = registerBlock("mashed_potato_block",
-            new Block(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SAND)
-                    .mapColor(MapColor.YELLOW)));
+            new MashedPotatoBlock(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SAND)
+                    .mapColor(MapColor.YELLOW).velocityMultiplier(0.6f).jumpVelocityMultiplier(0.5f)));
     public static final Block GLASS_BOWL = registerBlock("glass_bowl",
             new GlassBowlBlock(FabricBlockSettings.copyOf(Blocks.GLASS).hardness(0)
                     .mapColor(MapColor.WHITE).nonOpaque()));
@@ -60,7 +60,28 @@ public class ModBlocks {
             new GasCookingStoveBlock());
     public static final Block DEEP_FRY_BASKET = registerBlockWithoutItem("deep_fry_basket",
             new DeepFryBasketBlock());
+    public static final Block KITCHEN_UTENSIL_HOLDER = registerBlock("kitchen_utensil_holder",
+            new KitchenUtensilHolderBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).hardness(0)
+                    .sounds(BlockSoundGroup.STONE).mapColor(MapColor.WHITE).strength(5.0f).nonOpaque()));
+    public static final Block CUISINE_TABLE = registerBlock("cuisine_table",new CuisineTableBlock());
+    public static final Block ANDESITE_CABINET = registerBlock("andesite_cabinet",new CabinetBlock());
+    public static final Block DIORITE_CABINET = registerBlock("diorite_cabinet",new CabinetBlock());
+    public static final Block GRANITE_CABINET = registerBlock("granite_cabinet",new CabinetBlock());
+    public static final Block DEEPSLATE_CABINET = registerBlock("deepslate_cabinet",new CabinetBlock(
+            FabricBlockSettings.copyOf(Blocks.DEEPSLATE)
+    ));
+    public static final Block BLACKSTONE_CABINET = registerBlock("blackstone_cabinet",new CabinetBlock(
+            FabricBlockSettings.copyOf(Blocks.BLACKSTONE)
+    ));
+    public static final Block BASALT_CABINET = registerBlock("basalt_cabinet",new CabinetBlock(
+            FabricBlockSettings.copyOf(Blocks.BASALT)
+    ));
+    public static final Block OBSIDIAN_CABINET = registerBlock("obsidian_cabinet",new CabinetBlock(
+            FabricBlockSettings.copyOf(Blocks.OBSIDIAN)
+    ));
 
+
+    // Block Items
     public static final BlockItem DEEP_FRY_BASKET_ITEM = Registry.register(Registries.ITEM,new Identifier(Bakingdelight.MOD_ID,"deep_fry_basket"),
             new BlockItem(DEEP_FRY_BASKET,new FabricItemSettings().maxCount(1)));
     public static final BlockItem GAS_CANISTER_ITEM = Registry.register(Registries.ITEM,new Identifier(Bakingdelight.MOD_ID,"gas_canister"),
@@ -69,8 +90,8 @@ public class ModBlocks {
             new BlockItem(PIZZA, new FabricItemSettings().maxCount(1)));
     public static final BlockItem RAW_PIZZA_ITEM = Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID, "raw_pizza"),
             new BlockItem(RAW_PIZZA, new FabricItemSettings()
-                    .food(new FoodComponent.Builder().hunger(12).saturationModifier(0.1f).build()).maxCount(1)));
-
+                    .food(new FoodComponent.Builder().hunger(8).saturationModifier(0.1f)
+                            .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER,200,0),0.4f).build()).maxCount(1)));
     public static final BlockItem PIZZA_WIP_ITEM = Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID, "pizza_wip"),
             new BlockItem(PIZZA_WIP, new FabricItemSettings()
                     .food(new FoodComponent.Builder().hunger(5).saturationModifier(0.1f)

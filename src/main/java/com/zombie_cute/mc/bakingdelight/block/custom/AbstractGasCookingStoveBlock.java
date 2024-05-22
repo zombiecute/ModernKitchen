@@ -12,6 +12,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.OrderedTick;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +23,11 @@ public abstract class AbstractGasCookingStoveBlock extends BlockWithEntity imple
     }
     private static final VoxelShape SHAPED = Block.createCuboidShape(2,0,2,14,16,14);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP);
+    }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {

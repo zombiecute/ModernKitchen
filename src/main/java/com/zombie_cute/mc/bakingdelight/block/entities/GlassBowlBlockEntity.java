@@ -145,7 +145,7 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
                                 world.setBlockState(pos,state.with(HAS_ITEM,true));
                             }
                         }
-                        spawnItem(0);
+                        spawnItem(0,world);
                     }
                 }
             }
@@ -154,7 +154,7 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     }
     private void getResultItem(World world, BlockState state, PlayerEntity player, boolean spawn){
         if (spawn){
-            spawnItem(1);
+            spawnItem(1,world);
         } else {
             player.giveItemStack(GLASS_BOWL_INV.get(1));
             GLASS_BOWL_INV.set(1, ItemStack.EMPTY);
@@ -162,8 +162,12 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
         }
         world.setBlockState(pos,state.with(HAS_ITEM,false));
     }
-    private void spawnItem(int slot){
-        ItemScatterer.spawn(Objects.requireNonNull(this.getWorld()),this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
+    private void spawnItem(int slot,World world){
+        if (world.isClient){
+            setStack(slot, ItemStack.EMPTY);
+            return;
+        }
+        ItemScatterer.spawn(world,this.getPos().getX(),this.getPos().getY(),this.getPos().getZ(),
                 GLASS_BOWL_INV.get(slot));
         GLASS_BOWL_INV.set(slot, ItemStack.EMPTY);
         playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.8F);
@@ -233,23 +237,20 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
-        if (world.isClient){
-            return;
-        }
         if (state.get(WATERLOGGED)){
             world.setBlockState(pos,state.with(HAS_WATER,true));
             if (!GLASS_BOWL_INV.get(0).isEmpty()){
-                spawnItem(0);
+                spawnItem(0,world);
                 markDirty();
             }
             if (!GLASS_BOWL_INV.get(1).isEmpty()){
-                spawnItem(1);
+                spawnItem(1,world);
                 markDirty();
             }
         }
         if (state.get(HAS_WATER)){
             if (!GLASS_BOWL_INV.get(1).isEmpty()){
-                spawnItem(1);
+                spawnItem(1,world);
                 markDirty();
             }
             world.setBlockState(pos, state.with(HAS_ITEM,false));

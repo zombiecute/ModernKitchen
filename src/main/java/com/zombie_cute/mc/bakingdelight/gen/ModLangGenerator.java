@@ -1,5 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.gen;
 
+import com.zombie_cute.mc.bakingdelight.BakingdelightClient;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.*;
@@ -50,6 +51,17 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ToolTips.GAS_COOKING_STOVE_2, "and when activated, it can heat up the block above it, including baking tray,");
         translationBuilder.add(ToolTips.GAS_COOKING_STOVE_3, "oven, advance furnace, and deep fryer, all of which are compatible.");
         translationBuilder.add(ToolTips.CROWBAR, "The Holy Sword of Physics");
+        translationBuilder.add(ToolTips.PIZZA_INGREDIENTS, "Ingredients: ");
+        translationBuilder.add(ToolTips.BAKING_TRAY_1, "A small, easy-to-use iron plate that can be used for upgrading an Advanced Furnace");
+        translationBuilder.add(ToolTips.BAKING_TRAY_2, "or for stir-frying: with a Gas Cooking Stove underneath it to heat it up, ");
+        translationBuilder.add(ToolTips.BAKING_TRAY_3, "place the food on top of it and use a spatula to stir-fry it five times to cook the food.");
+        translationBuilder.add(ToolTips.DEEP_FRYER_1, "A deep fryer can be used to deep fry a variety of foods. Pour in cooking oil and it will start to consume the gas and heat up,");
+        translationBuilder.add(ToolTips.DEEP_FRYER_2, "place a Gas Canister at the back of the fryer, then press the button on the front of the fryer,");
+        translationBuilder.add(ToolTips.DEEP_FRYER_3, "then add the food to it to start frying, hold down Shift and right-click on the fryer to check its detailed status.");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_1, "A Wooden Basin that can be used to extract vegetable oil, put in an oil crop");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_2, "(e.g. stir-fried sunflower seeds) and a filter, then stand on it and jump to extract the oil,");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_3, "you can use a glass bottle or a bucket to take out the oil.");
+        translationBuilder.add(ToolTips.DFB, "For safe and harmless removal of the contents of the Deep Fryer");
 
 
         translationBuilder.add(AdvanceFurnaceScreen.TOOLTIP,"Click to gain experiences");
@@ -182,7 +194,8 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.POTATO_CHIP, "Potato Chip");
         translationBuilder.add(ModItems.CHEESE_BALL, "Cheese Ball");
         translationBuilder.add(ModItems.FRIED_DOUGH_STICK, "Deep-fried Dough Stick");
-
+        translationBuilder.add(ModItems.RAW_CHICKEN_FILLET, "Raw Chicken Fillet");
+        translationBuilder.add(ModItems.CHICKEN_FILLET, "Deep-fried Chicken Fillet");
 
         translationBuilder.add(ModEntities.BUTTER,"Butter");
         translationBuilder.add(ModEntities.CHERRY_BOMB,"Cherry");
@@ -218,6 +231,19 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(DeepFryerBlockEntity.ADD_OIL, "You need to add cooking oil to it.");
         translationBuilder.add(DeepFryerBlockEntity.TOO_HOT, "It's too hot! Please hold the deep fry basket to remove the items");
         translationBuilder.add(DeepFryerBlockEntity.DEEP_FRYER_NAME, "Deep Frying");
+        translationBuilder.add(ModBlocks.KITCHEN_UTENSIL_HOLDER, "Kitchen Utensil Holder");
+        translationBuilder.add(ModBlocks.CUISINE_TABLE, "Cuisine Table");
+        translationBuilder.add(CuisineTableBlockEntity.CUISINE_TABLE_NAME, "Culinary");
+        translationBuilder.add(ModBlocks.ANDESITE_CABINET, "Andesite Cabinet");
+        translationBuilder.add(ModBlocks.DIORITE_CABINET, "Diorite Cabinet");
+        translationBuilder.add(ModBlocks.GRANITE_CABINET, "Granite Cabinet");
+        translationBuilder.add(ModBlocks.BLACKSTONE_CABINET, "Blackstone Cabinet");
+        translationBuilder.add(ModBlocks.BASALT_CABINET, "Basalt Cabinet");
+        translationBuilder.add(ModBlocks.DEEPSLATE_CABINET, "Deepslate Cabinet");
+        translationBuilder.add(ModBlocks.OBSIDIAN_CABINET, "Obsidian Cabinet");
+        translationBuilder.add(CabinetBlockEntity.CABINET_NAME, "Cabinet");
+        translationBuilder.add(ModItems.ANCIENT_SCRAP, "Ancient Scrap");
+
 
         translationBuilder.add(OvenBlockEntity.OVEN_NAME, "Baking");
         translationBuilder.add(AdvanceFurnaceBlockEntity.ADVANCE_FURNACE_NAME, "Advance Furnace");
@@ -280,6 +306,8 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.block_gas_canister_filling", "Gas Canister: Filling");
         translationBuilder.add("sounds.bakingdelight.block_gas_cooking_stove_ignite", "Gas Cooking Stove: Try to Ignite");
 
+        translationBuilder.add(BakingdelightClient.ORE_UI_DARK, "Ore UI Style (Dark)");
+        translationBuilder.add(BakingdelightClient.ORE_UI_BRIGHT, "Ore UI Style (Bright)");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "The truth is it's a whisk");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "Craft a whisk to start your new kitchen journey.");
@@ -366,7 +394,10 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.desc", "Gas cooking stove can heat a lot of things, including yourself");
         translationBuilder.add("advancement.bakingdelight.spatula.title", "It's stir-fry time!");
         translationBuilder.add("advancement.bakingdelight.spatula.desc", "Heat up a baking tray on the burning gas cooking stove, then add ingredients to it and stir-fry with a spatula.");
-
+        translationBuilder.add("advancement.bakingdelight.kuh.title", "Beautify the kitchen");
+        translationBuilder.add("advancement.bakingdelight.kuh.desc", "Make a Kitchen Utensil Holder");
+        translationBuilder.add("advancement.bakingdelight.cuisine_table.title", "Break Down Everything");
+        translationBuilder.add("advancement.bakingdelight.cuisine_table.desc", "Make a Cuisine Table, with the top slot for tools and the bottom slot for items, you can break down a lot of items.");
 
 
     }

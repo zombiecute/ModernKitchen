@@ -19,7 +19,6 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -48,20 +47,14 @@ public class BiogasDigesterIOBlock extends BlockWithEntity implements Waterlogga
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         if(Screen.hasShiftDown()){
-            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
-            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.WHITE);
-            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
-            tooltip.add(mutableText);
+            tooltip.add(ToolTips.getShiftText(true));
             tooltip.add(Text.literal(" "));
             tooltip.add(Text.translatable(ToolTips.BDI_1).formatted(Formatting.GOLD));
             tooltip.add(Text.translatable(ToolTips.BDI_2).formatted(Formatting.GOLD));
             tooltip.add(Text.translatable(ToolTips.BDI_3).formatted(Formatting.GOLD));
             tooltip.add(Text.translatable(ToolTips.BDI_4).formatted(Formatting.GOLD));
         }else {
-            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
-            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.GRAY);
-            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
-            tooltip.add(mutableText);
+            tooltip.add(ToolTips.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, options);
     }

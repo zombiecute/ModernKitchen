@@ -17,12 +17,10 @@ public class ModBlockLootGenerator extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(ModBlocks.MASHED_POTATO_BLOCK);
         addDrop(ModBlocks.GLASS_BOWL);
         addDrop(ModBlocks.FREEZER);
         addDrop(ModBlocks.WHEAT_DOUGH);
         addDrop(ModBlocks.PIZZA_WIP);
-        addDrop(ModBlocks.RAW_PIZZA);
         addDrop(ModBlocks.BAKING_TRAY);
         addDrop(ModBlocks.DEEP_FRYER);
         addDrop(ModBlocks.ADVANCE_FURNACE);
@@ -33,6 +31,16 @@ public class ModBlockLootGenerator extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.GAS_COOKING_STOVE);
         addDrop(ModBlocks.BURNING_GAS_COOKING_STOVE,ModBlocks.GAS_COOKING_STOVE);
         addDrop(ModBlocks.DEEP_FRY_BASKET);
+        addDrop(ModBlocks.KITCHEN_UTENSIL_HOLDER);
+        addDrop(ModBlocks.CUISINE_TABLE);
+        addDrop(ModBlocks.ANDESITE_CABINET);
+        addDrop(ModBlocks.BLACKSTONE_CABINET);
+        addDrop(ModBlocks.BASALT_CABINET);
+        addDrop(ModBlocks.DEEPSLATE_CABINET);
+        addDrop(ModBlocks.GRANITE_CABINET);
+        addDrop(ModBlocks.DIORITE_CABINET);
+        addDrop(ModBlocks.OBSIDIAN_CABINET);
+
 
         BlockStatePropertyLootCondition.Builder builder2 = BlockStatePropertyLootCondition
                 .builder(ModBlocks.BLACK_PEPPER_CROP)

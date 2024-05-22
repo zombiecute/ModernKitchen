@@ -21,6 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
@@ -96,6 +99,11 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                 return 5;
             }
         };
+    }
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
     }
     public void playSound(SoundEvent sound, float volume, float pitch) {
         Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
@@ -327,6 +335,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     }
     public void setExperience(int experiences){
         this.experiences = experiences;
+        markDirty();
     }
     public int getExperience(){
         return experiences;

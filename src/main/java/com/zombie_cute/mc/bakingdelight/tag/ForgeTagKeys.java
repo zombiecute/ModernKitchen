@@ -7,7 +7,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class ForgeTagKeys {
-
     // Create Mod
     public static final TagKey<Item> UPRIGHT_ON_BELT = createModItemTag("upright_on_belt");
     public static final TagKey<Block> PASSIVE_BOILER_HEATERS = createModBlockTag("passive_boiler_heaters");
@@ -19,6 +18,8 @@ public class ForgeTagKeys {
     public static final TagKey<Item> C_WHEAT_DOUGH = forgeItemTag("wheat_dough");
     public static final TagKey<Item> C_DOUGH = forgeItemTag("dough");
     public static final TagKey<Item> FOODS = forgeItemTag("foods");
+        public static final TagKey<Item> BUCKET_OIL = forgeItemTag("foods/bucket_of_oil");
+        public static final TagKey<Item> BOTTLE_OIL = forgeItemTag("foods/bottle_of_oil");
         public static final TagKey<Item> FLOWER_CAKES = forgeItemTag("flower_cakes");
         public static final TagKey<Item> TRUFFLES = forgeItemTag("foods/truffles");
         public static final TagKey<Item> PUDDINGS = forgeItemTag("foods/puddings");

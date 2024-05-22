@@ -632,7 +632,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                         true,
                         false
                 )
-                .rewards(AdvancementRewards.Builder.experience(500))
+                .rewards(AdvancementRewards.Builder.experience(550))
                 .criterion("potato_chip", ConsumeItemCriterion.Conditions.item(ModItems.POTATO_CHIP))
                 .criterion("onion_ring", ConsumeItemCriterion.Conditions.item(ModItems.ONION_RING))
                 .criterion("salmon", ConsumeItemCriterion.Conditions.item(ModItems.FRIED_SALMON))
@@ -641,6 +641,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 .criterion("cod", ConsumeItemCriterion.Conditions.item(ModItems.FRIED_COD))
                 .criterion("apple", ConsumeItemCriterion.Conditions.item(ModItems.FRIED_APPLE))
                 .criterion("cheese_ball", ConsumeItemCriterion.Conditions.item(ModItems.CHEESE_BALL))
+                .criterion("chicken_fillet", ConsumeItemCriterion.Conditions.item(ModItems.CHICKEN_FILLET))
                 .build(consumer, Bakingdelight.MOD_ID + "/eat_all_fried");
         Advancement eatWitherCake = Advancement.Builder.create().parent(getStart)
                 .display(
@@ -669,5 +670,31 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 )
                 .criterion("spatula", InventoryChangedCriterion.Conditions.items(ModItems.SPATULA))
                 .build(consumer, Bakingdelight.MOD_ID + "/got_spatula");
+        Advancement getKitchenUtensilHolder = Advancement.Builder.create().parent(getStart)
+                .display(
+                        ModBlocks.KITCHEN_UTENSIL_HOLDER,
+                        Text.translatable("advancement.bakingdelight.kuh.title"),
+                        Text.translatable("advancement.bakingdelight.kuh.desc"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        false,
+                        false
+                )
+                .criterion("kuh", InventoryChangedCriterion.Conditions.items(ModBlocks.KITCHEN_UTENSIL_HOLDER))
+                .build(consumer, Bakingdelight.MOD_ID + "/got_kuh");
+        Advancement getCuisineTable = Advancement.Builder.create().parent(getStart)
+                .display(
+                        ModBlocks.CUISINE_TABLE,
+                        Text.translatable("advancement.bakingdelight.cuisine_table.title"),
+                        Text.translatable("advancement.bakingdelight.cuisine_table.desc"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("cuisine_table", InventoryChangedCriterion.Conditions.items(ModBlocks.CUISINE_TABLE))
+                .build(consumer, Bakingdelight.MOD_ID + "/got_cuisine_table");
     }
 }

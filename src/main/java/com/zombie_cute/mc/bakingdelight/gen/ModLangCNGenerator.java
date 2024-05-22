@@ -1,5 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.gen;
 
+import com.zombie_cute.mc.bakingdelight.BakingdelightClient;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.*;
@@ -51,6 +52,18 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ToolTips.GAS_COOKING_STOVE_2, "有几率激活它。激活后，它可以加热其上方的方块，");
         translationBuilder.add(ToolTips.GAS_COOKING_STOVE_3, "烤盘，烤炉，高级熔炉，油炸锅等均可兼容。");
         translationBuilder.add(ToolTips.CROWBAR, "物理学圣剑");
+        translationBuilder.add(ToolTips.PIZZA_INGREDIENTS, "成分：");
+        translationBuilder.add(ToolTips.BAKING_TRAY_1, "一款简易的小铁盘，可以用于升级高级熔炉，也可以用于炒菜：");
+        translationBuilder.add(ToolTips.BAKING_TRAY_2, "在其下方有燃气灶为其加热的条件下，将食物放在烤盘的上方，");
+        translationBuilder.add(ToolTips.BAKING_TRAY_3, "使用锅铲进行翻炒5次即可炒熟食物。");
+        translationBuilder.add(ToolTips.DEEP_FRYER_1, "油炸锅可以用于油炸各种食物。倒入食用油，在其后方放置一个装有燃气的燃气罐时，");
+        translationBuilder.add(ToolTips.DEEP_FRYER_2, "再按下它前方的按钮，它就会开始消耗燃气并加热，接着将食物加入其中就会开始油炸了，");
+        translationBuilder.add(ToolTips.DEEP_FRYER_3, "对其按住Shift加右键可以查看其详细状态。");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_1, "一个可以用于榨取植物油的木盆，放入油料作物");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_2, "（如炒葵花籽）和过滤网，然后站在它上面跳跃就可以榨油了，");
+        translationBuilder.add(ToolTips.WOODEN_BASIN_3, "你可以使用玻璃瓶或是桶来取出油。");
+        translationBuilder.add(ToolTips.DFB, "用于安全无伤的取出油炸锅内的物品");
+
 
         translationBuilder.add(AdvanceFurnaceScreen.TOOLTIP,"点击以获取经验值");
 
@@ -180,6 +193,8 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.POTATO_CHIP, "薯片");
         translationBuilder.add(ModItems.CHEESE_BALL, "起司球");
         translationBuilder.add(ModItems.FRIED_DOUGH_STICK, "油条");
+        translationBuilder.add(ModItems.RAW_CHICKEN_FILLET, "生鸡柳");
+        translationBuilder.add(ModItems.CHICKEN_FILLET, "炸鸡柳");
 
         translationBuilder.add(ModEntities.BUTTER,"黄油");
         translationBuilder.add(ModEntities.CHERRY_BOMB,"樱桃");
@@ -187,7 +202,7 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.PIZZA, "披萨");
         translationBuilder.add(ModBlocks.RAW_PIZZA, "生披萨");
         translationBuilder.add(ModBlocks.PIZZA_WIP, "披萨（半成品）");
-
+        translationBuilder.add(ModItems.ANCIENT_SCRAP, "远古残片");
 
         translationBuilder.add(ModBlocks.GLASS_BOWL, "玻璃碗");
         translationBuilder.add(GlassBowlWhiskingCategory.GLASS_BOWL_NAME, "搅拌");
@@ -222,6 +237,18 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add(DeepFryerBlockEntity.DEEP_FRYER_NAME, "油炸");
         translationBuilder.add(DeepFryerBlockEntity.ADD_OIL, "你需要向其中加入食用油");
         translationBuilder.add(DeepFryerBlockEntity.TOO_HOT, "太烫了！请用油炸篮来取物");
+        translationBuilder.add(ModBlocks.KITCHEN_UTENSIL_HOLDER, "厨具架");
+        translationBuilder.add(ModBlocks.CUISINE_TABLE, "料理台");
+        translationBuilder.add(CuisineTableBlockEntity.CUISINE_TABLE_NAME, "烹饪");
+        translationBuilder.add(ModBlocks.ANDESITE_CABINET, "安山岩橱柜");
+        translationBuilder.add(ModBlocks.DIORITE_CABINET, "闪长岩橱柜");
+        translationBuilder.add(ModBlocks.GRANITE_CABINET, "花岗岩橱柜");
+        translationBuilder.add(ModBlocks.BLACKSTONE_CABINET, "黑石橱柜");
+        translationBuilder.add(ModBlocks.BASALT_CABINET, "玄武岩橱柜");
+        translationBuilder.add(ModBlocks.DEEPSLATE_CABINET, "深板岩橱柜");
+        translationBuilder.add(ModBlocks.OBSIDIAN_CABINET, "黑曜石橱柜");
+        translationBuilder.add(CabinetBlockEntity.CABINET_NAME, "橱柜");
+
 
         translationBuilder.add(ModBlocks.CREAM_FLUID_BLOCK, "奶油");
         translationBuilder.add(ModBlocks.VEGETABLE_OIL_FLUID_BLOCK, "植物油");
@@ -276,6 +303,9 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.item_crowbar_attack", "撬棍: 击中生物");
         translationBuilder.add("sounds.bakingdelight.block_gas_canister_filling", "燃气罐: 填充");
         translationBuilder.add("sounds.bakingdelight.block_gas_cooking_stove_ignite", "燃气灶：尝试点燃");
+
+        translationBuilder.add(BakingdelightClient.ORE_UI_DARK, "Ore UI 风格资源包（深色）");
+        translationBuilder.add(BakingdelightClient.ORE_UI_BRIGHT, "Ore UI 风格资源包（浅色）");
 
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_TITLE, "真相就是搅拌器");
         translationBuilder.add(ModAdvancementGenerator.GET_WHISK_DESC, "合成一把搅拌器来开始你新的厨房之旅");
@@ -362,5 +392,9 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.gas_cooking_stove.desc", "燃气灶可以加热很多东西，包括你自己");
         translationBuilder.add("advancement.bakingdelight.spatula.title", "炒菜时间到！");
         translationBuilder.add("advancement.bakingdelight.spatula.desc", "对一个烤盘用燃气灶加热，这时往它上面放入食材再拿锅铲翻炒即可炒菜");
+        translationBuilder.add("advancement.bakingdelight.kuh.title", "美化厨房");
+        translationBuilder.add("advancement.bakingdelight.kuh.desc", "合成一个厨具架");
+        translationBuilder.add("advancement.bakingdelight.cuisine_table.title", "分解一切");
+        translationBuilder.add("advancement.bakingdelight.cuisine_table.desc", "合成一个料理台, 上面的槽位放工具，下面的槽放物品，你能分解很多东西！");
     }
 }

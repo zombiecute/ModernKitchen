@@ -2,11 +2,11 @@ package com.zombie_cute.mc.bakingdelight.recipe.custom;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -17,12 +17,10 @@ public class BakingRecipe implements Recipe<SimpleInventory> {
     private final Identifier id;
     private final ItemStack output;
     private final DefaultedList<Ingredient> recipeItems;
-    private final RecipeCategory category;
     public BakingRecipe(Identifier id, DefaultedList<Ingredient> ingredients, ItemStack itemStack){
         this.id = id;
         this.output = itemStack;
         this.recipeItems = ingredients;
-        category = RecipeCategory.FOOD;
     }
 
     @Override
@@ -77,8 +75,9 @@ public class BakingRecipe implements Recipe<SimpleInventory> {
         return list;
     }
 
-    public RecipeCategory getCategory() {
-        return category;
+    @Override
+    public ItemStack createIcon() {
+        return ModBlocks.OVEN.asItem().getDefaultStack();
     }
 
     @Override

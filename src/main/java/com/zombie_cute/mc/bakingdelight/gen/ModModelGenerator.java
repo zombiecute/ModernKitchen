@@ -19,8 +19,6 @@ public class ModModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MASHED_POTATO_BLOCK);
-
         blockStateModelGenerator.registerSimpleState(ModBlocks.BIOGAS_DIGESTER_CONTROLLER);
         blockStateModelGenerator.registerSimpleState(ModBlocks.BIOGAS_DIGESTER_IO);
         blockStateModelGenerator.registerSimpleState(ModBlocks.RAW_PIZZA);
@@ -51,6 +49,15 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModBlocks.BURNING_GAS_COOKING_STOVE.asItem(),registerItemBlockModel(ModBlocks.BURNING_GAS_COOKING_STOVE));
         itemModelGenerator.register(ModBlocks.GAS_COOKING_STOVE.asItem(),registerItemBlockModel(ModBlocks.GAS_COOKING_STOVE));
         itemModelGenerator.register(ModBlocks.DEEP_FRY_BASKET.asItem(),registerItemBlockModel(ModBlocks.DEEP_FRY_BASKET));
+        itemModelGenerator.register(ModBlocks.KITCHEN_UTENSIL_HOLDER.asItem(),registerItemBlockModel(ModBlocks.KITCHEN_UTENSIL_HOLDER));
+        itemModelGenerator.register(ModBlocks.CUISINE_TABLE.asItem(),registerItemBlockModel(ModBlocks.CUISINE_TABLE));
+        itemModelGenerator.register(ModBlocks.ANDESITE_CABINET.asItem(),registerItemBlockModel(ModBlocks.ANDESITE_CABINET));
+        itemModelGenerator.register(ModBlocks.DIORITE_CABINET.asItem(),registerItemBlockModel(ModBlocks.DIORITE_CABINET));
+        itemModelGenerator.register(ModBlocks.GRANITE_CABINET.asItem(),registerItemBlockModel(ModBlocks.GRANITE_CABINET));
+        itemModelGenerator.register(ModBlocks.DEEPSLATE_CABINET.asItem(),registerItemBlockModel(ModBlocks.DEEPSLATE_CABINET));
+        itemModelGenerator.register(ModBlocks.BASALT_CABINET.asItem(),registerItemBlockModel(ModBlocks.BASALT_CABINET));
+        itemModelGenerator.register(ModBlocks.BLACKSTONE_CABINET.asItem(),registerItemBlockModel(ModBlocks.BLACKSTONE_CABINET));
+        itemModelGenerator.register(ModBlocks.OBSIDIAN_CABINET.asItem(),registerItemBlockModel(ModBlocks.OBSIDIAN_CABINET));
 
         itemModelGenerator.register(ModItems.BLACK_PEPPER_DUST, Models.GENERATED);
         itemModelGenerator.register(ModItems.WOODEN_WHISK, Models.HANDHELD);
@@ -105,6 +112,8 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.CHERRY_BOMB, Models.GENERATED);
         itemModelGenerator.register(ModItems.BUTTER, Models.GENERATED);
         itemModelGenerator.register(ModItems.CHEESE, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.ANCIENT_SCRAP, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.BREAD_SLICE, Models.GENERATED);
         itemModelGenerator.register(ModItems.BUTTER_BREAD_SLICE, Models.GENERATED);
@@ -166,6 +175,8 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.POTATO_CHIP, Models.GENERATED);
         itemModelGenerator.register(ModItems.CHEESE_BALL, Models.GENERATED);
         itemModelGenerator.register(ModItems.FRIED_DOUGH_STICK, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CHICKEN_FILLET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.RAW_CHICKEN_FILLET, Models.GENERATED);
 
     }
     private static Model registerItemBlockModel(Block parent, TextureKey ... requiredTextureKeys) {

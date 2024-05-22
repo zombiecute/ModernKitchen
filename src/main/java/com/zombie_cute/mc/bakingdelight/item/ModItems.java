@@ -274,6 +274,15 @@ public class ModItems {
     public static final Item FRIED_DOUGH_STICK = registerItem("fried_dough_stick", new Item(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(5).saturationModifier(0.4f).snack().build())
     ));
+    public static final Item RAW_CHICKEN_FILLET = registerItem("raw_chicken_fillet",new Item(
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(1).saturationModifier(0.4f).snack().meat().build())
+    ));
+    public static final Item CHICKEN_FILLET = registerItem("chicken_fillet",new Item(
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(5).saturationModifier(0.4f).snack().meat().build())
+    ));
+    public static final Item ANCIENT_SCRAP = registerItem("ancient_scrap",new Item(
+            new FabricItemSettings().fireproof())
+    );
 
     public static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID,name),item);

@@ -122,11 +122,13 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (!world.getBlockState(getSideBlock(state, pos)).isAir() && state.get(IS_OPEN)){
             world.setBlockState(pos, state.with(IS_OPEN, false));
+            world.updateListeners(pos,state,state,FORCE_STATE);
         }
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (!world.isClient){
             Direction direction = state.get(FACING);
             BlockPos facingBlock = pos;
             BlockPos sideBlock = pos;
@@ -155,7 +157,6 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
             if (!world.getBlockState(getSideBlock(state, pos)).isAir()){
                 world.setBlockState(pos, state.with(IS_OPEN, false));
                 player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
-                return ActionResult.PASS;
             }
             if (state.get(IS_OPEN)){
                 if (world.getBlockState(facingBlock).isAir()){
@@ -165,7 +166,6 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
                             Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_CLOSE, SoundCategory.BLOCKS, 1.7f, world.random.nextFloat()+0.8f);
                         } else {
                             player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
-                            return ActionResult.PASS;
                         }
                     } else {
                         NamedScreenHandlerFactory screenHandlerFactory = ((FreezerBlockEntity) world.getBlockEntity(pos));
@@ -175,7 +175,6 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
                     }
                 } else {
                     player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
-                    return ActionResult.PASS;
                 }
             } else {
                 if (world.getBlockState(facingBlock).isAir() && world.getBlockState(sideBlock).isAir()){
@@ -183,9 +182,9 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
                     Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, ModSounds.BLOCK_FREEZER_OPEN, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat()+0.8f);
                 } else {
                     player.sendMessage(Text.translatable(FAIL_TO_OPEN),true);
-                    return ActionResult.PASS;
                 }
             }
+        }
         return ActionResult.SUCCESS;
     }
 

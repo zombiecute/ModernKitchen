@@ -56,7 +56,27 @@ public class ModBlockEntities {
             Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID,"deep_fryer_block_be"),
             FabricBlockEntityTypeBuilder.create(DeepFryerBlockEntity::new, ModBlocks.DEEP_FRYER).build(null)
     );
-
+    public static final BlockEntityType<KitchenUtensilHolderBlockEntity> KITCHEN_UTENSIL_HOLDER_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID, "kitchen_utensil_holder_be"),
+            FabricBlockEntityTypeBuilder.create(KitchenUtensilHolderBlockEntity::new, ModBlocks.KITCHEN_UTENSIL_HOLDER).build(null)
+    );
+    public static final BlockEntityType<CuisineTableBlockEntity> CUISINE_TABLE_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID, "cuisine_table_be"),
+            FabricBlockEntityTypeBuilder.create(CuisineTableBlockEntity::new, ModBlocks.CUISINE_TABLE).build(null)
+    );
+    public static final BlockEntityType<RawPizzaBlockEntity> RAW_PIZZA_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID, "raw_pizza_be"),
+            FabricBlockEntityTypeBuilder.create(RawPizzaBlockEntity::new, ModBlocks.RAW_PIZZA).build(null)
+    );
+    public static final BlockEntityType<PizzaBlockEntity> PIZZA_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID, "pizza_be"),
+            FabricBlockEntityTypeBuilder.create(PizzaBlockEntity::new, ModBlocks.PIZZA).build(null)
+    );
+    public static final BlockEntityType<CabinetBlockEntity> CABINET_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE, new Identifier(Bakingdelight.MOD_ID, "cabinet_be"),
+            FabricBlockEntityTypeBuilder.create(CabinetBlockEntity::new,
+                    ModBlocks.ANDESITE_CABINET).build(null)
+    );
 
     public static void registerBlockEntities(){
         Bakingdelight.LOGGER.info("Registering Mod Block Entities for " + Bakingdelight.MOD_ID);

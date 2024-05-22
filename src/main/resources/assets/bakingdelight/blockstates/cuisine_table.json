@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bakingdelight:block/cuisine_table",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bakingdelight:block/cuisine_table",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "bakingdelight:block/cuisine_table",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "bakingdelight:block/cuisine_table",
+      "y": 180
+    }
+  }
+}

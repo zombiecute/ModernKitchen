@@ -18,7 +18,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
@@ -123,9 +122,14 @@ public class BakingTrayBlockEntity extends BlockEntity implements ImplementedInv
     }
 
     private void spawnItem(World world,int slot){
+        if (world.isClient){
+            this.setStack(slot,ItemStack.EMPTY);
+            return;
+        }
         ItemScatterer.spawn(world,pos.getX(),pos.getY(),pos.getZ(),this.getStack(slot));
         this.setStack(slot,ItemStack.EMPTY);
         playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,true);
+        markDirty();
     }
 
     private void splitItem(PlayerEntity player, boolean isMainHand,int inv) {
@@ -194,26 +198,11 @@ public class BakingTrayBlockEntity extends BlockEntity implements ImplementedInv
         return items.contains(item);
     }
     public void tick(World world, BlockPos pos) {
-        if (world.isClient){
-            return;
-        }
         if (coolTime!=0){
             coolTime--;
         }
         if (isHeated(world,pos)){
             if (!isFlat(this.getStack(0).getItem())){
-                if (!this.getStack(0).isEmpty()){
-                    world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.25, pos.getY()+0.2, pos.getZ()+0.25, 0.0, 5.0E-4, 0.0);
-                }
-                if (!this.getStack(1).isEmpty()){
-                    world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.25, pos.getY()+0.2, pos.getZ()+0.75, 0.0, 5.0E-4, 0.0);
-                }
-                if (!this.getStack(2).isEmpty()){
-                    world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.75, pos.getY()+0.2, pos.getZ()+0.25, 0.0, 5.0E-4, 0.0);
-                }
-                if (!this.getStack(3).isEmpty()){
-                    world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.75, pos.getY()+0.2, pos.getZ()+0.75, 0.0, 5.0E-4, 0.0);
-                }
                 if (stir_fry_times == max_stir_fry_times){
                     if (hasCampfireRecipe(this.getStack(0))){
                         craftCampfireItem(this.getStack(0),0,world);
@@ -234,6 +223,10 @@ public class BakingTrayBlockEntity extends BlockEntity implements ImplementedInv
     }
 
     private void craftCampfireItem(ItemStack stack, int slot, World world) {
+        if (world.isClient){
+            this.setStack(slot,ItemStack.EMPTY);
+            return;
+        }
         SimpleInventory inventory = new SimpleInventory(1);
         inventory.setStack(0,stack);
         Optional<CampfireCookingRecipe> match = Objects.requireNonNull(this.getWorld()).getRecipeManager()

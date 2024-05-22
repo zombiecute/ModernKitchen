@@ -2,22 +2,28 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.WoodenBasinBlockEntity;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -30,6 +36,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.tick.OrderedTick;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class WoodenBasinBlock extends BlockWithEntity implements Waterloggable{
     public WoodenBasinBlock() {
@@ -109,12 +117,24 @@ public class WoodenBasinBlock extends BlockWithEntity implements Waterloggable{
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (!world.isClient && world.random.nextFloat() < fallDistance - 0.5f && entity instanceof LivingEntity && (entity instanceof PlayerEntity || world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) && entity.getWidth() * entity.getWidth() * entity.getHeight() > 0.512f) {
             if (world.getBlockEntity(pos) instanceof WoodenBasinBlockEntity blockEntity) {
-                blockEntity.onLandedUpon(state, world);
+                blockEntity.onLandedUpon(world);
             }
         }
         super.onLandedUpon(world, state, pos, entity, fallDistance);
     }
-
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
+        if(Screen.hasShiftDown()){
+            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(Text.literal(" "));
+            tooltip.add(Text.translatable(ToolTips.WOODEN_BASIN_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.WOODEN_BASIN_2).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.WOODEN_BASIN_3).formatted(Formatting.GOLD));
+        } else {
+            tooltip.add(ToolTips.getShiftText(false));
+        }
+        super.appendTooltip(stack, world, tooltip, options);
+    }
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {

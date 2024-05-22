@@ -1,5 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.screen.custom;
 
+import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
 import com.zombie_cute.mc.bakingdelight.screen.ModScreenHandlers;
 import com.zombie_cute.mc.bakingdelight.screen.slot.OnlyExtractSlot;
@@ -14,7 +15,6 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
-
 public class FreezerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
@@ -76,7 +76,7 @@ public class FreezerScreenHandler extends ScreenHandler {
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
-        if (slot != null && slot.hasStack()) {
+        if (slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
             if (invSlot < this.inventory.size()) {
@@ -102,7 +102,7 @@ public class FreezerScreenHandler extends ScreenHandler {
         BlockPos pos1 = player.getBlockPos();
         BlockPos pos2 = blockEntity.getPos();
         double distance = Math.sqrt(Math.pow(pos2.getX()-pos1.getX(),2)+Math.pow(pos2.getY()-pos1.getY(),2)+Math.pow(pos2.getZ()-pos1.getZ(),2));
-        return this.inventory.canPlayerUse(player) && distance < 5 && !blockEntity.isRemoved();
+        return this.inventory.canPlayerUse(player) && distance < 5 && !blockEntity.isRemoved() && blockEntity.getCachedState().get(FreezerBlock.IS_OPEN);
     }
     private void addPlayerInventory(PlayerInventory playerInventory){
         for (int i = 0; i < 3; ++i){

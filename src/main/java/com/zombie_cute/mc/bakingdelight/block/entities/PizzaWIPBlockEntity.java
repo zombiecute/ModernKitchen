@@ -3,48 +3,36 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static com.zombie_cute.mc.bakingdelight.block.custom.PizzaWIPBlock.CRAFT_STATE;
 
-public class PizzaWIPBlockEntity extends BlockEntity implements ImplementedInventory {
+public class PizzaWIPBlockEntity extends AbstractPizzaBlockEntity {
     public PizzaWIPBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PIZZA_WIP_ENTITY, pos, state);
     }
-    public final DefaultedList<ItemStack> PIZZA_INV = DefaultedList.ofSize(5, ItemStack.EMPTY);
     public static final String NEED_INGREDIENT = "bakingdelight.pizza_message.need_ingredient";
     public static final String NEED_CHEESE = "bakingdelight.pizza_message.need_cheese";
 
-    @Override
-    public DefaultedList<ItemStack> getItems() {
-        return PIZZA_INV;
-    }
     public void onUse(PlayerEntity player, BlockState state, World world) {
         if (world.isClient){
             return;
@@ -74,12 +62,29 @@ public class PizzaWIPBlockEntity extends BlockEntity implements ImplementedInven
             }
         } else if (currentState == 5){
             if (item == ModItems.CHEESE){
+                SimpleInventory inventory = new SimpleInventory(PIZZA_INV.size());
                 for (int i = 0;i < 5;i++){
+                    inventory.setStack(i,this.getStack(i));
                     this.setStack(i,ItemStack.EMPTY);
                 }
                 player.getMainHandStack().decrement(1);
+                ItemStack rawPizza = new ItemStack(ModBlocks.RAW_PIZZA_ITEM);
+                NbtList nbtList = new NbtList();
+                for(int i = 0; i < inventory.size(); ++i) {
+                    ItemStack itemStack = inventory.getStack(i);
+                    if (!itemStack.isEmpty()) {
+                        NbtCompound nbtCompound = new NbtCompound();
+                        nbtCompound.putByte("Slot", (byte)i);
+                        itemStack.writeNbt(nbtCompound);
+                        nbtList.add(nbtCompound);
+                    }
+                }
+                NbtCompound nbt = new NbtCompound();
+                nbt.put("Items",nbtList);
+                BlockItem.setBlockEntityNbt(rawPizza,ModBlockEntities.RAW_PIZZA_BLOCK_ENTITY,nbt);
                 playSound(SoundEvents.BLOCK_HONEY_BLOCK_PLACE,1.0f, world.random.nextFloat() + 0.1f);
-                world.setBlockState(pos, ModBlocks.RAW_PIZZA.getDefaultState());
+                ItemScatterer.spawn(world,pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,rawPizza);
+                world.breakBlock(pos, false);
             } else {
                 player.sendMessage(Text.translatable(NEED_CHEESE), true);
             }
@@ -93,36 +98,5 @@ public class PizzaWIPBlockEntity extends BlockEntity implements ImplementedInven
             list.add(registryEntry.value());
         }
         return list.contains(stack.getItem());
-    }
-    private void playSound(SoundEvent sound, float volume, float pitch) {
-        Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
-    }
-    @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, PIZZA_INV);
-    }
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        Inventories.readNbt(nbt, PIZZA_INV);
-    }
-    @Override
-    public void markDirty() {
-        if (world != null) {
-            world.updateListeners(pos, getCachedState(), getCachedState(), 3);
-        }
-        super.markDirty();
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
-    }
-
-    @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
     }
 }

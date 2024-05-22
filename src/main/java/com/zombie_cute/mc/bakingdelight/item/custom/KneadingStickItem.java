@@ -17,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -55,17 +54,11 @@ public class KneadingStickItem extends ToolItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if(Screen.hasShiftDown()){
-            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
-            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.WHITE);
-            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
-            tooltip.add(mutableText);
+            tooltip.add(ToolTips.getShiftText(true));
             tooltip.add(Text.literal(" "));
             tooltip.add(Text.translatable(ToolTips.KNEADING_STICK).formatted(Formatting.GOLD));
         }else {
-            MutableText mutableText = Text.translatable(ToolTips.SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
-            mutableText.append(Text.literal("[SHIFT]")).formatted(Formatting.GRAY);
-            mutableText.append(Text.translatable(ToolTips.SHIFT_END)).formatted(Formatting.DARK_GRAY);
-            tooltip.add(mutableText);
+            tooltip.add(ToolTips.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, context);
     }

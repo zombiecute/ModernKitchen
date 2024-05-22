@@ -5,6 +5,7 @@ import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
@@ -394,9 +395,8 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.DEEP_FRYER)
                 .pattern("  I")
                 .pattern("IKI")
-                .pattern("BBB")
+                .pattern("III")
                 .input('I', Items.IRON_INGOT)
-                .input('B', Items.QUARTZ_BLOCK)
                 .input('K', ModBlocks.DEEP_FRY_BASKET)
                 .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT),
                         FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
@@ -491,6 +491,110 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .input('B', Items.IRON_BARS)
                 .criterion(FabricRecipeProvider.hasItem(Items.IRON_BARS),
                         FabricRecipeProvider.conditionsFromItem(Items.IRON_BARS))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.KITCHEN_UTENSIL_HOLDER,4)
+                .pattern("QQQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_SLAB)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.COBBLED_DEEPSLATE),
+                        FabricRecipeProvider.conditionsFromItem(Items.COBBLED_DEEPSLATE))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.CUISINE_TABLE)
+                .pattern("SAQ")
+                .pattern("PCP")
+                .pattern("SSS")
+                .input('Q', Items.QUARTZ)
+                .input('C', Items.TRAPPED_CHEST)
+                .input('A', Items.POLISHED_ANDESITE)
+                .input('S', ItemTags.WOODEN_SLABS)
+                .input('P', ItemTags.PLANKS)
+                .criterion(FabricRecipeProvider.hasItem(Items.TRAPPED_CHEST),
+                        FabricRecipeProvider.conditionsFromItem(Items.TRAPPED_CHEST))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.ANDESITE_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.POLISHED_ANDESITE_SLAB)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.GRANITE_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.POLISHED_GRANITE_SLAB)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.DIORITE_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.POLISHED_DIORITE_SLAB)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.DEEPSLATE_CABINET)
+                .pattern("DDD")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.BASALT_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.POLISHED_BASALT)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.BLACKSTONE_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.POLISHED_BLACKSTONE_BRICK_SLAB)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.OBSIDIAN_CABINET)
+                .pattern("AAA")
+                .pattern("QCQ")
+                .pattern("DDD")
+                .input('Q', Items.QUARTZ_BLOCK)
+                .input('C', Items.BARREL)
+                .input('A', Items.OBSIDIAN)
+                .input('D', Items.POLISHED_DEEPSLATE_SLAB)
+                .criterion(FabricRecipeProvider.hasItem(Items.QUARTZ),
+                        FabricRecipeProvider.conditionsFromItem(Items.QUARTZ))
+                .offerTo(exporter);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Blocks.ANCIENT_DEBRIS)
+                .pattern("AAA")
+                .pattern("AAA")
+                .pattern("AAA")
+                .input('A', ModItems.ANCIENT_SCRAP)
+                .criterion(FabricRecipeProvider.hasItem(ModItems.ANCIENT_SCRAP),
+                        FabricRecipeProvider.conditionsFromItem(ModItems.ANCIENT_SCRAP))
                 .offerTo(exporter);
     }
 }

@@ -152,11 +152,10 @@ public class WoodenBasinBlockEntity extends BlockEntity implements ImplementedIn
         }
         return filterItems.contains(item);
     }
-    public void onLandedUpon(BlockState state, World world) {
+    public void onLandedUpon(World world) {
         if (world.isClient){
             return;
         }
-
         if (fluidLevel != maxFluidLevel && canCreateOil(getStack(INGREDIENT_SLOT))
                 &&isFilter(getStack(FILTER_SLOT).getItem())){
             if (fluidLevel + getOil(getStack(INGREDIENT_SLOT)) <= maxFluidLevel){

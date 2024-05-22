@@ -16,11 +16,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,6 +38,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -56,7 +62,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     private int burnTime = 0;
     private int maxBurnTime = 1;
     private int experiences = 0;
-
+    private int cachedBurnTime = 0;
+    private int cachedMaxBurnTime = 0;
     public OvenBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OVEN_BLOCK_ENTITY, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
@@ -99,7 +106,11 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
             }
         };
     }
-
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -108,6 +119,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         nbt.putInt("oven.fuelTime", burnTime);
         nbt.putInt("oven.maxFuelTime", maxBurnTime);
         nbt.putInt("oven.experiences", experiences);
+        nbt.putInt("oven.cachedBurnTime", cachedBurnTime);
+        nbt.putInt("oven.cachedMaxBurnTime", cachedMaxBurnTime);
     }
 
     @Override
@@ -118,6 +131,8 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         burnTime = nbt.getInt("oven.fuelTime");
         maxBurnTime = nbt.getInt("oven.maxFuelTime");
         experiences = nbt.getInt("oven.experiences");
+        cachedBurnTime = nbt.getInt("oven.cachedBurnTime");
+        cachedMaxBurnTime = nbt.getInt("oven.cachedMaxBurnTime");
     }
     @Override
     public NbtCompound toInitialChunkDataNbt() {
@@ -155,17 +170,25 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
         if (tick == 0) tick = 20;
         boolean alwaysBurning = world.getBlockEntity(pos.down()) instanceof BurningGasCookingStoveBlockEntity;
         if (alwaysBurning){
+            if (burnTime != 0 && cachedBurnTime == 0){
+                cachedBurnTime = burnTime;
+                cachedMaxBurnTime = maxBurnTime;
+            }
             burnTime = 1;
             maxBurnTime = 1;
             world.setBlockState(pos, state.with(OVEN_BURNING,true));
             markDirty(world, pos, state);
-            if (tick % 3 == 0) playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,world.random.nextFloat()+0.3f);
             checkAndCraft(world, pos, state, entity);
         } else {
+            if (cachedBurnTime != 0){
+                burnTime = cachedBurnTime;
+                maxBurnTime = cachedMaxBurnTime;
+                cachedBurnTime = 0;
+                cachedMaxBurnTime = 0;
+            }
             if (isFuelBurning()){
                 --burnTime;
                 world.setBlockState(pos, state.with(OVEN_BURNING,true));
-                if (tick % 3 == 0) playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,0.2f);
                 checkAndCraft(world, pos, state, entity);
             } else {
                 if (hasRecipe(entity)){
@@ -234,15 +257,49 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     }
 
     private void craftItem(OvenBlockEntity entity) {
-        SimpleInventory inventory = new SimpleInventory(entity.size());
-        for(int i = 0; i< entity.size();i++){
-            inventory.setStack(i,entity.getStack(i));
+        if (this.getStack(INPUT_SLOT_1).getItem().equals(ModItems.BLACK_PEPPER_DUST) &&
+                this.getStack(INPUT_SLOT_2).getItem().equals(Items.SUGAR) &&
+                this.getStack(INPUT_SLOT_3).getItem().equals(ModItems.BLACK_PEPPER_DUST) &&
+                this.getStack(INPUT_SLOT_4).getItem().equals(ModBlocks.RAW_PIZZA_ITEM)){
+            ItemStack rawPizzaStack = this.getStack(INPUT_SLOT_4);
+            NbtCompound rawPizzaNBT = BlockItem.getBlockEntityNbt(rawPizzaStack);
+            DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(5, ItemStack.EMPTY);
+            if (rawPizzaNBT != null) {
+                if (rawPizzaNBT.contains("Items", 9)) {
+                    Inventories.readNbt(rawPizzaNBT, defaultedList);
+                }
+            }
+            ItemStack pizzaStack = new ItemStack(ModBlocks.PIZZA_ITEM);
+            NbtCompound nbt = getNbtCompound(defaultedList);
+            BlockItem.setBlockEntityNbt(pizzaStack,ModBlockEntities.PIZZA_BLOCK_ENTITY,nbt);
+            this.setStack(OUTPUT_SLOT,pizzaStack);
+        } else {
+            SimpleInventory inventory = new SimpleInventory(entity.size());
+            for(int i = 0; i< entity.size();i++){
+                inventory.setStack(i,entity.getStack(i));
+            }
+            Optional<BakingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
+                    .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
+            this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
+                    getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
         }
-        Optional<BakingRecipe> match = Objects.requireNonNull(entity.getWorld()).getRecipeManager()
-                .getFirstMatch(BakingRecipe.Type.INSTANCE, inventory,entity.getWorld());
         experiences += 4;
-        this.setStack(OUTPUT_SLOT, new ItemStack(match.get().getOutput(null).getItem(),
-                getStack(OUTPUT_SLOT).getCount() + match.get().getOutput(null).getCount()));
+    }
+    @NotNull
+    private static NbtCompound getNbtCompound(DefaultedList<ItemStack> defaultedList) {
+        NbtList nbtList = new NbtList();
+        for(int i = 0; i < defaultedList.size(); ++i) {
+            ItemStack itemStack = defaultedList.get(i);
+            if (!itemStack.isEmpty()) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putByte("Slot", (byte)i);
+                itemStack.writeNbt(nbtCompound);
+                nbtList.add(nbtCompound);
+            }
+        }
+        NbtCompound nbt = new NbtCompound();
+        nbt.put("Items",nbtList);
+        return nbt;
     }
 
     private boolean hasCraftingFinished() {
@@ -254,6 +311,13 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     }
 
     private boolean hasRecipe(OvenBlockEntity entity) {
+        if (this.getStack(INPUT_SLOT_1).getItem().equals(ModItems.BLACK_PEPPER_DUST) &&
+        this.getStack(INPUT_SLOT_2).getItem().equals(Items.SUGAR) &&
+        this.getStack(INPUT_SLOT_3).getItem().equals(ModItems.BLACK_PEPPER_DUST) &&
+        this.getStack(INPUT_SLOT_4).getItem().equals(ModBlocks.RAW_PIZZA_ITEM) &&
+        this.getStack(OUTPUT_SLOT).isEmpty()){
+            return true;
+        }
         SimpleInventory inventory = new SimpleInventory(entity.size());
         for(int i = 0; i < entity.size();i++){
             inventory.setStack(i,entity.getStack(i));
@@ -315,6 +379,7 @@ public class OvenBlockEntity extends BlockEntity implements ExtendedScreenHandle
     }
     public void setExperience(int experiences){
         this.experiences = experiences;
+        markDirty();
     }
     public int getExperience(){
         return experiences;

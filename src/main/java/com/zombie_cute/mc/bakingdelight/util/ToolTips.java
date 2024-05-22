@@ -1,5 +1,9 @@
 package com.zombie_cute.mc.bakingdelight.util;
 
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
 public class ToolTips {
     public static final String SHIFT_FRONT = "bakingdelight.tooltips.shift_front";
     public static final String SHIFT_END = "bakingdelight.tooltips.shift_end";
@@ -24,4 +28,29 @@ public class ToolTips {
     public static final String GAS_COOKING_STOVE_2 = "bakingdelight.tooltips.gas_cooking_stove_2";
     public static final String GAS_COOKING_STOVE_3 = "bakingdelight.tooltips.gas_cooking_stove_3";
     public static final String CROWBAR = "bakingdelight.tooltips.crowbar";
+    public static final String PIZZA_INGREDIENTS = "bakingdelight.tooltips.pizza_ingredients";
+    public static final String BAKING_TRAY_1 = "bakingdelight.tooltips.baking_tray_1";
+    public static final String BAKING_TRAY_2 = "bakingdelight.tooltips.baking_tray_2";
+    public static final String BAKING_TRAY_3 = "bakingdelight.tooltips.baking_tray_3";
+    public static final String DEEP_FRYER_1 = "bakingdelight.tooltips.deep_fryer_1";
+    public static final String DEEP_FRYER_2 = "bakingdelight.tooltips.deep_fryer_2";
+    public static final String DEEP_FRYER_3 = "bakingdelight.tooltips.deep_fryer_3";
+    public static final String WOODEN_BASIN_1 = "bakingdelight.tooltips.wooden_basin_1";
+    public static final String WOODEN_BASIN_2 = "bakingdelight.tooltips.wooden_basin_2";
+    public static final String WOODEN_BASIN_3 = "bakingdelight.tooltips.wooden_basin_3";
+    public static final String DFB = "bakingdelight.tooltips.dfb";
+
+
+    public static MutableText getShiftText(boolean hasDown){
+        MutableText mutableText = Text.translatable(SHIFT_FRONT).formatted(Formatting.DARK_GRAY);
+        mutableText.append(Text.literal("[").formatted(Formatting.DARK_GRAY));
+        if (hasDown){
+            mutableText.append(Text.literal("Shift").formatted(Formatting.WHITE));
+        } else {
+            mutableText.append(Text.literal("Shift").formatted(Formatting.GRAY));
+        }
+        mutableText.append(Text.literal("]").formatted(Formatting.DARK_GRAY));
+        mutableText.append(Text.translatable(SHIFT_END).formatted(Formatting.DARK_GRAY));
+        return mutableText;
+    }
 }

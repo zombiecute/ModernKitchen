@@ -132,10 +132,12 @@ public class GasCanisterBlockEntity extends BlockEntity implements ExtendedScree
                 playSound(ModSounds.BLOCK_GAS_CANISTER_FILLING,0.5f,0.8f);
                 entity.reduceGas(5);
                 blockEntity.gasValue += 5;
+                markDirty();
             } else if (entity.getGasValue() > 0){
                 playSound(ModSounds.BLOCK_GAS_CANISTER_FILLING,0.5f,0.8f);
                 entity.reduceGas(1);
                 blockEntity.gasValue += 1;
+                markDirty();
             }
         }
     }
@@ -230,5 +232,13 @@ public class GasCanisterBlockEntity extends BlockEntity implements ExtendedScree
         if (gasValue!=0 && tick %2 == 0){
             gasValue--;
         }
+        markDirty();
+    }
+    @Override
+    public void markDirty() {
+        if (world != null) {
+            world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        }
+        super.markDirty();
     }
 }

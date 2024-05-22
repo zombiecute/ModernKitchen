@@ -3,31 +3,41 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.BakingTrayBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.entities.BurningGasCookingStoveBlockEntity;
+import com.zombie_cute.mc.bakingdelight.util.ToolTips;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.tick.OrderedTick;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class BakingTrayBlock extends BlockWithEntity implements Waterloggable{
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -82,6 +92,38 @@ public class BakingTrayBlock extends BlockWithEntity implements Waterloggable{
     public BlockState getPlacementState(ItemPlacementContext context) {
         FluidState fluidState = context.getWorld().getFluidState(context.getBlockPos());
         return getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+    }
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
+        if(Screen.hasShiftDown()){
+            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(Text.literal(" "));
+            tooltip.add(Text.translatable(ToolTips.BAKING_TRAY_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.BAKING_TRAY_2).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ToolTips.BAKING_TRAY_3).formatted(Formatting.GOLD));
+        } else {
+            tooltip.add(ToolTips.getShiftText(false));
+        }
+        super.appendTooltip(stack, world, tooltip, options);
+    }
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (world.getBlockEntity(pos) instanceof BakingTrayBlockEntity entity &&
+        world.getBlockEntity(pos.down()) instanceof BurningGasCookingStoveBlockEntity){
+            if (!entity.getStack(0).isEmpty()){
+                world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.25, pos.getY()+0.2, pos.getZ()+0.25, 0.0, 5.0E-4, 0.0);
+            }
+            if (!entity.getStack(1).isEmpty()){
+                world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.25, pos.getY()+0.2, pos.getZ()+0.75, 0.0, 5.0E-4, 0.0);
+            }
+            if (!entity.getStack(2).isEmpty()){
+                world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.75, pos.getY()+0.2, pos.getZ()+0.25, 0.0, 5.0E-4, 0.0);
+            }
+            if (!entity.getStack(3).isEmpty()){
+                world.addParticle(ParticleTypes.SMOKE, pos.getX()+0.75, pos.getY()+0.2, pos.getZ()+0.75, 0.0, 5.0E-4, 0.0);
+            }
+        }
+        super.randomDisplayTick(state, world, pos, random);
     }
 
     @Override

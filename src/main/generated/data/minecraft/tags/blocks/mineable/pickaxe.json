@@ -10,6 +10,15 @@
     "bakingdelight:biogas_digester_controller",
     "bakingdelight:biogas_digester_io",
     "bakingdelight:gas_cooking_stove",
-    "bakingdelight:burning_gas_cooking_stove"
+    "bakingdelight:burning_gas_cooking_stove",
+    "bakingdelight:kitchen_utensil_holder",
+    "bakingdelight:cuisine_table",
+    "bakingdelight:andesite_cabinet",
+    "bakingdelight:diorite_cabinet",
+    "bakingdelight:granite_cabinet",
+    "bakingdelight:basalt_cabinet",
+    "bakingdelight:deepslate_cabinet",
+    "bakingdelight:blackstone_cabinet",
+    "bakingdelight:obsidian_cabinet"
   ]
 }

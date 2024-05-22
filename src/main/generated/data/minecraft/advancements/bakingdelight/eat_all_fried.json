@@ -21,6 +21,16 @@
       },
       "trigger": "minecraft:consume_item"
     },
+    "chicken_fillet": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bakingdelight:chicken_fillet"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
     "cod": {
       "conditions": {
         "item": {
@@ -121,10 +131,13 @@
     ],
     [
       "cheese_ball"
+    ],
+    [
+      "chicken_fillet"
     ]
   ],
   "rewards": {
-    "experience": 500
+    "experience": 550
   },
   "sends_telemetry_event": true
 }

@@ -20,6 +20,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
@@ -59,6 +62,8 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
     private int burnTime = 0;
     private int maxBurnTime = 1;
     private int experience = 0;
+    private int cachedBurnTime = 0;
+    private int cachedMaxBurnTime = 0;
     public AdvanceFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ADVANCE_FURNACE_BLOCK_ENTITY, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
@@ -113,7 +118,11 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
             }
         };
     }
-
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -125,6 +134,8 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
         nbt.putInt("advance_furnace.burnTime", burnTime);
         nbt.putInt("advance_furnace.maxBurnTime", maxBurnTime);
         nbt.putInt("advance_furnace.experience", experience);
+        nbt.putInt("advance_furnace.cachedBurnTime", cachedBurnTime);
+        nbt.putInt("advance_furnace.cachedMaxBurnTime", cachedMaxBurnTime);
     }
 
     @Override
@@ -138,6 +149,8 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
         burnTime = nbt.getInt("advance_furnace.burnTime");
         maxBurnTime = nbt.getInt("advance_furnace.maxBurnTime");
         experience = nbt.getInt("advance_furnace.experience");
+        cachedBurnTime = nbt.getInt("advance_furnace.cachedBurnTime");
+        cachedMaxBurnTime = nbt.getInt("advance_furnace.cachedMaxBurnTime");
     }
     @Override
     public NbtCompound toInitialChunkDataNbt() {
@@ -178,25 +191,29 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
         if (tick==0) tick = 20;
         alwaysBurning(world.getBlockEntity(pos.down()) instanceof BurningGasCookingStoveBlockEntity);
         if (alwaysBurning){
+            if (burnTime != 0 && cachedBurnTime == 0){
+                cachedBurnTime = burnTime;
+                cachedMaxBurnTime = maxBurnTime;
+            }
             maxBurnTime = 1;
             burnTime = 1;
             world.setBlockState(pos, state.with(AdvanceFurnaceBlock.BURNING,true));
             markDirty(world, pos, state);
-            if (tick % 3 == 0){
-                playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,world.random.nextFloat()+0.3f);
-            }
             checkStack(entity,state,INPUT_SLOT_1,OUTPUT_SLOT_1);
             checkStack(entity,state,INPUT_SLOT_2,OUTPUT_SLOT_2);
             checkStack(entity,state,INPUT_SLOT_3,OUTPUT_SLOT_3);
             checkStack(entity,state,INPUT_SLOT_4,OUTPUT_SLOT_4);
         } else {
+            if (cachedBurnTime != 0){
+                burnTime = cachedBurnTime;
+                maxBurnTime = cachedMaxBurnTime;
+                cachedBurnTime = 0;
+                cachedMaxBurnTime = 0;
+            }
             if (isFuelBurning()){
                 --burnTime;
                 world.setBlockState(pos, state.with(AdvanceFurnaceBlock.BURNING,true));
                 markDirty(world, pos, state);
-                if (tick % 3 == 0){
-                    playSound(SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 1.0f,0.2f);
-                }
                 checkStack(entity,state,INPUT_SLOT_1,OUTPUT_SLOT_1);
                 checkStack(entity,state,INPUT_SLOT_2,OUTPUT_SLOT_2);
                 checkStack(entity,state,INPUT_SLOT_3,OUTPUT_SLOT_3);
@@ -299,8 +316,8 @@ public class AdvanceFurnaceBlockEntity extends BlockEntity implements ExtendedSc
         this.setStack(outputSlot, new ItemStack(match.get().getOutput(null).getItem(),
                 getStack(outputSlot).getCount() + match.get().getOutput(null).getCount()));
     }
-    public void resetExperience(){
-        this.experience = 0;
+    public void setExperience(int value){
+        this.experience = value;
         markDirty();
     }
     public int getExperience(){

@@ -2,11 +2,11 @@ package com.zombie_cute.mc.bakingdelight.recipe.custom;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -17,16 +17,15 @@ public class MixWithWaterRecipe implements Recipe<SimpleInventory> {
     private final Identifier id;
     private final ItemStack output;
     private final DefaultedList<Ingredient> recipeItems;
-    private final RecipeCategory category;
     public MixWithWaterRecipe(Identifier id, DefaultedList<Ingredient> ingredients, ItemStack itemStack){
         this.id = id;
         this.output = itemStack;
         this.recipeItems = ingredients;
-        category = RecipeCategory.FOOD;
     }
 
-    public RecipeCategory getCategory() {
-        return category;
+    @Override
+    public ItemStack createIcon() {
+        return ModBlocks.GLASS_BOWL.asItem().getDefaultStack();
     }
 
     @Override
@@ -101,9 +100,7 @@ public class MixWithWaterRecipe implements Recipe<SimpleInventory> {
         public MixWithWaterRecipe read(Identifier id, PacketByteBuf buf) {
             DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readInt(),Ingredient.EMPTY);
 
-            for(int i =0;i<inputs.size();i++){
-                inputs.set(i,Ingredient.fromPacket(buf));
-            }
+            inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
 
             ItemStack output = buf.readItemStack();
             return new MixWithWaterRecipe(id, inputs, output);

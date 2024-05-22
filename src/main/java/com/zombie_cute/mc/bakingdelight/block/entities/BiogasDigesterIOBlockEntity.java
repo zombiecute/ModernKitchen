@@ -164,8 +164,8 @@ public class BiogasDigesterIOBlockEntity extends BlockEntity implements Implemen
                     if (blockEntity.progress == blockEntity.maxProgress){
                         entity.addGas(tempGasValue);
                         resetProgress();
-                        blockEntity.counter++;
-                        if (blockEntity.counter == 20){
+                        blockEntity.counter += world.random.nextBetween(0,4);
+                        if (blockEntity.counter >= 32){
                             putItem(world);
                             blockEntity.counter = 0;
                         }

@@ -120,6 +120,6 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
     }
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return !world.getBlockState(pos.down()).isAir();
+        return world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP);
     }
 }

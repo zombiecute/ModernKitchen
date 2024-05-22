@@ -2,27 +2,21 @@ package com.zombie_cute.mc.bakingdelight.screen.custom;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.zombie_cute.mc.bakingdelight.Bakingdelight;
-import com.zombie_cute.mc.bakingdelight.block.entities.AdvanceFurnaceBlockEntity;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.entity.BlockEntity;
+import com.zombie_cute.mc.bakingdelight.util.NetworkHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.Objects;
-
+@Environment(EnvType.CLIENT)
 public class AdvanceFurnaceScreen extends HandledScreen<AdvanceFurnaceScreenHandler> {
     private static final Identifier TEXTURE = new Identifier(Bakingdelight.MOD_ID,
             "textures/gui/advance_furnace_gui.png");
@@ -50,40 +44,14 @@ public class AdvanceFurnaceScreen extends HandledScreen<AdvanceFurnaceScreenHand
         if (mouseX >= minX && mouseX <= maxX &&
         mouseY >= minY && mouseY <= maxY && button == 0){
             MinecraftClient mc = MinecraftClient.getInstance();
-            if (mc.player != null){
-                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-                BlockPos pos = handler.blockEntity.getPos();
-                buf.writeBlockPos(pos);
-                Objects.requireNonNull(mc.getNetworkHandler()).sendPacket(new CustomPayloadC2SPacket(
-                        Identifier.tryParse("bakingdelight:advance_furnace_spawn_xp"),buf
-                ));
-                if (handler.getExperiences() == 0){
-                    mc.player.playSound(SoundEvents.BLOCK_DISPENSER_FAIL,1.0f,2.8f);
+            if (mc.player != null && !mc.player.isSpectator()) {
+                if (handler.getExperiences()/10 != 0){
+                    mc.player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON,1.0f,1.0f);
+                    NetworkHandler.sendSpawnXPPacket(handler.blockEntity.getPos());
                 } else {
-                    mc.player.playSound(SoundEvents.BLOCK_DISPENSER_DISPENSE,1.0f,1.0f);
+                    mc.player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,1.0f,1.6f);
                 }
             }
-            ServerPlayNetworking.registerGlobalReceiver(
-                    new Identifier(Bakingdelight.MOD_ID, "advance_furnace_spawn_xp"),
-                    ((server, player, handler1, buf1, responseSender) -> {
-                        BlockPos blockPos = buf1.readBlockPos();
-                        server.execute(() -> {
-                            World world = server.getWorld(player.getWorld().getRegistryKey());
-                            if (world != null) {
-                                BlockEntity blockEntity = world.getBlockEntity(blockPos);
-                                if (blockEntity instanceof AdvanceFurnaceBlockEntity entity){
-                                    if (entity.getExperience() != 0){
-                                        ExperienceOrbEntity xp;
-                                        xp = new ExperienceOrbEntity(world,
-                                                blockPos.getX(),blockPos.getY() + 1,blockPos.getZ(), entity.getExperience());
-                                        world.spawnEntity(xp);
-                                        entity.resetExperience();
-                                    }
-                                }
-                            }
-                        });
-                    })
-            );
             return true;
         } else {
             return super.mouseClicked(mouseX, mouseY, button);

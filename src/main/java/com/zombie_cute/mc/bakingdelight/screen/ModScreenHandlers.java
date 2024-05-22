@@ -33,6 +33,12 @@ public class ModScreenHandlers {
     public static final ScreenHandlerType<DeepFryerScreenHandler> DEEP_FRYER_SCREEN_HANDLER =
             Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "deep_fryer_screen"),
                     new ExtendedScreenHandlerType<>(DeepFryerScreenHandler::new));
+    public static final ScreenHandlerType<CuisineTableScreenHandler> CUISINE_TABLE_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "cuisine_table_screen"),
+                    new ExtendedScreenHandlerType<>(CuisineTableScreenHandler::new));
+    public static final ScreenHandlerType<CabinetScreenHandler> CABINET_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "cabinet_screen"),
+                    new ExtendedScreenHandlerType<>(CabinetScreenHandler::new));
     public static void registerScreenHandlers(){
         Bakingdelight.LOGGER.info("Registering Screen Handlers for " + Bakingdelight.MOD_ID);
     }

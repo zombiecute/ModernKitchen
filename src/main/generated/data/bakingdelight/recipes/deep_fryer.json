@@ -2,9 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:quartz_block"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
@@ -15,7 +12,7 @@
   "pattern": [
     "  I",
     "IKI",
-    "BBB"
+    "III"
   ],
   "result": {
     "item": "bakingdelight:deep_fryer"

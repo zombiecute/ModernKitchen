@@ -54,6 +54,15 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BIOGAS_DIGESTER_IO);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.GAS_COOKING_STOVE);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.KITCHEN_UTENSIL_HOLDER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.CUISINE_TABLE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.ANDESITE_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.DIORITE_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.GRANITE_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BASALT_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.DEEPSLATE_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BLACKSTONE_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.OBSIDIAN_CABINET);
 
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.WOODEN_BASIN);
 
@@ -65,6 +74,7 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.GAS_COOKING_STOVE);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
 
+        getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL).add(ModBlocks.OBSIDIAN_CABINET);
 
         getOrCreateTagBuilder(BlockTags.CROPS).add(ModBlocks.BLACK_PEPPER_CROP);
         getOrCreateTagBuilder(BlockTags.BEE_GROWABLES).add(ModBlocks.BLACK_PEPPER_CROP);

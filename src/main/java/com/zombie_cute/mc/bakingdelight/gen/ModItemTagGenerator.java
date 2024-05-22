@@ -22,6 +22,10 @@ public class ModItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
+        // Bucket of Oil
+        getOrCreateTagBuilder(ForgeTagKeys.BUCKET_OIL).add(ModItems.VEGETABLE_OIL_BUCKET);
+        // Bottle of Oil
+        getOrCreateTagBuilder(ForgeTagKeys.BOTTLE_OIL).add(ModItems.VEGETABLE_OIL_BOTTLE);
         // Filters
         getOrCreateTagBuilder(ModTagKeys.FILTERS).add(ModItems.FILTER);
         // Oil Plants

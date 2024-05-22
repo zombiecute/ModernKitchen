@@ -5,6 +5,8 @@ import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayCategor
 import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayDisplay;
 import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationCategory;
 import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationDisplay;
+import com.zombie_cute.mc.bakingdelight.compat.rei.cuisine.CuisineCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.cuisine.CuisineDisplay;
 import com.zombie_cute.mc.bakingdelight.compat.rei.deep_frying.DeepFryingCategory;
 import com.zombie_cute.mc.bakingdelight.compat.rei.deep_frying.DeepFryingDisplay;
 import com.zombie_cute.mc.bakingdelight.compat.rei.freezer.FreezerFreezingCategory;
@@ -49,7 +51,8 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
                 new BakingTrayCategory(),
                 new WoodenBasinCategory(),
                 new BiogasFermentationCategory(),
-                new DeepFryingCategory()
+                new DeepFryingCategory(),
+                new CuisineCategory()
         );
         registry.addWorkstations(OvenBakingCategory.OVEN_BAKING, EntryStacks.of(ModBlocks.OVEN));
         registry.addWorkstations(OvenBakingCategory.OVEN_BAKING, EntryStacks.of(ModBlocks.GAS_CANISTER));
@@ -72,6 +75,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.DEEP_FRY_BASKET));
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.GAS_CANISTER));
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.GAS_COOKING_STOVE));
+        registry.addWorkstations(CuisineCategory.CUISINE, EntryStacks.of(ModBlocks.CUISINE_TABLE));
     }
 
     @Override
@@ -87,6 +91,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
         registry.add(new WoodenBasinDisplay());
         registry.add(new BiogasFermentationDisplay());
         registry.registerRecipeFiller(DeepFryingRecipe.class, DeepFryingRecipe.Type.INSTANCE, DeepFryingDisplay::new);
+        registry.registerRecipeFiller(CuisineRecipe.class, CuisineRecipe.Type.INSTANCE, CuisineDisplay::new);
     }
 
     @Override
@@ -105,5 +110,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
                 BiogasFermentationCategory.BIOGAS_FERMENTATION);
         registry.registerClickArea(screen -> new Rectangle((screen.width-176)/2 + 161,(screen.height-166)/2 + 5,11,11), DeepFryerScreen.class,
                 DeepFryingCategory.DEEP_FRYING);
+        registry.registerClickArea(screen -> new Rectangle((screen.width-176)/2 + 161,(screen.height-166)/2 + 5,11,11), CuisineTableScreen.class,
+                CuisineCategory.CUISINE);
     }
 }

@@ -3,13 +3,16 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.custom.DeepFryerBlock;
+import com.zombie_cute.mc.bakingdelight.block.custom.GasCanisterBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
-import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.recipe.custom.DeepFryingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.custom.DeepFryerScreenHandler;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
+import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,6 +23,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -30,6 +38,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,56 +103,112 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4,ItemStack.EMPTY);
     public static final String ADD_OIL = "bakingdelight.deep_fryer_message.need_oil";
     public static final String TOO_HOT = "bakingdelight.deep_fryer_message.too_hot";
-
-    public void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+    public void useOnButton(BlockState state, World world){
         if (world.isClient){
             return;
         }
-        Item mainHandItem = player.getMainHandStack().getItem();
-        Item offHandItem = player.getOffHandStack().getItem();
+        if (!isHeated(state)){
+            playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON,1.0f,1.0f);
+            world.setBlockState(pos,state.with(DeepFryerBlock.RUNNING,true));
+        } else {
+            playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,1.0f,1.0f);
+            world.setBlockState(pos,state.with(DeepFryerBlock.RUNNING,false));
+        }
+        markDirty();
+        world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+    }
+    public boolean isBottleOil(Item item){
+        for (RegistryEntry<Item> registryEntry : Registries.ITEM.iterateEntries(ForgeTagKeys.BOTTLE_OIL)){
+            if (item == registryEntry.value()){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isBucketOil(Item item){
+        for (RegistryEntry<Item> registryEntry : Registries.ITEM.iterateEntries(ForgeTagKeys.BUCKET_OIL)){
+            if (item == registryEntry.value()){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        if (world.isClient){
+            ItemStack mainHandItem = player.getMainHandStack();
+            ItemStack offHandItem = player.getOffHandStack();
+            if (!state.get(DeepFryerBlock.HAS_OIL)){
+                if ( !isBottleOil(offHandItem.getItem()) &&
+                        !isBottleOil(mainHandItem.getItem()) &&
+                        !isBucketOil(offHandItem.getItem()) &&
+                        !isBucketOil(mainHandItem.getItem()) &&
+                        (
+                                !getStack(0).isEmpty() ||
+                                !getStack(1).isEmpty() ||
+                                !getStack(2).isEmpty() ||
+                                !getStack(3).isEmpty()
+                        )
+                ) {
+                    spawnItem(world);
+                }
+            } else if (mainHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem() ||
+                    offHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem()) {
+                spawnItem(world);
+            } else {
+                if (player.getOffHandStack().isEmpty()){
+                    if (player.getMainHandStack().isEmpty()){
+                        spawnItem(world);
+                    }
+                }
+            }
+            return;
+        }
+        ItemStack mainHandItem = player.getMainHandStack();
+        ItemStack offHandItem = player.getOffHandStack();
         if (!state.get(DeepFryerBlock.HAS_OIL)){
-            if (offHandItem == ModItems.VEGETABLE_OIL_BOTTLE){
+            if (isBottleOil(offHandItem.getItem())){
                 splitOilItem(state, world, pos, player,false, Items.GLASS_BOTTLE);
-            } else if (mainHandItem == ModItems.VEGETABLE_OIL_BOTTLE){
+            } else if (isBottleOil(mainHandItem.getItem())){
                 splitOilItem(state, world, pos, player,true,Items.GLASS_BOTTLE);
-            } else if (offHandItem == ModItems.VEGETABLE_OIL_BUCKET){
+            } else if (isBucketOil(offHandItem.getItem())){
                 splitOilItem(state, world, pos, player,false,Items.BUCKET);
-            } else if (mainHandItem == ModItems.VEGETABLE_OIL_BUCKET){
+            } else if (isBucketOil(mainHandItem.getItem())){
                 splitOilItem(state, world, pos, player,true,Items.BUCKET);
             } else {
-                if (getStack(0).isEmpty()&&getStack(1).isEmpty()&&getStack(3).isEmpty()){
+                if (getStack(0).isEmpty() && getStack(1).isEmpty() && getStack(2).isEmpty() && getStack(3).isEmpty()){
                     player.sendMessage(Text.translatable(ADD_OIL),true);
                 } else {
-                    if (mainHandItem == ModBlocks.DEEP_FRY_BASKET.asItem() ||
-                            offHandItem == ModBlocks.DEEP_FRY_BASKET.asItem()){
+                    if (mainHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem() ||
+                            offHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem()){
                         spawnItem(world);
                     } else {
                         spawnItemAndTryDamage(world,player,state);
                     }
                 }
             }
-        } else if (mainHandItem == ModBlocks.DEEP_FRY_BASKET.asItem() ||
-        offHandItem == ModBlocks.DEEP_FRY_BASKET.asItem()) {
+        } else if (mainHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem() ||
+                offHandItem.getItem() == ModBlocks.DEEP_FRY_BASKET.asItem()) {
             spawnItem(world);
         } else {
             if (player.getOffHandStack().isEmpty()){
                 if (player.getMainHandStack().isEmpty()){
                     spawnItemAndTryDamage(world,player,state);
                 } else {
-                    checkAndPut(mainHandItem,true,player,world);
+                    checkAndPut(true,player,world);
                 }
             } else {
-                checkAndPut(offHandItem,false,player,world);
+                checkAndPut(false,player,world);
             }
         }
         markDirty();
+        world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
     }
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
     }
     private void spawnItemAndTryDamage(World world, PlayerEntity player, BlockState state){
-        if (isHeated(world)){
+        if (isHeated(state)){
             player.damage(world.getDamageSources().onFire(),1.5f);
             player.sendMessage(Text.translatable(TOO_HOT),true);
         } else if (state.get(DeepFryerBlock.HAS_OIL)) {
@@ -153,39 +218,30 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
         spawnItem(world);
     }
     private void spawnItem(World world){
-        if (!getStack(3).isEmpty()){
-            spawnItem(3,world);
-        } else if (!getStack(2).isEmpty()){
-            spawnItem(2,world);
-        } else if (!getStack(1).isEmpty()){
-            spawnItem(1,world);
-        } else if (!getStack(0).isEmpty()){
-            spawnItem(0,world);
+        for(int i=3;i>=0;i--){
+            if (!getStack(i).isEmpty()){
+                spawnItem(i,world);
+                break;
+            }
         }
     }
     private void spawnItem(int slot,World world){
+        if (world.isClient){
+            this.setStack(slot,ItemStack.EMPTY);
+            return;
+        }
         ItemScatterer.spawn(world,pos.getX()+0.5,pos.getY()+0.8,pos.getZ()+0.5,
                 getStack(slot));
-        setStack(slot,ItemStack.EMPTY);
+        this.setStack(slot,ItemStack.EMPTY);
         playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.3f,world.random.nextFloat()+0.4f);
     }
-    private void checkAndPut(Item item,boolean isMainHand,PlayerEntity player,World world){
-        if (getStack(0).isEmpty()){
-            setStack(0,item.getDefaultStack());
-            checkHandAndDecrement(isMainHand,player);
-            playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,world.random.nextFloat()+0.3f);
-        } else if (getStack(1).isEmpty()){
-            setStack(1,item.getDefaultStack());
-            checkHandAndDecrement(isMainHand,player);
-            playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,world.random.nextFloat()+0.3f);
-        } else if (getStack(2).isEmpty()){
-            setStack(2,item.getDefaultStack());
-            checkHandAndDecrement(isMainHand,player);
-            playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,world.random.nextFloat()+0.3f);
-        } else if (getStack(3).isEmpty()){
-            setStack(3,item.getDefaultStack());
-            checkHandAndDecrement(isMainHand,player);
-            playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,world.random.nextFloat()+0.3f);
+    private void checkAndPut(boolean isMainHand, PlayerEntity player, World world){
+        for (int i=0;i<4;i++){
+            if (getStack(i).isEmpty()){
+                checkHandAndSplit(isMainHand,player,i);
+                playSound(SoundEvents.ENTITY_ITEM_PICKUP,1.0f,world.random.nextFloat()+0.3f);
+                break;
+            }
         }
     }
     private void checkHandAndDecrement(boolean isMainHand,PlayerEntity player){
@@ -193,6 +249,13 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
             player.getMainHandStack().decrement(1);
         } else {
             player.getOffHandStack().decrement(1);
+        }
+    }
+    private void checkHandAndSplit(boolean isMainHand,PlayerEntity player,int slot){
+        if (isMainHand){
+            setStack(slot,player.getMainHandStack().split(1));
+        } else {
+            setStack(slot,player.getOffHandStack().split(1));
         }
     }
     private void splitOilItem(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean isMainHand, Item item) {
@@ -210,8 +273,47 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
         if (progress1 != 0 || progress2 !=0 || progress3 != 0 || progress4 != 0){
             playSound(ModSounds.BLOCK_FOOD_FRYING,0.4f,1.0f);
         }
-        if (isHeated(world)){
+        if (isHeated(state)){
             isHeated = 1;
+            playSound(SoundEvents.BLOCK_FIRE_AMBIENT,0.3f,1.0f);
+            Direction dir = state.get(DeepFryerBlock.FACING);
+            BlockState neighborState = Blocks.AIR.getDefaultState();
+            BlockPos neighborPos = pos;
+            switch (dir){
+                case EAST -> {
+                    neighborPos = pos.offset(Direction.WEST);
+                    neighborState = world.getBlockState(neighborPos);
+                }
+                case SOUTH -> {
+                    neighborPos = pos.offset(Direction.NORTH);
+                    neighborState = world.getBlockState(neighborPos);
+                }
+                case WEST -> {
+                    neighborPos = pos.offset(Direction.EAST);
+                    neighborState = world.getBlockState(neighborPos);
+                }
+                case NORTH -> {
+                    neighborPos = pos.offset(Direction.SOUTH);
+                    neighborState = world.getBlockState(neighborPos);
+                }
+            }
+            if (neighborState.getBlock() instanceof GasCanisterBlock) {
+                if (neighborState.get(GasCanisterBlock.FACING) == dir) {
+                    BlockEntity neighborBlockEntity = world.getBlockEntity(neighborPos);
+                    if (neighborBlockEntity instanceof GasCanisterBlockEntity entity && entity.getGasValue() != 0) {
+                        entity.reduceGas();
+                    } else {
+                        playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,1.0f,1.0f);
+                        world.setBlockState(pos,state.with(DeepFryerBlock.RUNNING,false));
+                    }
+                } else {
+                    playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,1.0f,1.0f);
+                    world.setBlockState(pos,state.with(DeepFryerBlock.RUNNING,false));
+                }
+            } else {
+                playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,1.0f,1.0f);
+                world.setBlockState(pos,state.with(DeepFryerBlock.RUNNING,false));
+            }
             if (getOilLevel() != 0){
                 if (hasRecipe(0)){
                     blockEntity.progress1++;
@@ -261,6 +363,8 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
                 } else {
                     blockEntity.progress4 = 0;
                 }
+            } else {
+                resetAllProgress();
             }
         } else {
             resetAllProgress();
@@ -272,6 +376,7 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
         progress2 = 0;
         progress3 = 0;
         progress4 = 0;
+        markDirty();
     }
     public void playSound(SoundEvent sound, float volume, float pitch) {
         Objects.requireNonNull(world).playSound(null, pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, sound, SoundCategory.BLOCKS, volume, pitch);
@@ -280,8 +385,8 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
     public DefaultedList<ItemStack> getItems() {
         return inventory;
     }
-    private boolean isHeated(World world){
-        return world.getBlockEntity(pos.down()) instanceof BurningGasCookingStoveBlockEntity;
+    private boolean isHeated(BlockState state){
+        return state.get(DeepFryerBlock.RUNNING);
     }
     private int getOilLevel(){
         return oilLevel;
@@ -333,7 +438,11 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
         oilLevel = nbt.getInt("deep_fryer.oilLevel");
         isHeated = nbt.getInt("deep_fryer.isHeated");
     }
-
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
     @Override
     public void markDirty() {
         if (world != null) {
@@ -341,7 +450,6 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
         }
         super.markDirty();
     }
-
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeBlockPos(this.pos);

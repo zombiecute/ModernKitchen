@@ -64,6 +64,19 @@ public class ModItemGroups {
                         // Freezer
                         entries.add(ModBlocks.FREEZER);
                         entries.add(ModItems.ICE_BRICK);
+                        // Cuisine & Storage
+                        entries.add(ModBlocks.CUISINE_TABLE);
+                        entries.add(ModBlocks.DEEPSLATE_CABINET);
+                        entries.add(ModBlocks.GRANITE_CABINET);
+                        entries.add(ModBlocks.DIORITE_CABINET);
+                        entries.add(ModBlocks.ANDESITE_CABINET);
+                        entries.add(ModBlocks.OBSIDIAN_CABINET);
+                        entries.add(ModBlocks.BLACKSTONE_CABINET);
+                        entries.add(ModBlocks.BASALT_CABINET);
+                        // Building
+                        entries.add(ModBlocks.KITCHEN_UTENSIL_HOLDER);
+                        // Misc
+                        entries.add(ModItems.ANCIENT_SCRAP);
                         // Truffles
                         entries.add(ModItems.BLACK_TRUFFLE);
                         entries.add(ModItems.WHITE_TRUFFLE);
@@ -78,6 +91,9 @@ public class ModItemGroups {
                         entries.add(ModItems.MASHED_POTATO);
                         entries.add(ModItems.SAUCE_MASHED_POTATO);
                         entries.add(ModBlocks.MASHED_POTATO_BLOCK);
+                        // Chicken
+                        entries.add(ModItems.RAW_CHICKEN_FILLET);
+                        entries.add(ModItems.CHICKEN_FILLET);
                         // Snacks
                         entries.add(ModItems.APPLE_PETAL);
                         entries.add(ModItems.FRIED_APPLE);

@@ -33,6 +33,7 @@ public class BurningGasCookingStoveBlock extends AbstractGasCookingStoveBlock {
             double e = (double)pos.getY() +  world.random.nextDouble() * 0.5 + 1;
             double f = (double)pos.getZ() +  world.random.nextDouble();
             world.addParticle(ParticleTypes.LARGE_SMOKE, d, e, f, 0.0, 0.0, 0.0);
+            world.addParticle(ParticleTypes.FLAME, d, e, f, 0.0, 0.0, 0.0);
         }
     }
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
