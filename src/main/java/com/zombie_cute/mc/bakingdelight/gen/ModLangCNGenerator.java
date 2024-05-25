@@ -377,7 +377,7 @@ public class ModLangCNGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.vegetable_oil.title", "第一桶油");
         translationBuilder.add("advancement.bakingdelight.vegetable_oil.desc", "恭喜你你离油炸食物已经不远啦");
         translationBuilder.add("advancement.bakingdelight.deep_fryer.title", "煎熬（对食物而言）");
-        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "右键倒入油或存入或取出物品，潜行加右键可查看其状态。它必须在有油和被燃气灶加热时才能工作");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "右键倒入油或存入或取出物品，潜行加右键可查看其状态。它必须在有油和有燃气罐连接的情况下才能工作");
         translationBuilder.add("advancement.bakingdelight.deep_fry_basket.title", "当心热油烫手");
         translationBuilder.add("advancement.bakingdelight.deep_fry_basket.desc", "记得用油炸篮来从油炸锅中取物，当心油锅杀人事件");
         translationBuilder.add("advancement.bakingdelight.all_fried.title", "完全煎炸");

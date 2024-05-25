@@ -24,8 +24,6 @@ public class DeepFryingDisplay extends BasicDisplay {
         List<EntryIngredient> ingredients = new ArrayList<>(super.getInputEntries());
         ingredients.add(EntryIngredients.ofFluidTag(ModTagKeys.OIL));
         ingredients.add(EntryIngredients.of(ModBlocks.GAS_CANISTER));
-        ingredients.add(EntryIngredients.of(ModBlocks.GAS_COOKING_STOVE));
-        ingredients.add(EntryIngredients.of(ModBlocks.DEEP_FRY_BASKET));
         ingredients.add(EntryIngredients.of(ModBlocks.DEEP_FRY_BASKET));
         return ingredients;
     }

@@ -55,4 +55,8 @@ public class GlassBowlWhiskingCategory implements DisplayCategory<GlassBowlWhisk
 
         return widgets;
     }
+    @Override
+    public int getDisplayHeight() {
+        return 55;
+    }
 }

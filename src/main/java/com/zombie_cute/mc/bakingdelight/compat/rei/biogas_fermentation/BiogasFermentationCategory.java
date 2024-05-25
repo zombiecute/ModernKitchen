@@ -61,6 +61,10 @@ public class BiogasFermentationCategory implements DisplayCategory<BiogasFerment
         return widgets;
     }
     @Override
+    public int getDisplayHeight() {
+        return 122;
+    }
+    @Override
     public int getFixedDisplaysPerPage() {
         return 2;
     }

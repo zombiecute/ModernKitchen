@@ -63,7 +63,7 @@ public class BakingTrayCategory implements DisplayCategory<BakingTrayDisplay> {
     }
 
     @Override
-    public int getFixedDisplaysPerPage() {
-        return 1;
+    public int getDisplayHeight() {
+        return 73;
     }
 }

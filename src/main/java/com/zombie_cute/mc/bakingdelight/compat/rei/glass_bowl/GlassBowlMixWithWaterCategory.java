@@ -52,4 +52,8 @@ public class GlassBowlMixWithWaterCategory implements DisplayCategory<GlassBowlM
 
         return widgets;
     }
+    @Override
+    public int getDisplayHeight() {
+        return 55;
+    }
 }

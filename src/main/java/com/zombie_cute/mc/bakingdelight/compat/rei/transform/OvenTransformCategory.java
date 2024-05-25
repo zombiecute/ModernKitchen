@@ -55,7 +55,10 @@ public class OvenTransformCategory implements DisplayCategory<OvenTransformDispl
                 .markOutput().entry(EntryStacks.of(ModBlocks.BAKING_TRAY.asItem().getDefaultStack())));
         return widgets;
     }
-
+    @Override
+    public int getDisplayHeight() {
+        return 52;
+    }
     @Override
     public int getFixedDisplaysPerPage() {
         return 1;

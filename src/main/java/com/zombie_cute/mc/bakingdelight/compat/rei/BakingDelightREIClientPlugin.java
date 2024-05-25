@@ -74,7 +74,6 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.DEEP_FRYER));
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.DEEP_FRY_BASKET));
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.GAS_CANISTER));
-        registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.GAS_COOKING_STOVE));
         registry.addWorkstations(CuisineCategory.CUISINE, EntryStacks.of(ModBlocks.CUISINE_TABLE));
     }
 

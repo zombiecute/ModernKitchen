@@ -59,4 +59,8 @@ public class OvenBakingCategory implements DisplayCategory<OvenBakingDisplay> {
 
         return widgets;
     }
+    @Override
+    public int getDisplayHeight() {
+        return 55;
+    }
 }

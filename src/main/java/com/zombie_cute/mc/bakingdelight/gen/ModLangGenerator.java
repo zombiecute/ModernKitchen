@@ -379,7 +379,7 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("advancement.bakingdelight.vegetable_oil.title", "Glossy");
         translationBuilder.add("advancement.bakingdelight.vegetable_oil.desc", "Congratulations, you're not far from deep-frying food.");
         translationBuilder.add("advancement.bakingdelight.deep_fryer.title", "Ordeal (For Food)");
-        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "Right click to put in oil or take out or deposit an item, sneak and right click to see its status. It must work when oil is present and heated by a gas cooking stove.");
+        translationBuilder.add("advancement.bakingdelight.deep_fryer.desc", "Right click to put in oil or take out or deposit an item, sneak and right click to see its status. It must be oiled and have a gas canister connection in order to work");
         translationBuilder.add("advancement.bakingdelight.deep_fry_basket.title", "Watch out for hot oil");
         translationBuilder.add("advancement.bakingdelight.deep_fry_basket.desc", "Remember to use a deep fry basket to get items out of the deep fryer, beware of fryer killers!");
         translationBuilder.add("advancement.bakingdelight.all_fried.title", "All Fried");

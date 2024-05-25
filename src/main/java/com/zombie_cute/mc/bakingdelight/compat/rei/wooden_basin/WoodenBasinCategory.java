@@ -63,7 +63,11 @@ public class WoodenBasinCategory implements DisplayCategory<WoodenBasinDisplay> 
         return widgets;
     }
     @Override
+    public int getDisplayHeight() {
+        return 74;
+    }
+    @Override
     public int getFixedDisplaysPerPage() {
-        return 2;
+        return 1;
     }
 }

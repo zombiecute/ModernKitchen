@@ -54,4 +54,9 @@ public class CuisineCategory implements DisplayCategory<CuisineDisplay> {
 
         return widgets;
     }
+
+    @Override
+    public int getDisplayHeight() {
+        return DisplayCategory.super.getDisplayHeight();
+    }
 }

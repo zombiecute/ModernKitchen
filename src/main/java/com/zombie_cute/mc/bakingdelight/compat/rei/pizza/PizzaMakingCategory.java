@@ -65,6 +65,10 @@ public class PizzaMakingCategory implements DisplayCategory<PizzaMakingDisplay> 
         return widgets;
     }
     @Override
+    public int getDisplayHeight() {
+        return 55;
+    }
+    @Override
     public int getFixedDisplaysPerPage() {
         return 1;
     }

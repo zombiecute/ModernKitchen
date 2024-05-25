@@ -7,7 +7,7 @@
   "advancement.bakingdelight.cuisine_table.title": "分解一切",
   "advancement.bakingdelight.deep_fry_basket.desc": "记得用油炸篮来从油炸锅中取物，当心油锅杀人事件",
   "advancement.bakingdelight.deep_fry_basket.title": "当心热油烫手",
-  "advancement.bakingdelight.deep_fryer.desc": "右键倒入油或存入或取出物品，潜行加右键可查看其状态。它必须在有油和被燃气灶加热时才能工作",
+  "advancement.bakingdelight.deep_fryer.desc": "右键倒入油或存入或取出物品，潜行加右键可查看其状态。它必须在有油和有燃气罐连接的情况下才能工作",
   "advancement.bakingdelight.deep_fryer.title": "煎熬（对食物而言）",
   "advancement.bakingdelight.filter.desc": "把过滤器和炒制的油料作物（例如葵花籽）放入木盆，并用脚踩木盆来榨油",
   "advancement.bakingdelight.filter.title": "开始劳苦的一生",

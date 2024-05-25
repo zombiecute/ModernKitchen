@@ -50,7 +50,10 @@ public class AdvanceFurnaceTransformCategory implements DisplayCategory<AdvanceF
 
         return widgets;
     }
-
+    @Override
+    public int getDisplayHeight() {
+        return 52;
+    }
     @Override
     public int getFixedDisplaysPerPage() {
         return 1;

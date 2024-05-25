@@ -60,4 +60,8 @@ public class FreezerFreezingCategory implements DisplayCategory<FreezerFreezingD
 
         return widgets;
     }
+    @Override
+    public int getDisplayHeight() {
+        return 70;
+    }
 }

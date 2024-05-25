@@ -24,7 +24,6 @@ public class DeepFryingCategory implements DisplayCategory<DeepFryingDisplay> {
             new Identifier(Bakingdelight.MOD_ID, "textures/gui/compats/deep_fryer.png");
     public static final CategoryIdentifier<DeepFryingDisplay> DEEP_FRYING =
             CategoryIdentifier.of(Bakingdelight.MOD_ID, "deep_frying");
-
     @Override
     public CategoryIdentifier<? extends DeepFryingDisplay> getCategoryIdentifier() {
         return DEEP_FRYING;
@@ -46,27 +45,26 @@ public class DeepFryingCategory implements DisplayCategory<DeepFryingDisplay> {
         List<Widget> widgets = new LinkedList<>();
         widgets.add(Widgets.createTexturedWidget(TEXTURE, new Rectangle(startPoint.x, startPoint.y,150,73)));
 
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 11,startPoint.y + 23))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 19,startPoint.y + 9))
                 .entries(display.getInputEntries().get(0)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 29,startPoint.y + 52))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 19,startPoint.y + 33))
                 .markInput().entry(EntryStacks.of(ModBlocks.GAS_CANISTER)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 47,startPoint.y + 52))
-                .markInput().entry(EntryStacks.of(ModBlocks.GAS_COOKING_STOVE)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 87,startPoint.y + 52))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 77,startPoint.y + 51))
                 .markInput().entry(EntryStacks.of(ModBlocks.DEEP_FRY_BASKET)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 66,startPoint.y + 5))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 56,startPoint.y + 9))
                 .markInput().entries(EntryIngredients.ofFluidTag(ModTagKeys.OIL)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 47,startPoint.y + 23))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 37,startPoint.y + 33))
                 .markInput().entry(EntryStacks.of(ModBlocks.DEEP_FRYER)));
 
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 124,startPoint.y + 34))
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 114,startPoint.y + 33))
                 .markOutput().entries(display.getOutputEntries().get(0)));
 
         return widgets;
     }
 
     @Override
-    public int getFixedDisplaysPerPage() {
-        return 1;
+    public int getDisplayHeight() {
+        return 73;
     }
+
 }
