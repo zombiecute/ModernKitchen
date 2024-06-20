@@ -83,6 +83,9 @@ public class WheatDoughBlock extends Block {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient){
+            return ActionResult.SUCCESS;
+        }
         Item item = player.getMainHandStack().getItem();
         int currentState = state.get(CRAFT_STATE);
         if (isKneadingStick(item) && currentState < 3){

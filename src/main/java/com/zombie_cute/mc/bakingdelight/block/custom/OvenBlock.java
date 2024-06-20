@@ -2,18 +2,15 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
-import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -28,9 +25,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
@@ -96,7 +90,7 @@ public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient){
             NamedScreenHandlerFactory screenHandlerFactory = ((OvenBlockEntity) world.getBlockEntity(pos));
-            if (isCrowbar(player)){
+            if (ModUtil.isCrowbar(player)){
                 if (world.getBlockEntity(pos) instanceof OvenBlockEntity container) {
                     container.onUse(state, world);
                     return ActionResult.SUCCESS;
@@ -106,14 +100,6 @@ public class OvenBlock extends BlockWithEntity implements BlockEntityProvider {
             }
         }
         return ActionResult.SUCCESS;
-    }
-    private boolean isCrowbar(PlayerEntity player) {
-        Item item = player.getMainHandStack().getItem();
-        List<Item> items = new ArrayList<>();
-        for (RegistryEntry<Item> registryEntry: Registries.ITEM.iterateEntries(ModTagKeys.CROWBARS)){
-            items.add(registryEntry.value());
-        }
-        return items.contains(item);
     }
 
     @Override

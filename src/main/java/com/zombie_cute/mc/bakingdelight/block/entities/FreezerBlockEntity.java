@@ -2,7 +2,9 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Maps;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ACConsumer;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ACGenerateAble;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.recipe.custom.FreezingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.custom.FreezerScreenHandler;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
@@ -44,7 +46,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, SidedInventory {
+public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, SidedInventory, ACConsumer {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(20,ItemStack.EMPTY);
     private static final int INPUT_SLOT_1 = 0;
     private static final int INPUT_SLOT_2 = 1;
@@ -158,7 +160,9 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
         }
         if (isCool()){
             --coolTime;
-            playSound(ModSounds.BLOCK_FREEZER_RUNNING,0.3f,0.8f);
+            if (world.getTime() % 100L == 0L){
+                playSound(ModSounds.BLOCK_FREEZER_RUNNING,0.3f,0.8f);
+            }
             if (isOutputSlotEmptyOrReceivable()){
                 if (hasRecipe(entity)){
                     increaseCraftProgress();
@@ -187,7 +191,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
             } else {
                 resetProgress();
             }
-            maxCoolTime = 1;
+            maxCoolTime = 60;
             markDirty(world, pos, state);
         }
         if (canUseAsIce(this.getStack(3))&&this.coolTime == 0){
@@ -198,6 +202,54 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
                 this.setStack(ICE_SLOT, Items.BUCKET.getDefaultStack());
             } else {
                 this.removeStack(ICE_SLOT,1);
+            }
+        }
+        if (world.getTime() % 60L == 0L){
+            for (Direction dir : Direction.values()){
+                switch (dir){
+                    case UP -> {
+                        if (world.getBlockEntity(pos.up()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                    case DOWN -> {
+                        if (world.getBlockEntity(pos.down()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                    case NORTH -> {
+                        if (world.getBlockEntity(pos.north()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                    case SOUTH -> {
+                        if (world.getBlockEntity(pos.south()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                    case WEST -> {
+                        if (world.getBlockEntity(pos.west()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                    case EAST -> {
+                        if (world.getBlockEntity(pos.east()) instanceof ACGenerateAble able && able.getEfficiency() >= 15){
+                            if (!this.isCool()){
+                                this.coolTime = 60;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -339,5 +391,22 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     }
     public int getExperience(){
         return experiences;
+    }
+
+    @Override
+    public int getConsumedValue() {
+        return 15;
+    }
+
+    @Override
+    public boolean isWorking() {
+        return !this.isCool();
+    }
+
+    @Override
+    public void energize() {
+        if (!this.isCool()){
+            this.coolTime = 60;
+        }
     }
 }

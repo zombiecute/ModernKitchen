@@ -36,7 +36,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class GasCanisterBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
+public class GasCanisterBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory{
     private int gasValue = 0;
     private final int maxGasValue = 6000;
     private int cycleInt = 0;

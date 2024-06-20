@@ -1,6 +1,7 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.block.entities.abstracts.AbstractPizzaBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;

@@ -61,9 +61,31 @@ public class ModItemGroups {
                         entries.add(ModBlocks.BIOGAS_DIGESTER_IO);
                         entries.add(ModBlocks.GAS_CANISTER);
                         entries.add(ModBlocks.GAS_COOKING_STOVE);
+                        // Power System
+                        entries.add(ModBlocks.ELECTRICIANS_DESK);
+                        entries.add(ModBlocks.PHOTOVOLTAIC_GENERATOR);
+                        entries.add(ModBlocks.FAN_BLADE_ITEM);
+                        entries.add(ModBlocks.WIND_TURBINE_CONTROLLER);
+                        entries.add(ModBlocks.STERLING_ENGINE_ITEM);
+                        entries.add(ModBlocks.FARADAY_GENERATOR);
+                        entries.add(ModBlocks.AC_DC_CONVERTER);
+                        entries.add(ModBlocks.TESLA_COIL);
+                        entries.add(ModBlocks.SIMPLE_BATTERY);
+                        entries.add(ModBlocks.INTERMEDIATE_BATTERY);
+                        entries.add(ModBlocks.ADVANCE_BATTERY);
+                        entries.add(ModBlocks.DIMENSION_BATTERY);
+                        // Materials
+                        entries.add(ModItems.SILICON_INGOT);
+                        entries.add(ModBlocks.SILICON_BLOCK);
+                        entries.add(ModItems.REDSTONE_COMPONENT);
+                        entries.add(ModItems.SILICON_COMPONENT);
+                        entries.add(ModItems.DIAMOND_COMPONENT);
                         // Freezer
                         entries.add(ModBlocks.FREEZER);
                         entries.add(ModItems.ICE_BRICK);
+                        // Steamer
+                        entries.add(ModBlocks.BAMBOO_GRATE);
+                        entries.add(ModBlocks.BAMBOO_COVER);
                         // Cuisine & Storage
                         entries.add(ModBlocks.CUISINE_TABLE);
                         entries.add(ModBlocks.DEEPSLATE_CABINET);
@@ -110,6 +132,7 @@ public class ModItemGroups {
 
                         entries.add(ModItems.CHERRY);
                         entries.add(ModItems.CHERRY_BOMB);
+                        entries.add(ModBlocks.BOXED_CHERRIES);
 
                         entries.add(ModItems.BUTTER);
 

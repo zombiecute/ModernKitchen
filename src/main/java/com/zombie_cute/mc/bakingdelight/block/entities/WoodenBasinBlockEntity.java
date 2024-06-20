@@ -3,7 +3,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Maps;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.custom.WoodenBasinBlock;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.screen.custom.WoodenBasinScreenHandler;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
-import com.zombie_cute.mc.bakingdelight.util.ToolTips;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,10 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class CrowbarItem extends ToolItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
@@ -55,26 +52,29 @@ public class CrowbarItem extends ToolItem {
     }
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
         if(Screen.hasShiftDown()){
-            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(ModUtil.getShiftText(true));
             tooltip.add(Text.literal(" "));
-            tooltip.add(Text.translatable(ToolTips.CROWBAR).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.CROWBAR).formatted(Formatting.GOLD));
         }else {
-            tooltip.add(ToolTips.getShiftText(false));
+            tooltip.add(ModUtil.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, context);
     }
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
+        if (world.isClient){
+            return ActionResult.SUCCESS;
+        }
         BlockPos blockPos = context.getBlockPos();
-        List<Block> blocks = new ArrayList<>();
+        HashSet<Block> blocks = new HashSet<>();
         for (RegistryEntry<Block> registryEntry : Registries.BLOCK.iterateEntries(ModTagKeys.CROWBAR_DESTROYABLE)){
             blocks.add(registryEntry.value());
         }
         if (blocks.contains(world.getBlockState(blockPos).getBlock())){
             context.getStack().damage(1, Objects.requireNonNull(context.getPlayer()),
                     (player) -> player.sendToolBreakStatus(player.getActiveHand()));
-            if (world.random.nextDouble() < 0.3){
+            if (world.random.nextDouble() < 0.5){
                 world.playSound(blockPos.getX(),blockPos.getY(),blockPos.getZ(),
                         ModSounds.ITEM_CROWBAR_HIT,
                         SoundCategory.BLOCKS,

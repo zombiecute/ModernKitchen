@@ -19,4 +19,10 @@ public class NetworkHandler {
         buf.writeBlockPos(pos);
         ClientPlayNetworking.send(Bakingdelight.SPAWN_XP_PACKET_ID, buf);
     }
+    public static void sendChangeBlockEntityDataPacket(BlockPos pos, int[] array) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeBlockPos(pos);
+        buf.writeIntArray(array);
+        ClientPlayNetworking.send(Bakingdelight.CHANGE_BLOCK_ENTITY_DATA_PACKET_ID, buf);
+    }
 }

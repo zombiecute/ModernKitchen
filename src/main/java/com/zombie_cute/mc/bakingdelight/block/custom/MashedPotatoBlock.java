@@ -79,7 +79,7 @@ public class MashedPotatoBlock extends Block {
 
     @Override
     public boolean hasComparatorOutput(BlockState state) {
-        return false;
+        return true;
     }
 
     @Override

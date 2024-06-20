@@ -2,8 +2,9 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
+import com.zombie_cute.mc.bakingdelight.item.custom.ModStewItem;
 import com.zombie_cute.mc.bakingdelight.recipe.custom.WhiskingRecipe;
 import com.zombie_cute.mc.bakingdelight.recipe.custom.MixWithWaterRecipe;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
@@ -244,13 +245,17 @@ public class GlassBowlBlockEntity extends BlockEntity implements ImplementedInve
                 markDirty();
             }
             if (!GLASS_BOWL_INV.get(1).isEmpty()){
-                spawnItem(1,world);
+                if (!(getStack(1).getItem() instanceof ModStewItem)) {
+                    spawnItem(1,world);
+                }
                 markDirty();
             }
         }
         if (state.get(HAS_WATER)){
             if (!GLASS_BOWL_INV.get(1).isEmpty()){
-                spawnItem(1,world);
+                if (!(getStack(1).getItem() instanceof ModStewItem)) {
+                    spawnItem(1,world);
+                }
                 markDirty();
             }
             world.setBlockState(pos, state.with(HAS_ITEM,false));

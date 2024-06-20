@@ -11,6 +11,7 @@ import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -119,11 +121,16 @@ public class FreezerBlock extends BlockWithEntity implements BlockEntityProvider
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        world.setBlockState(pos, state.with(IS_OPEN, false));
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (!world.getBlockState(getSideBlock(state, pos)).isAir() && state.get(IS_OPEN)){
-            world.setBlockState(pos, state.with(IS_OPEN, false));
-            world.updateListeners(pos,state,state,FORCE_STATE);
+            world.scheduleBlockTick(pos,this,1);
         }
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
     @Override

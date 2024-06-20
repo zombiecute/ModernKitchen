@@ -48,4 +48,5 @@ public class BurningGasCookingStoveBlockEntity extends BlockEntity {
             world.setBlockState(pos, ModBlocks.GAS_COOKING_STOVE.getDefaultState());
         }
     }
+
 }

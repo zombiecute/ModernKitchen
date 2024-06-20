@@ -2,10 +2,7 @@ package com.zombie_cute.mc.bakingdelight;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.AdvanceFurnaceBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.CuisineTableBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.FreezerBlockEntity;
-import com.zombie_cute.mc.bakingdelight.block.entities.OvenBlockEntity;
+import com.zombie_cute.mc.bakingdelight.block.entities.*;
 import com.zombie_cute.mc.bakingdelight.effects.ModEffectsAndPotions;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.entity.custom.ButterEntity;
@@ -49,6 +46,7 @@ public class Bakingdelight implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final Identifier UPDATE_INVENTORY_PACKET_ID = new Identifier(MOD_ID,"update_inventory");
 	public static final Identifier SPAWN_XP_PACKET_ID = new Identifier(MOD_ID,"spawn_xp");
+	public static final Identifier CHANGE_BLOCK_ENTITY_DATA_PACKET_ID = new Identifier(MOD_ID,"change_block_entity_data");
 
 	@Override
 	public void onInitialize() {
@@ -94,8 +92,41 @@ public class Bakingdelight implements ModInitializer {
         LOGGER.info("Registering C2S receiver with id {}", UPDATE_INVENTORY_PACKET_ID);
 		ServerPlayNetworking.registerGlobalReceiver(SPAWN_XP_PACKET_ID, this::handleSpawnXPPacket);
 		LOGGER.info("Registering C2S receiver with id {}", SPAWN_XP_PACKET_ID);
+		ServerPlayNetworking.registerGlobalReceiver(CHANGE_BLOCK_ENTITY_DATA_PACKET_ID, this::handleSetGasPumpStatePacket);
+		LOGGER.info("Registering C2S receiver with id {}", CHANGE_BLOCK_ENTITY_DATA_PACKET_ID);
 	}
-
+	private void handleSetGasPumpStatePacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+		BlockPos pos = buf.readBlockPos();
+		int[] array = buf.readIntArray();
+		server.execute(() -> {
+			BlockEntity blockEntity = player.getWorld().getBlockEntity(pos);
+			if (blockEntity instanceof TeslaCoilBlockEntity teslaCoilBlockEntity){
+				switch (array[0]){
+					case 1 -> teslaCoilBlockEntity.setShowParticle(false);
+					case 2 -> teslaCoilBlockEntity.setShowParticle(true);
+				}
+			} else if (blockEntity instanceof ACDCConverterBlockEntity gasPumpBlockEntity) {
+				switch (array[0]){
+					case 1 -> gasPumpBlockEntity.addWorkSpeed(1);
+					case 2 -> gasPumpBlockEntity.reduceWorkSpeed(1);
+				}
+				switch (array[1]){
+					case 1 -> gasPumpBlockEntity.setACMode(false);
+					case 2 -> gasPumpBlockEntity.setACMode(true);
+				}
+				gasPumpBlockEntity.markDirty();
+			} else if (blockEntity instanceof ElectriciansDeskBlockEntity electriciansDeskBlockEntity) {
+				switch (array[0]){
+					case 1 -> electriciansDeskBlockEntity.setCanCraft(true);
+					case 2 -> electriciansDeskBlockEntity.setCanCraft(false);
+					case 3 -> {
+						electriciansDeskBlockEntity.removeStack(6, 1);
+						electriciansDeskBlockEntity.removeStack(7, 1);
+					}
+				}
+			}
+		});
+	}
 	private void handleUpdateInventoryPacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
 		BlockPos pos = buf.readBlockPos();
 		ItemStack itemStack = buf.readItemStack();
@@ -104,6 +135,8 @@ public class Bakingdelight implements ModInitializer {
 			if (blockEntity instanceof CuisineTableBlockEntity cuisineTableBlockEntity) {
 				cuisineTableBlockEntity.getItems().set(2, itemStack);
 				blockEntity.markDirty();
+			} else if (blockEntity instanceof ElectriciansDeskBlockEntity electriciansDeskBlockEntity){
+				electriciansDeskBlockEntity.getItems().set(8,itemStack);
 			}
 		});
 	}

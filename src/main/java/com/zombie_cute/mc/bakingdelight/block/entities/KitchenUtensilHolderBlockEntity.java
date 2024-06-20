@@ -1,7 +1,7 @@
 package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -3,6 +3,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 import com.google.common.collect.Lists;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.entities.abstracts.AbstractPizzaBlockEntity;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
 import com.zombie_cute.mc.bakingdelight.tag.ForgeTagKeys;
 import net.minecraft.block.BlockState;

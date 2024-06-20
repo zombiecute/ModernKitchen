@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:iron_bars",
+    "bakingdelight:gas_pipe",
+    "bakingdelight:ac_dc_converter",
     {
       "id": "#minecraft:trapdoors",
       "required": false

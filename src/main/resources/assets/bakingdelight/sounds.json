@@ -82,5 +82,19 @@
     "sounds": [
       "bakingdelight:gas_cooking_stove_ignite"
     ]
+  },
+  "block_sterling_engine": {
+    "subtitle": "sounds.bakingdelight.block_sterling_engine",
+    "sounds": [
+      "bakingdelight:sterling_engine"
+    ]
+  },
+  "block_tesla_coil": {
+    "subtitle": "sounds.bakingdelight.block_tesla_coil",
+    "sounds": [
+      "bakingdelight:tesla_coil_1",
+      "bakingdelight:tesla_coil_2",
+      "bakingdelight:tesla_coil_3"
+    ]
   }
 }

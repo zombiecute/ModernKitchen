@@ -25,6 +25,14 @@ public class ModModelGenerator extends FabricModelProvider {
         blockStateModelGenerator.registerSimpleState(ModBlocks.BAKING_TRAY);
         blockStateModelGenerator.registerSimpleState(ModBlocks.BURNING_GAS_COOKING_STOVE);
         blockStateModelGenerator.registerSimpleState(ModBlocks.GAS_COOKING_STOVE);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.SIMPLE_BATTERY);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.INTERMEDIATE_BATTERY);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.ADVANCE_BATTERY);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.DIMENSION_BATTERY);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BOXED_CHERRIES);
+        blockStateModelGenerator.registerSimpleState(ModBlocks.BAMBOO_COVER);
+
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SILICON_BLOCK);
 
         blockStateModelGenerator.registerCrop(ModBlocks.BLACK_PEPPER_CROP, BlackPepperCropBlock.AGE, 0,1,2,3,4,5,6);
     }
@@ -58,7 +66,24 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModBlocks.BASALT_CABINET.asItem(),registerItemBlockModel(ModBlocks.BASALT_CABINET));
         itemModelGenerator.register(ModBlocks.BLACKSTONE_CABINET.asItem(),registerItemBlockModel(ModBlocks.BLACKSTONE_CABINET));
         itemModelGenerator.register(ModBlocks.OBSIDIAN_CABINET.asItem(),registerItemBlockModel(ModBlocks.OBSIDIAN_CABINET));
+        itemModelGenerator.register(ModBlocks.PHOTOVOLTAIC_GENERATOR.asItem(),registerItemBlockModel(ModBlocks.PHOTOVOLTAIC_GENERATOR));
+        itemModelGenerator.register(ModBlocks.GAS_PIPE.asItem(),registerItemBlockModel(ModBlocks.GAS_PIPE));
+        itemModelGenerator.register(ModBlocks.AC_DC_CONVERTER.asItem(),registerItemBlockModel(ModBlocks.AC_DC_CONVERTER));
+        itemModelGenerator.register(ModBlocks.WIND_TURBINE_CONTROLLER.asItem(),registerItemBlockModel(ModBlocks.WIND_TURBINE_CONTROLLER));
+        itemModelGenerator.register(ModBlocks.SIMPLE_BATTERY.asItem(),registerItemBlockModel(ModBlocks.SIMPLE_BATTERY));
+        itemModelGenerator.register(ModBlocks.INTERMEDIATE_BATTERY.asItem(),registerItemBlockModel(ModBlocks.INTERMEDIATE_BATTERY));
+        itemModelGenerator.register(ModBlocks.ADVANCE_BATTERY.asItem(),registerItemBlockModel(ModBlocks.ADVANCE_BATTERY));
+        itemModelGenerator.register(ModBlocks.DIMENSION_BATTERY.asItem(),registerItemBlockModel(ModBlocks.DIMENSION_BATTERY));
+        itemModelGenerator.register(ModBlocks.FARADAY_GENERATOR.asItem(),registerItemBlockModel(ModBlocks.FARADAY_GENERATOR));
+        itemModelGenerator.register(ModBlocks.TESLA_COIL.asItem(),registerItemBlockModel(ModBlocks.TESLA_COIL));
+        itemModelGenerator.register(ModBlocks.ELECTRICIANS_DESK.asItem(),registerItemBlockModel(ModBlocks.ELECTRICIANS_DESK));
+        itemModelGenerator.register(ModBlocks.SILICON_BLOCK.asItem(), registerItemBlockModel(ModBlocks.SILICON_BLOCK));
+        itemModelGenerator.register(ModBlocks.BOXED_CHERRIES.asItem(), registerItemBlockModel(ModBlocks.BOXED_CHERRIES));
+        itemModelGenerator.register(ModBlocks.BAMBOO_COVER.asItem(), registerItemBlockModel(ModBlocks.BAMBOO_COVER));
+        itemModelGenerator.register(ModBlocks.BAMBOO_GRATE.asItem(), registerItemBlockModel(ModBlocks.BAMBOO_GRATE));
 
+        itemModelGenerator.register(ModBlocks.FAN_BLADE_ITEM, Models.GENERATED);
+        itemModelGenerator.register(ModBlocks.STERLING_ENGINE_ITEM, Models.GENERATED);
         itemModelGenerator.register(ModItems.BLACK_PEPPER_DUST, Models.GENERATED);
         itemModelGenerator.register(ModItems.WOODEN_WHISK, Models.HANDHELD);
         itemModelGenerator.register(ModItems.STONE_WHISK, Models.HANDHELD);
@@ -83,6 +108,12 @@ public class ModModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.BLACK_TRUFFLE, Models.GENERATED);
         itemModelGenerator.register(ModItems.WHITE_TRUFFLE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ICE_BRICK, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.SILICON_INGOT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SILICON_COMPONENT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.REDSTONE_COMPONENT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DIAMOND_COMPONENT, Models.GENERATED);
+
 
         itemModelGenerator.register(ModItems.EGG_TART, Models.GENERATED);
         itemModelGenerator.register(ModItems.APPLE_PUDDING, Models.GENERATED);

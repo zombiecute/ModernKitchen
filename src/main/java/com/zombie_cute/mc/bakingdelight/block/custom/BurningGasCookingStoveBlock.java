@@ -2,6 +2,7 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.custom.abstracts.AbstractGasCookingStoveBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.BurningGasCookingStoveBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;

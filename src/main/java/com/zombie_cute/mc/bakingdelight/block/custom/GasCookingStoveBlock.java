@@ -1,8 +1,9 @@
 package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.custom.abstracts.AbstractGasCookingStoveBlock;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
-import com.zombie_cute.mc.bakingdelight.util.ToolTips;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GasCookingStoveBlock extends AbstractGasCookingStoveBlock{
+public class GasCookingStoveBlock extends AbstractGasCookingStoveBlock {
     public GasCookingStoveBlock() {
         super(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque());
     }
@@ -33,13 +34,13 @@ public class GasCookingStoveBlock extends AbstractGasCookingStoveBlock{
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         if(Screen.hasShiftDown()){
-            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(ModUtil.getShiftText(true));
             tooltip.add(Text.literal(" "));
-            tooltip.add(Text.translatable(ToolTips.GAS_COOKING_STOVE_1).formatted(Formatting.GOLD));
-            tooltip.add(Text.translatable(ToolTips.GAS_COOKING_STOVE_2).formatted(Formatting.GOLD));
-            tooltip.add(Text.translatable(ToolTips.GAS_COOKING_STOVE_3).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.GAS_COOKING_STOVE_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.GAS_COOKING_STOVE_2).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.GAS_COOKING_STOVE_3).formatted(Formatting.GOLD));
         }else {
-            tooltip.add(ToolTips.getShiftText(false));
+            tooltip.add(ModUtil.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, options);
     }

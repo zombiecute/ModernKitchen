@@ -2,12 +2,9 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.entities.BiogasDigesterControllerBlockEntity;
-import com.zombie_cute.mc.bakingdelight.util.ToolTips;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -41,13 +38,13 @@ public class BiogasDigesterControllerBlock extends BlockWithEntity {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         if(Screen.hasShiftDown()){
-            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(ModUtil.getShiftText(true));
             tooltip.add(Text.literal(" "));
-            tooltip.add(Text.translatable(ToolTips.BDC_1).formatted(Formatting.GOLD));
-            tooltip.add(Text.translatable(ToolTips.BDC_2).formatted(Formatting.GOLD));
-            tooltip.add(Text.translatable(ToolTips.BDC_3).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.BDC_1).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.BDC_2).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.BDC_3).formatted(Formatting.GOLD));
         } else {
-            tooltip.add(ToolTips.getShiftText(false));
+            tooltip.add(ModUtil.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, options);
     }
@@ -56,6 +53,7 @@ public class BiogasDigesterControllerBlock extends BlockWithEntity {
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient){

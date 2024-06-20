@@ -2,7 +2,9 @@ package com.zombie_cute.mc.bakingdelight.gen;
 
 import com.zombie_cute.mc.bakingdelight.BakingdelightClient;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.block.custom.BoxedCherriesBlock;
 import com.zombie_cute.mc.bakingdelight.block.custom.FreezerBlock;
+import com.zombie_cute.mc.bakingdelight.block.custom.abstracts.AbstractBatteryBlock;
 import com.zombie_cute.mc.bakingdelight.block.entities.*;
 import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayCategory;
 import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationCategory;
@@ -14,10 +16,8 @@ import com.zombie_cute.mc.bakingdelight.effects.ModEffectsAndPotions;
 import com.zombie_cute.mc.bakingdelight.entity.ModEntities;
 import com.zombie_cute.mc.bakingdelight.item.ModItemGroups;
 import com.zombie_cute.mc.bakingdelight.item.ModItems;
-import com.zombie_cute.mc.bakingdelight.screen.custom.AdvanceFurnaceScreen;
-import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterControllerScreen;
-import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterIOScreen;
-import com.zombie_cute.mc.bakingdelight.util.ToolTips;
+import com.zombie_cute.mc.bakingdelight.screen.custom.*;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -28,40 +28,40 @@ public class ModLangGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
-        translationBuilder.add(ToolTips.SHIFT_FRONT, "Hold ");
-        translationBuilder.add(ToolTips.SHIFT_END, " to view summary");
-        translationBuilder.add(ToolTips.WHISK_1, "A whisk that can be used to mix ingredients,");
-        translationBuilder.add(ToolTips.WHISK_2, "or... whisk the brains of monsters?");
-        translationBuilder.add(ToolTips.BUTTER_1, "Sticky texture...Maybe it's used ");
-        translationBuilder.add(ToolTips.BUTTER_2, "for something other than food");
-        translationBuilder.add(ToolTips.TRUFFLE, "It can be found in podzol");
-        translationBuilder.add(ToolTips.CUTTLEBONE, "It can be dropped when a squid killed by an amethyst tool");
-        translationBuilder.add(ToolTips.FILTER_1, "A filter made of string that can be placed");
-        translationBuilder.add(ToolTips.FILTER_2, "in a wooden basin to filter oil and slags");
-        translationBuilder.add(ToolTips.KNEADING_STICK, "It beats and kneads people");
-        translationBuilder.add(ToolTips.SPATULA, "It can be used with a heated tray to stir-fry foods");
-        translationBuilder.add(ToolTips.BDC_1, "It is the core component that makes up the biogas digester,");
-        translationBuilder.add(ToolTips.BDC_2, "and when a flat and completely sealed cuboid area exists underneath it,");
-        translationBuilder.add(ToolTips.BDC_3, "it will automatically recognize this area as the digester.");
-        translationBuilder.add(ToolTips.BDI_1, "It will be activated when it is a working biogas digester controller");
-        translationBuilder.add(ToolTips.BDI_2, "underneath it, at which point you just need to fill it with any food");
-        translationBuilder.add(ToolTips.BDI_3, "to start fermenting it to produce biogas. If a gas canister attached to");
-        translationBuilder.add(ToolTips.BDI_4, "the side of it, it will allow you to fill the gas canister with biogas.");
-        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_1, "When it is flanked by a gas canister containing gas, right-click to activate it,");
-        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_2, "and when activated, it can heat up the block above it, including baking tray,");
-        translationBuilder.add(ToolTips.GAS_COOKING_STOVE_3, "oven, advance furnace, and deep fryer, all of which are compatible.");
-        translationBuilder.add(ToolTips.CROWBAR, "The Holy Sword of Physics");
-        translationBuilder.add(ToolTips.PIZZA_INGREDIENTS, "Ingredients: ");
-        translationBuilder.add(ToolTips.BAKING_TRAY_1, "A small, easy-to-use iron plate that can be used for upgrading an Advanced Furnace");
-        translationBuilder.add(ToolTips.BAKING_TRAY_2, "or for stir-frying: with a Gas Cooking Stove underneath it to heat it up, ");
-        translationBuilder.add(ToolTips.BAKING_TRAY_3, "place the food on top of it and use a spatula to stir-fry it five times to cook the food.");
-        translationBuilder.add(ToolTips.DEEP_FRYER_1, "A deep fryer can be used to deep fry a variety of foods. Pour in cooking oil and it will start to consume the gas and heat up,");
-        translationBuilder.add(ToolTips.DEEP_FRYER_2, "place a Gas Canister at the back of the fryer, then press the button on the front of the fryer,");
-        translationBuilder.add(ToolTips.DEEP_FRYER_3, "then add the food to it to start frying, hold down Shift and right-click on the fryer to check its detailed status.");
-        translationBuilder.add(ToolTips.WOODEN_BASIN_1, "A Wooden Basin that can be used to extract vegetable oil, put in an oil crop");
-        translationBuilder.add(ToolTips.WOODEN_BASIN_2, "(e.g. stir-fried sunflower seeds) and a filter, then stand on it and jump to extract the oil,");
-        translationBuilder.add(ToolTips.WOODEN_BASIN_3, "you can use a glass bottle or a bucket to take out the oil.");
-        translationBuilder.add(ToolTips.DFB, "For safe and harmless removal of the contents of the Deep Fryer");
+        translationBuilder.add(ModUtil.SHIFT_FRONT, "Hold ");
+        translationBuilder.add(ModUtil.SHIFT_END, " to view summary");
+        translationBuilder.add(ModUtil.WHISK_1, "A whisk that can be used to mix ingredients,");
+        translationBuilder.add(ModUtil.WHISK_2, "or... whisk the brains of monsters?");
+        translationBuilder.add(ModUtil.BUTTER_1, "Sticky texture...Maybe it's used ");
+        translationBuilder.add(ModUtil.BUTTER_2, "for something other than food");
+        translationBuilder.add(ModUtil.TRUFFLE, "It can be found in podzol");
+        translationBuilder.add(ModUtil.CUTTLEBONE, "It can be dropped when a squid killed by an amethyst tool");
+        translationBuilder.add(ModUtil.FILTER_1, "A filter made of string that can be placed");
+        translationBuilder.add(ModUtil.FILTER_2, "in a wooden basin to filter oil and slags");
+        translationBuilder.add(ModUtil.KNEADING_STICK, "It beats and kneads people");
+        translationBuilder.add(ModUtil.SPATULA, "It can be used with a heated tray to stir-fry foods");
+        translationBuilder.add(ModUtil.BDC_1, "It is the core component that makes up the biogas digester,");
+        translationBuilder.add(ModUtil.BDC_2, "and when a flat and completely sealed cuboid area exists underneath it,");
+        translationBuilder.add(ModUtil.BDC_3, "it will automatically recognize this area as the digester.");
+        translationBuilder.add(ModUtil.BDI_1, "It will be activated when it is a working biogas digester controller");
+        translationBuilder.add(ModUtil.BDI_2, "underneath it, at which point you just need to fill it with any food");
+        translationBuilder.add(ModUtil.BDI_3, "to start fermenting it to produce biogas. If a gas canister attached to");
+        translationBuilder.add(ModUtil.BDI_4, "the side of it, it will allow you to fill the gas canister with biogas.");
+        translationBuilder.add(ModUtil.GAS_COOKING_STOVE_1, "When it is flanked by a gas canister containing gas, right-click to activate it,");
+        translationBuilder.add(ModUtil.GAS_COOKING_STOVE_2, "and when activated, it can heat up the block above it, including baking tray,");
+        translationBuilder.add(ModUtil.GAS_COOKING_STOVE_3, "oven, and advance furnace, all of which are compatible.");
+        translationBuilder.add(ModUtil.CROWBAR, "The Holy Sword of Physics");
+        translationBuilder.add(ModUtil.PIZZA_INGREDIENTS, "Ingredients: ");
+        translationBuilder.add(ModUtil.BAKING_TRAY_1, "A small, easy-to-use iron plate that can be used for upgrading an Advanced Furnace");
+        translationBuilder.add(ModUtil.BAKING_TRAY_2, "or for stir-frying: with a Gas Cooking Stove underneath it to heat it up, ");
+        translationBuilder.add(ModUtil.BAKING_TRAY_3, "place the food on top of it and use a spatula to stir-fry it five times to cook the food.");
+        translationBuilder.add(ModUtil.DEEP_FRYER_1, "A deep fryer can be used to deep fry a variety of foods. Pour in cooking oil and it will start to consume the gas and heat up,");
+        translationBuilder.add(ModUtil.DEEP_FRYER_2, "place a Gas Canister at the back of the fryer, then press the button on the front of the fryer,");
+        translationBuilder.add(ModUtil.DEEP_FRYER_3, "then add the food to it to start frying, hold down Shift and right-click on the fryer to check its detailed status.");
+        translationBuilder.add(ModUtil.WOODEN_BASIN_1, "A Wooden Basin that can be used to extract vegetable oil, put in an oil crop");
+        translationBuilder.add(ModUtil.WOODEN_BASIN_2, "(e.g. stir-fried sunflower seeds) and a filter, then stand on it and jump to extract the oil,");
+        translationBuilder.add(ModUtil.WOODEN_BASIN_3, "you can use a glass bottle or a bucket to take out the oil.");
+        translationBuilder.add(ModUtil.DFB, "For safe and harmless removal of the contents of the Deep Fryer");
 
 
         translationBuilder.add(AdvanceFurnaceScreen.TOOLTIP,"Click to gain experiences");
@@ -165,6 +165,12 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.WHITE_TRUFFLE, "White Truffle");
         translationBuilder.add(ModItems.ICE_BRICK, "Ice Brick");
 
+        translationBuilder.add(ModItems.SILICON_INGOT, "Silicon Ingot");
+        translationBuilder.add(ModBlocks.SILICON_BLOCK, "Block of Silicon");
+        translationBuilder.add(ModItems.SILICON_COMPONENT, "Silicon Component");
+        translationBuilder.add(ModItems.REDSTONE_COMPONENT, "Redstone Component");
+        translationBuilder.add(ModItems.DIAMOND_COMPONENT, "Diamond Component");
+
         translationBuilder.add(ModItems.AMETHYST_SWORD, "Amethyst Sword");
         translationBuilder.add(ModItems.AMETHYST_PICKAXE, "Amethyst Pickaxe");
         translationBuilder.add(ModItems.AMETHYST_AXE, "Amethyst Axe");
@@ -251,6 +257,35 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add(FreezerBlockEntity.FREEZER_NAME, "Refrigerate");
         translationBuilder.add(PizzaMakingCategory.PIZZA_TITLE, "Pizza Making");
         translationBuilder.add(OvenTransformCategory.TRANSFORM_TITLE, "Transform");
+        translationBuilder.add(PhotovoltaicGeneratorBlockEntity.PHOTOVOLTAIC_GENERATOR_NAME, "Photovoltaic Power Generation");
+        translationBuilder.add(ModBlocks.PHOTOVOLTAIC_GENERATOR, "Photovoltaic Generator");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.GREEN_TIP_1, "High efficiency model:");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.GREEN_TIP_2, "Daytime only and");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.GREEN_TIP_3, "open air only");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.YELLOW_TIP_1, "Inefficiency model:");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.YELLOW_TIP_2, "Activated when there is");
+        translationBuilder.add(PhotovoltaicGeneratorScreen.YELLOW_TIP_3, "sufficient light nearby");
+        translationBuilder.add(ModBlocks.GAS_PIPE, "Gas Pipe");
+        translationBuilder.add(ModBlocks.AC_DC_CONVERTER, "AC/DC Converter");
+        translationBuilder.add(ModBlocks.FAN_BLADE_ITEM, "Wind Turbine Blades");
+        translationBuilder.add(ModBlocks.WIND_TURBINE_CONTROLLER, "Wind Turbine Controller");
+        translationBuilder.add(ModBlocks.SIMPLE_BATTERY, "Simple Battery");
+        translationBuilder.add(ModBlocks.INTERMEDIATE_BATTERY, "Intermediate Battery");
+        translationBuilder.add(ModBlocks.ADVANCE_BATTERY, "Advance Battery");
+        translationBuilder.add(ModBlocks.DIMENSION_BATTERY, "Dimension Battery");
+        translationBuilder.add(AbstractBatteryBlock.TOOLTIP_TEXT, "Quantity of electric charge or power: ");
+        translationBuilder.add(ModBlocks.STERLING_ENGINE_ITEM, "Sterling Engine");
+        translationBuilder.add(ModBlocks.FARADAY_GENERATOR, "Faraday Generator");
+        translationBuilder.add(ACDCConverterScreen.SPEED_NAME, "Working Speed");
+        translationBuilder.add(ModBlocks.TESLA_COIL, "Tesla Coil");
+        translationBuilder.add(ModBlocks.ELECTRICIANS_DESK, "Electrician's Desk");
+        translationBuilder.add(ModBlocks.BOXED_CHERRIES, "Cherries Crate");
+        translationBuilder.add(BoxedCherriesBlock.TIP, "You'll need at least 32 gunpowder to activate it.");
+        translationBuilder.add(ModBlocks.BAMBOO_COVER, "Bamboo Steamer Cover");
+        translationBuilder.add(ModBlocks.BAMBOO_GRATE, "Bamboo Steamer Grate");
+        translationBuilder.add(BambooGrateBlockEntity.NAME, "Bamboo Steamer");
+
+        translationBuilder.add("death.attack.bakingdelight_electroshock","%1$s was electrocuted!");
 
         translationBuilder.add(ModBlocks.CREAM_FLUID_BLOCK, "Cream");
         translationBuilder.add(ModBlocks.VEGETABLE_OIL_FLUID_BLOCK, "Vegetable Oil");
@@ -305,6 +340,8 @@ public class ModLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("sounds.bakingdelight.item_crowbar_attack", "Crowbar: Attack");
         translationBuilder.add("sounds.bakingdelight.block_gas_canister_filling", "Gas Canister: Filling");
         translationBuilder.add("sounds.bakingdelight.block_gas_cooking_stove_ignite", "Gas Cooking Stove: Try to Ignite");
+        translationBuilder.add("sounds.bakingdelight.block_sterling_engine", "Sterling Engine: Running");
+        translationBuilder.add("sounds.bakingdelight.block_tesla_coil", "Tesla Coil: Electroshock");
 
         translationBuilder.add(BakingdelightClient.ORE_UI_DARK, "Ore UI Style (Dark)");
         translationBuilder.add(BakingdelightClient.ORE_UI_BRIGHT, "Ore UI Style (Bright)");

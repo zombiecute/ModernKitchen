@@ -12,7 +12,7 @@
       "item": "minecraft:chest"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "bakingdelight:redstone_component"
     }
   },
   "pattern": [

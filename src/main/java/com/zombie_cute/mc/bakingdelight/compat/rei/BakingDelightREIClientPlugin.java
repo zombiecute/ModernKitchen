@@ -1,6 +1,8 @@
 package com.zombie_cute.mc.bakingdelight.compat.rei;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
+import com.zombie_cute.mc.bakingdelight.compat.rei.assembly.AssemblyCategory;
+import com.zombie_cute.mc.bakingdelight.compat.rei.assembly.AssemblyDisplay;
 import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayCategory;
 import com.zombie_cute.mc.bakingdelight.compat.rei.baking_tray.BakingTrayDisplay;
 import com.zombie_cute.mc.bakingdelight.compat.rei.biogas_fermentation.BiogasFermentationCategory;
@@ -52,7 +54,8 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
                 new WoodenBasinCategory(),
                 new BiogasFermentationCategory(),
                 new DeepFryingCategory(),
-                new CuisineCategory()
+                new CuisineCategory(),
+                new AssemblyCategory()
         );
         registry.addWorkstations(OvenBakingCategory.OVEN_BAKING, EntryStacks.of(ModBlocks.OVEN));
         registry.addWorkstations(OvenBakingCategory.OVEN_BAKING, EntryStacks.of(ModBlocks.GAS_CANISTER));
@@ -75,6 +78,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.DEEP_FRY_BASKET));
         registry.addWorkstations(DeepFryingCategory.DEEP_FRYING, EntryStacks.of(ModBlocks.GAS_CANISTER));
         registry.addWorkstations(CuisineCategory.CUISINE, EntryStacks.of(ModBlocks.CUISINE_TABLE));
+        registry.addWorkstations(AssemblyCategory.ASSEMBLY, EntryStacks.of(ModBlocks.ELECTRICIANS_DESK));
     }
 
     @Override
@@ -91,6 +95,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
         registry.add(new BiogasFermentationDisplay());
         registry.registerRecipeFiller(DeepFryingRecipe.class, DeepFryingRecipe.Type.INSTANCE, DeepFryingDisplay::new);
         registry.registerRecipeFiller(CuisineRecipe.class, CuisineRecipe.Type.INSTANCE, CuisineDisplay::new);
+        registry.registerRecipeFiller(AssemblyRecipe.class, AssemblyRecipe.Type.INSTANCE, AssemblyDisplay::new);
     }
 
     @Override
@@ -111,5 +116,7 @@ public class BakingDelightREIClientPlugin implements REIClientPlugin {
                 DeepFryingCategory.DEEP_FRYING);
         registry.registerClickArea(screen -> new Rectangle((screen.width-176)/2 + 161,(screen.height-166)/2 + 5,11,11), CuisineTableScreen.class,
                 CuisineCategory.CUISINE);
+        registry.registerClickArea(screen -> new Rectangle((screen.width-176)/2 + 84,(screen.height-166)/2 + 26,22,15), ElectriciansDeskScreen.class,
+                AssemblyCategory.ASSEMBLY);
     }
 }

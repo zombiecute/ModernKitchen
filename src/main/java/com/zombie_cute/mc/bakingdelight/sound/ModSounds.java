@@ -20,6 +20,9 @@ public class ModSounds {
     public static final SoundEvent ITEM_CROWBAR_ATTACK = registerSound("item_crowbar_attack");
     public static final SoundEvent BLOCK_GAS_CANISTER_FILLING = registerSound("block_gas_canister_filling");
     public static final SoundEvent BLOCK_GAS_COOKING_STOVE_IGNITE = registerSound("block_gas_cooking_stove_ignite");
+    public static final SoundEvent BLOCK_STERLING_ENGINE = registerSound("block_sterling_engine");
+    public static final SoundEvent BLOCK_TESLA_COIL = registerSound("block_tesla_coil");
+
     public static SoundEvent registerSound(String name){
         Identifier id = new Identifier(Bakingdelight.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

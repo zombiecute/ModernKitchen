@@ -32,5 +32,9 @@ public class ModRecipes {
                 CuisineRecipe.Serializer.INSTANCE);
         Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, CuisineRecipe.Type.ID),
                 CuisineRecipe.Type.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Bakingdelight.MOD_ID, AssemblyRecipe.Serializer.ID),
+                AssemblyRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_TYPE, new Identifier(Bakingdelight.MOD_ID, AssemblyRecipe.Type.ID),
+                AssemblyRecipe.Type.INSTANCE);
     }
 }

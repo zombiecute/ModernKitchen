@@ -56,14 +56,23 @@ public class BakingdelightClient implements ClientModInitializer {
         HandledScreens.register(ModScreenHandlers.DEEP_FRYER_SCREEN_HANDLER, DeepFryerScreen::new);
         HandledScreens.register(ModScreenHandlers.CUISINE_TABLE_SCREEN_HANDLER, CuisineTableScreen::new);
         HandledScreens.register(ModScreenHandlers.CABINET_SCREEN_HANDLER, CabinetScreen::new);
+        HandledScreens.register(ModScreenHandlers.PHOTOVOLTAIC_GENERATOR_SCREEN_HANDLER, PhotovoltaicGeneratorScreen::new);
+        HandledScreens.register(ModScreenHandlers.ACDC_CONVERTER_SCREEN_HANDLER, ACDCConverterScreen::new);
+        HandledScreens.register(ModScreenHandlers.WIND_TURBINE_CONTROLLER_SCREEN_HANDLER, WindTurbineControllerScreen::new);
+        HandledScreens.register(ModScreenHandlers.FARADAY_GENERATOR_SCREEN_HANDLER, FaradayGeneratorScreen::new);
+        HandledScreens.register(ModScreenHandlers.TESLA_COIL_SCREEN_HANDLER, TeslaCoilScreen::new);
+        HandledScreens.register(ModScreenHandlers.ELECTRICIANS_DESK_SCREEN_HANDLER, ElectriciansDeskScreen::new);
+        HandledScreens.register(ModScreenHandlers.BAMBOO_STEAMER_SCREEN_HANDLER, BambooSteamerScreen::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.GLASS_BOWL_ENTITY, GlassBowlBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.FREEZER_ENTITY, FreezerBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.BAKING_TRAY_BLOCK_ENTITY, BakingTrayBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.WOODEN_BASIN_BLOCK_ENTITY, WoodenBasinBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.DEEP_FRYER_BLOCK_ENTITY, DeepFryerBlockEntityRenderer::new);
-
+        BlockEntityRendererFactories.register(ModBlockEntities.FAN_BLADE_BLOCK_ENTITY, FanBladeBlockEntityRender::new);
         BlockEntityRendererFactories.register(ModBlockEntities.KITCHEN_UTENSIL_HOLDER_BLOCK_ENTITY, KitchenUtensilHolderBlockEntityRender::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.STERLING_ENGINE_BLOCK_ENTITY, SterlingEngineBlockEntityRender::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.BAMBOO_GRATE_BLOCK_ENTITY, BambooGrateBlockEntityRenderer::new);
 
         FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_CREAM, ModFluid.FLOWING_CREAM,
                 new SimpleFluidRenderHandler(

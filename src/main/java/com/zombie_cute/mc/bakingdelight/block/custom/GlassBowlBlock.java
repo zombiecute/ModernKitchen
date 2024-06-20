@@ -2,6 +2,7 @@ package com.zombie_cute.mc.bakingdelight.block.custom;
 
 import com.zombie_cute.mc.bakingdelight.block.entities.GlassBowlBlockEntity;
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
+import com.zombie_cute.mc.bakingdelight.item.custom.ModStewItem;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -74,7 +75,9 @@ public class GlassBowlBlock extends BlockWithEntity implements Waterloggable{
         if (state.getBlock() != newState.getBlock()){
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof GlassBowlBlockEntity){
-                ItemScatterer.spawn(world ,pos, (GlassBowlBlockEntity)blockEntity);
+                if (!(((GlassBowlBlockEntity) blockEntity).getStack(1).getItem() instanceof ModStewItem)) {
+                    ItemScatterer.spawn(world ,pos, (GlassBowlBlockEntity)blockEntity);
+                }
                 world.updateComparators(pos,this);
             }
         }

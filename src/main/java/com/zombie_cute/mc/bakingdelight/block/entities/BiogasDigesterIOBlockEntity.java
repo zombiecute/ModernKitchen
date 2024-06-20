@@ -2,7 +2,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.screen.custom.BiogasDigesterIOScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -185,6 +185,7 @@ public class BiogasDigesterIOBlockEntity extends BlockEntity implements Implemen
             markDirty();
         }
     }
+
     @Override
     public void markDirty() {
         if (world != null) {
@@ -225,4 +226,5 @@ public class BiogasDigesterIOBlockEntity extends BlockEntity implements Implemen
     public boolean isFood(Item item){
         return item.isFood();
     }
+
 }

@@ -102,7 +102,7 @@ public class FreezerScreenHandler extends ScreenHandler {
         BlockPos pos1 = player.getBlockPos();
         BlockPos pos2 = blockEntity.getPos();
         double distance = Math.sqrt(Math.pow(pos2.getX()-pos1.getX(),2)+Math.pow(pos2.getY()-pos1.getY(),2)+Math.pow(pos2.getZ()-pos1.getZ(),2));
-        return this.inventory.canPlayerUse(player) && distance < 5 && !blockEntity.isRemoved() && blockEntity.getCachedState().get(FreezerBlock.IS_OPEN);
+        return this.inventory.canPlayerUse(player) && distance < 7 && !blockEntity.isRemoved() && blockEntity.getCachedState().get(FreezerBlock.IS_OPEN);
     }
     private void addPlayerInventory(PlayerInventory playerInventory){
         for (int i = 0; i < 3; ++i){

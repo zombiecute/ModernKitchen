@@ -39,6 +39,27 @@ public class ModScreenHandlers {
     public static final ScreenHandlerType<CabinetScreenHandler> CABINET_SCREEN_HANDLER =
             Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "cabinet_screen"),
                     new ExtendedScreenHandlerType<>(CabinetScreenHandler::new));
+    public static final ScreenHandlerType<PhotovoltaicGeneratorScreenHandler> PHOTOVOLTAIC_GENERATOR_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "photovoltaic_generator_screen"),
+                    new ExtendedScreenHandlerType<>(PhotovoltaicGeneratorScreenHandler::new));
+    public static final ScreenHandlerType<ACDCConverterScreenHandler> ACDC_CONVERTER_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "gas_pump_screen"),
+                    new ExtendedScreenHandlerType<>(ACDCConverterScreenHandler::new));
+    public static final ScreenHandlerType<WindTurbineControllerScreenHandler> WIND_TURBINE_CONTROLLER_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "wind_turbine_controller_screen"),
+                    new ExtendedScreenHandlerType<>(WindTurbineControllerScreenHandler::new));
+    public static final ScreenHandlerType<FaradayGeneratorScreenHandler> FARADAY_GENERATOR_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "faraday_generator_screen"),
+                    new ExtendedScreenHandlerType<>(FaradayGeneratorScreenHandler::new));
+    public static final ScreenHandlerType<TeslaCoilScreenHandler> TESLA_COIL_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "tesla_coil_screen"),
+                    new ExtendedScreenHandlerType<>(TeslaCoilScreenHandler::new));
+    public static final ScreenHandlerType<ElectriciansDeskScreenHandler> ELECTRICIANS_DESK_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "electric_desk_screen"),
+                    new ExtendedScreenHandlerType<>(ElectriciansDeskScreenHandler::new));
+    public static final ScreenHandlerType<BambooSteamerScreenHandler> BAMBOO_STEAMER_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bakingdelight.MOD_ID, "bamboo_steamer_screen"),
+                    new ExtendedScreenHandlerType<>(BambooSteamerScreenHandler::new));
     public static void registerScreenHandlers(){
         Bakingdelight.LOGGER.info("Registering Screen Handlers for " + Bakingdelight.MOD_ID);
     }

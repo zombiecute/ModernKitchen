@@ -2,7 +2,7 @@ package com.zombie_cute.mc.bakingdelight.block.entities;
 
 import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
 import com.zombie_cute.mc.bakingdelight.tag.ModTagKeys;
 import net.minecraft.block.BlockState;

@@ -4,7 +4,7 @@ import com.zombie_cute.mc.bakingdelight.block.ModBlockEntities;
 import com.zombie_cute.mc.bakingdelight.block.ModBlocks;
 import com.zombie_cute.mc.bakingdelight.block.custom.DeepFryerBlock;
 import com.zombie_cute.mc.bakingdelight.block.custom.GasCanisterBlock;
-import com.zombie_cute.mc.bakingdelight.block.entities.interfaces.ImplementedInventory;
+import com.zombie_cute.mc.bakingdelight.block.entities.utils.ImplementedInventory;
 import com.zombie_cute.mc.bakingdelight.recipe.custom.DeepFryingRecipe;
 import com.zombie_cute.mc.bakingdelight.screen.custom.DeepFryerScreenHandler;
 import com.zombie_cute.mc.bakingdelight.sound.ModSounds;
@@ -17,6 +17,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -45,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
-public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory {
+public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory, SidedInventory {
     public DeepFryerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DEEP_FRYER_BLOCK_ENTITY, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
@@ -465,4 +466,20 @@ public class DeepFryerBlockEntity extends BlockEntity implements ImplementedInve
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new DeepFryerScreenHandler(syncId,playerInventory,this,this.propertyDelegate);
     }
+
+    @Override
+    public int[] getAvailableSlots(Direction side) {
+        return new int[0];
+    }
+
+    @Override
+    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+        return false;
+    }
+
+    @Override
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+        return false;
+    }
+
 }

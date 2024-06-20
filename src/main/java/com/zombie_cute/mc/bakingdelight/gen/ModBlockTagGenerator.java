@@ -63,9 +63,32 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.DEEPSLATE_CABINET);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.BLACKSTONE_CABINET);
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.OBSIDIAN_CABINET);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.PHOTOVOLTAIC_GENERATOR);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.GAS_PIPE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.AC_DC_CONVERTER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.FAN_BLADE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.WIND_TURBINE_CONTROLLER);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.SIMPLE_BATTERY);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.INTERMEDIATE_BATTERY);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.ADVANCE_BATTERY);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.DIMENSION_BATTERY);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.STERLING_ENGINE);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.FARADAY_GENERATOR);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.TESLA_COIL);
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(ModBlocks.SILICON_BLOCK);
 
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.WOODEN_BASIN);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.ELECTRICIANS_DESK);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.BOXED_CHERRIES);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.BAMBOO_COVER);
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.BAMBOO_GRATE);
 
+
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.SILICON_BLOCK);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.FARADAY_GENERATOR);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.INTERMEDIATE_BATTERY);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.FAN_BLADE);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.WIND_TURBINE_CONTROLLER);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.FREEZER);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BAKING_TRAY);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.GAS_CANISTER);
@@ -73,8 +96,12 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BIOGAS_DIGESTER_IO);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.GAS_COOKING_STOVE);
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.PHOTOVOLTAIC_GENERATOR);
+
+        getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.ADVANCE_BATTERY);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL).add(ModBlocks.OBSIDIAN_CABINET);
+        getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL).add(ModBlocks.DIMENSION_BATTERY);
 
         getOrCreateTagBuilder(BlockTags.CROPS).add(ModBlocks.BLACK_PEPPER_CROP);
         getOrCreateTagBuilder(BlockTags.BEE_GROWABLES).add(ModBlocks.BLACK_PEPPER_CROP);
@@ -84,6 +111,8 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(ForgeTagKeys.HEAT_SOURCES).add(ModBlocks.BURNING_GAS_COOKING_STOVE);
         // Crowbar Destroyable
         getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).add(Blocks.IRON_BARS);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).add(ModBlocks.GAS_PIPE);
+        getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).add(ModBlocks.AC_DC_CONVERTER);
         getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.TRAPDOORS);
         getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.DOORS);
         getOrCreateTagBuilder(ModTagKeys.CROWBAR_DESTROYABLE).addOptionalTag(BlockTags.FENCES);

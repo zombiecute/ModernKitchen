@@ -283,6 +283,18 @@ public class ModItems {
     public static final Item ANCIENT_SCRAP = registerItem("ancient_scrap",new Item(
             new FabricItemSettings().fireproof())
     );
+    public static final Item SILICON_INGOT = registerItem("silicon_ingot",new Item(
+            new FabricItemSettings())
+    );
+    public static final Item SILICON_COMPONENT = registerItem("silicon_component",new Item(
+            new FabricItemSettings())
+    );
+    public static final Item REDSTONE_COMPONENT = registerItem("redstone_component",new Item(
+            new FabricItemSettings())
+    );
+    public static final Item DIAMOND_COMPONENT = registerItem("diamond_component",new Item(
+            new FabricItemSettings())
+    );
 
     public static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(Bakingdelight.MOD_ID,name),item);

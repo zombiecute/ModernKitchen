@@ -1,6 +1,6 @@
 package com.zombie_cute.mc.bakingdelight.block.custom;
 
-import com.zombie_cute.mc.bakingdelight.util.ToolTips;
+import com.zombie_cute.mc.bakingdelight.util.ModUtil;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.client.gui.screen.Screen;
@@ -49,11 +49,11 @@ public class DeepFryBasketBlock extends Block {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         if(Screen.hasShiftDown()){
-            tooltip.add(ToolTips.getShiftText(true));
+            tooltip.add(ModUtil.getShiftText(true));
             tooltip.add(Text.literal(" "));
-            tooltip.add(Text.translatable(ToolTips.DFB).formatted(Formatting.GOLD));
+            tooltip.add(Text.translatable(ModUtil.DFB).formatted(Formatting.GOLD));
         } else {
-            tooltip.add(ToolTips.getShiftText(false));
+            tooltip.add(ModUtil.getShiftText(false));
         }
         super.appendTooltip(stack, world, tooltip, options);
     }

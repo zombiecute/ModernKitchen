@@ -40,7 +40,19 @@ public class ModBlockLootGenerator extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.GRANITE_CABINET);
         addDrop(ModBlocks.DIORITE_CABINET);
         addDrop(ModBlocks.OBSIDIAN_CABINET);
-
+        addDrop(ModBlocks.PHOTOVOLTAIC_GENERATOR);
+        addDrop(ModBlocks.GAS_PIPE);
+        addDrop(ModBlocks.AC_DC_CONVERTER);
+        addDrop(ModBlocks.FAN_BLADE);
+        addDrop(ModBlocks.WIND_TURBINE_CONTROLLER);
+        addDrop(ModBlocks.STERLING_ENGINE);
+        addDrop(ModBlocks.FARADAY_GENERATOR);
+        addDrop(ModBlocks.TESLA_COIL);
+        addDrop(ModBlocks.ELECTRICIANS_DESK);
+        addDrop(ModBlocks.SILICON_BLOCK);
+        addDrop(ModBlocks.BOXED_CHERRIES);
+        addDrop(ModBlocks.BAMBOO_COVER);
+        addDrop(ModBlocks.BAMBOO_GRATE);
 
         BlockStatePropertyLootCondition.Builder builder2 = BlockStatePropertyLootCondition
                 .builder(ModBlocks.BLACK_PEPPER_CROP)

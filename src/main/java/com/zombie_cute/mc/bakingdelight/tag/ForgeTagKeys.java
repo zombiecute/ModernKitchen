@@ -13,6 +13,7 @@ public class ForgeTagKeys {
     // Farmer's Delight Mod
     public static final TagKey<Block> HEAT_SOURCES = fdModBlockTag("heat_sources");
     // C
+    public static final TagKey<Item> SILICON = forgeItemTag("silicon");
     public static final TagKey<Item> C_WHEAT_FLOUR = forgeItemTag("wheat_flour");
     public static final TagKey<Item> C_FLOUR = forgeItemTag("flour");
     public static final TagKey<Item> C_WHEAT_DOUGH = forgeItemTag("wheat_dough");
